@@ -136,3 +136,15 @@ if model is not None:
             st.error(f"Prediction failed: {e}")
 else:
     st.warning("Model not available. Please train or upload a model.")
+
+
+# ----------------------------------------------------
+# SECTION 7: EXPORT PROCESSED DATA (OPTIONAL)
+# ----------------------------------------------------
+st.header("7. Export Processed Data")
+
+if st.button("Download cleaned dataset"):
+    cleaned_csv = df_clean.to_csv(index=False).encode("utf-8")
+    st.download_button("Download CSV", cleaned_csv, "cleaned_data.csv", "text/csv")
+
+st.write("End of template. Modify each section to build your complete healthcare analytics workflow.")
