@@ -80,3 +80,28 @@ df_features = df_clean.copy()
 
 st.write("Feature-engineered data preview:")
 st.dataframe(df_features.head())
+
+
+
+# ----------------------------------------------------
+# SECTION 5: TRAIN OR LOAD MODEL (USER CHOOSES)
+# ----------------------------------------------------
+st.header("5. Machine Learning Model")
+
+mode = st.radio("Choose model mode:", ["Load Existing Model", "Train New Model"])
+
+if mode == "Load Existing Model":
+    model_file = st.file_uploader("Upload trained .pkl model", type=["pkl"])
+    if model_file is not None:
+        model = joblib.load(model_file)
+        st.success("Model loaded successfully.")
+    else:
+        st.warning("Upload a model to continue.")
+        st.stop()
+
+else:
+    st.write("Add your model training code below.")
+    st.info("This template does not include a training implementation. Write your own training logic here.")
+
+    # Placeholder to prevent execution errors
+    model = None
