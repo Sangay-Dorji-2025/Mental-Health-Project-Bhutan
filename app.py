@@ -38,3 +38,28 @@ df_clean.fillna(method="bfill", inplace=True)
 
 st.write("Cleaned dataset:")
 st.dataframe(df_clean.head())
+
+# ----------------------------------------------------
+# SECTION 3: EXPLORATORY DATA ANALYSIS (EDIT AS NEEDED)
+# ----------------------------------------------------
+st.header("3. Exploratory Data Analysis (EDA)")
+
+st.write("Add your own analyses here. Below are optional placeholders.")
+
+if st.checkbox("Show summary statistics"):
+    st.write(df_clean.describe())
+
+if st.checkbox("Show column info"):
+    st.write(pd.DataFrame({
+        "Column": df_clean.columns,
+        "Dtype": df_clean.dtypes.astype(str)
+    }))
+
+# Optional chart
+if st.checkbox("Show sample histogram"):
+    numeric_cols = df_clean.select_dtypes(include=[np.number]).columns.tolist()
+    if numeric_cols:
+        col = st.selectbox("Choose a numeric column", numeric_cols)
+        st.bar_chart(df_clean[col])
+    else:
+        st.warning("No numeric columns available.")
