@@ -67,3 +67,16 @@ if st.checkbox("Show sample histogram"):
         st.bar_chart(df_clean[col])
     else:
         st.warning("No numeric columns available.")
+
+# ----------------------------------------------------
+# SECTION 4: FEATURE ENGINEERING (USER FILLS IN)
+# ----------------------------------------------------
+st.header("4. Feature Engineering")
+
+st.write("Create engineered features here. Add your own logic below.")
+
+# Placeholder
+df_features = df_clean.copy()
+
+st.write("Feature-engineered data preview:")
+st.dataframe(df_features.head())
