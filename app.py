@@ -43,18 +43,27 @@ df_clean = df.copy()
 #df_clean.isnull().sum()
 #df_clean.shape
 #df_clean.duplicated().sum()
-
+#Handle NaN 
+df_clean = df.fillna(method='ffill').fillna(method='bfill')
+#Handle duplicate
 df_clean.drop_duplicates(inplace=True)
-df_clean = df_clean.fillna(method='ffill).fillna(method='bfill')
-df_clean[['Numeric', 'Low', 'High']] = df_clean[['Numeric', 'Low', 'High']].astype("float")
-df_clean.dtypes
+for col in df_clean.columns: 
+    if df_clean['Numeric', 'Low', 'High'].dtypes == 'object':
+        #check object type
+        try:
+            df_clean['Numeric', 'Low', 'High']=df_clean['Numeric', 'Low', 'High'].astype(float)
+        except ValueError:
+            # Ignore columns that cannot be converted 
+            pass
+
+
 #df_clean.fillna(method="ffill", inplace=True)
 #df_clean.fillna(method="bfill", inplace=True)
 # -------------------------------------------------
 
 st.write("Cleaned dataset:")
-st.dataframe(df_clean.head())
-
+#st.dataframe(df_clean.head())
+st.dataframe(df_clean)
 # ----------------------------------------------------
 # SECTION 3: EXPLORATORY DATA ANALYSIS (EDIT AS NEEDED)
 # ----------------------------------------------------
