@@ -31,7 +31,7 @@ else:
 st.header("2. Basic Data Cleaning")
 
 st.write("This section contains a minimal cleaning workflow. Modify it as needed.")
-
+missing_data = df.isna()
 df_clean = df.copy()
 
 # Placeholder: user will customize cleaning steps
