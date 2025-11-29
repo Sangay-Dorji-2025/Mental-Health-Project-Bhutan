@@ -60,7 +60,7 @@ for dtype, cols in cols_to_convert.items():
 st.write("Cleaned dataset:")
 st.dataframe(df_clean.head())
 # Already displayed in section 3
-st.dataframe(df_clean.dtypes)
+#st.dataframe(df_clean.dtypes)
 
 # ----------------------------------------------------
 # SECTION 3: EXPLORATORY DATA ANALYSIS (EDIT AS NEEDED)
