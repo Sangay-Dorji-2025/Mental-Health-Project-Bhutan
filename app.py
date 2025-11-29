@@ -44,14 +44,9 @@ df_clean.fillna(method="ffill", inplace=True)
 df_clean.fillna(method="bfill", inplace=True)
 # Convert numeric-looking object columns to float
 cols_to_convert = ['Numeric', 'Low', 'High']
-for col in cols_to_convert: 
-    if df_clean[col].dtypes == 'object':
-        #check object type
-        try:
-            df_clean[col]= df_clean[col].astype(float)
-        except ValueError:
-            # Ignore columns that cannot be converted 
-            pass
+# Convert columns to float, coercing errors to NaN
+for col in cols_to_convert:
+    df_clean[col] = pd.to_numeric(df_clean[col], errors='coerce')
 
 
 #df_clean.fillna(method="ffill", inplace=True)
