@@ -43,8 +43,8 @@ df_clean.drop_duplicates(inplace=True)
 df_clean.fillna(method="ffill", inplace=True)
 df_clean.fillna(method="bfill", inplace=True)
 # Convert numeric-looking object columns to float
-df_clean = ['Numeric', 'Low', 'High']
-for col in df_clean: 
+cols_to_convert = ['Numeric', 'Low', 'High']
+for col in cols_to_convert: 
     if df_clean[col].dtypes == 'object':
         #check object type
         try:
