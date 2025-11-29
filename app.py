@@ -46,7 +46,7 @@ df_clean = df.copy()
 #Handle NaN 
 df_clean = df.fillna(method='ffill').fillna(method='bfill')
 #Handle duplicate
-df_clean.drop_duplicates(inplace=True)
+df_clean = df_clean.drop_duplicates()
 for col in df_clean.columns: 
     if df_clean['Numeric', 'Low', 'High'].dtypes == 'object':
         #check object type
