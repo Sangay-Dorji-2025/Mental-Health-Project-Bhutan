@@ -44,15 +44,15 @@ df_clean.fillna(method="ffill", inplace=True)
 df_clean.fillna(method="bfill", inplace=True)
 # Convert numeric-looking object columns to float
 cols_to_convert = ['Numeric', 'Low', 'High']
-Convert columns to float, coercing errors to NaN
+# Convert columns to float, coercing errors to NaN
 for col in cols_to_convert:
    df_clean[col] = pd.to_numeric(df_clean[col], errors='coerce')
 # -------------------------------------------------
 
 st.write("Cleaned dataset:")
 st.dataframe(df_clean.head())
-#Already displayed in section 3
-#st.dataframe(df_clean.dtypes)
+# Already displayed in section 3
+# st.dataframe(df_clean.dtypes)
 
 # ----------------------------------------------------
 # SECTION 3: EXPLORATORY DATA ANALYSIS (EDIT AS NEEDED)
