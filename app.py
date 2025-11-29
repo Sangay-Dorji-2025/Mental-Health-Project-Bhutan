@@ -30,9 +30,10 @@ else:
 # ----------------------------------------------------
 st.header("2. Basic Data Cleaning")
 missing_data = df.notnull()
+df.isnull().sum()
 st.write("This section contains a minimal cleaning workflow. Modify it as needed.")
 
-df_clean = df.copy()
+#df_clean = df.copy()
 
 # Placeholder: user will customize cleaning steps
 # -------------------------------------------------
