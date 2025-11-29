@@ -42,12 +42,13 @@ df_clean.drop_duplicates(inplace=True)
 # Handle NaN: forward fill then backward fill
 df_clean.fillna(method="ffill", inplace=True)
 df_clean.fillna(method="bfill", inplace=True)
-# Convert numeric-looking object columns to float 
+# Convert numeric-looking object columns to float
+df_clean = ['Numeric', 'Low', 'High']
 for col in df_clean.columns: 
-    if df_clean['Numeric', 'Low', 'High'].dtypes == 'object':
+    if df_clean[col].dtypes == 'object':
         #check object type
         try:
-            df_clean['Numeric', 'Low', 'High']= df_clean['Numeric', 'Low', 'High'].astype(float)
+            df_clean[col]= df_clean[col].astype(float)
         except ValueError:
             # Ignore columns that cannot be converted 
             pass
