@@ -42,16 +42,19 @@ df_clean.drop_duplicates(inplace=True)
 # Handle NaN: forward fill then backward fill
 df_clean.fillna(method="ffill", inplace=True)
 df_clean.fillna(method="bfill", inplace=True)
-# Convert numeric-looking object columns to float coercing errors to NaN
-cols_toconvert_float= ['Numeric', 'Low', 'High']
-for col in cols_toconvert_float:
-   df_clean[col] = pd.to_numeric(df_clean[col], errors='coerce')
-# Convert numeric-looking object columns to Int coercing errors to NaN    
-#cols_toconvert_int = ['YEAR(DISPLAY)', 'STARTYEAR', 'ENDYEAR']   
-#for col in cols_toconvert_int:
- #   df_clean[col] = pd.to_numeric(df_clean[col], errors='coerce', downcast ='integer')
+# Convert numeric-looking object columns to float and integer coercing errors to NaN
+cols_to_convert = {
+    'float': ['Numeric', 'Low', 'High'],
+    'int': ['YEAR(DISPLAY)', 'STARTYEAR', 'ENDYEAR']
+}
+for dtype, cols in cols_to_convert.items():
+    for col in cols:
+        if dtype == 'float':
+            df_clean[col] = pd.to_numeric(df_clean[col], errors='coerce')
+        elif dtype == 'int':
+            df_clean[col] = pd.to_numeric(df_clean[col], errors='coerce', downcast='integer')
+            
 # -------------------------------------------------
-
 st.write("Cleaned dataset:")
 st.dataframe(df_clean.head())
 # Already displayed in section 3
