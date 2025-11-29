@@ -45,8 +45,9 @@ df_clean = df.copy()
 #df_clean.duplicated().sum()
 
 df_clean.drop_duplicates(inplace=True)
-df_clean.fillna("NaN", inplace=True)
+df_clean = df_clean.fillna(method='ffill).fillna(method='bfill')
 df_clean[['Numeric', 'Low', 'High']] = df_clean[['Numeric', 'Low', 'High']].astype("float")
+df_clean.dtypes
 #df_clean.fillna(method="ffill", inplace=True)
 #df_clean.fillna(method="bfill", inplace=True)
 # -------------------------------------------------
