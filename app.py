@@ -29,9 +29,9 @@ else:
 # SECTION 2: BASIC DATA CLEANING (EDIT AS NEEDED)
 # ----------------------------------------------------
 st.header("2. Basic Data Cleaning")
-
+missing_data2 = df.notnull()
 st.write("This section contains a minimal cleaning workflow. Modify it as needed.")
-missing_data = df.isna()
+
 df_clean = df.copy()
 
 # Placeholder: user will customize cleaning steps
@@ -42,8 +42,8 @@ df_clean.fillna(method="ffill", inplace=True)
 df_clean.fillna(method="bfill", inplace=True)
 # -------------------------------------------------
 
-st.write("Cleaned dataset:")
-st.dataframe(df_clean.head())
+#st.write("Cleaned dataset:")
+#st.dataframe(df_clean.head())
 
 # ----------------------------------------------------
 # SECTION 3: EXPLORATORY DATA ANALYSIS (EDIT AS NEEDED)
