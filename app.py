@@ -82,14 +82,6 @@ if st.checkbox("Show column info"):
     }))
 
 # Optional chart
-#if st.checkbox("Show sample histogram"):
- #   numeric_cols = df_clean.select_dtypes(include=[np.number]).columns.tolist()
- #   if numeric_cols:
- #       col = st.selectbox("Choose a numeric column", numeric_cols)
- #       st.bar_chart(df_clean[col])
- #   else:
- #       st.warning("No numeric columns available.")
-
 exclude_cols = ['YEAR (DISPLAY)', 'STARTYEAR', 'ENDYEAR']
 
 # Numeric columns excluding the year columns
