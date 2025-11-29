@@ -46,7 +46,7 @@ df_clean.fillna(method="bfill", inplace=True)
 # -------------------------------------------------
 
 st.write("Cleaned dataset:")
-st.dataframe(df_clean.head(10))
+st.dataframe(df_clean.head(20))
 
 # ----------------------------------------------------
 # SECTION 3: EXPLORATORY DATA ANALYSIS (EDIT AS NEEDED)
