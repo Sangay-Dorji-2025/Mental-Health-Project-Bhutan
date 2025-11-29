@@ -37,12 +37,16 @@ df_clean = df.copy()
 # Placeholder: user will customize cleaning steps
 # -------------------------------------------------
 # Example steps (comment out or replace as needed)
-df_clean.drop_duplicates(inplace=True)
-df_clean.fillna(method="ffill", inplace=True)
-df_clean.fillna(method="bfill", inplace=True)
+#df_clean.drop_duplicates(inplace=True)
+#df_clean.fillna(method="ffill", inplace=True)
+#df_clean.fillna(method="bfill", inplace=True)
 #df_clean.isnull().sum()
 #df_clean.shape
 #df_clean.duplicated().sum()
+
+df_clean.fillna(0)
+df_clean.fillna(method="ffill")
+df_clean.fillna(method="bfill")
 # -------------------------------------------------
 
 st.write("Cleaned dataset:")
