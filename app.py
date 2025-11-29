@@ -34,7 +34,7 @@ st.write("This section contains a minimal cleaning workflow. Modify it as needed
 #df_clean = df.isnull().sum()
 #df_clean.columns.values.tolist()
 #df_clean = df.copy()
-df.dtypes
+#df.dtypes
 df[["Numeric", "Low", "High"]] = df[["Numeric", "Low", "High"]].astype("float")
 
 #missing_data = df.isnull()
