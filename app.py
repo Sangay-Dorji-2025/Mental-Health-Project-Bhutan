@@ -20,7 +20,7 @@ uploaded_file = st.file_uploader("Upload CSV", type=["csv"])
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
     st.write("Preview of dataset:")
-    st.dataframe(df.head(10))
+    st.dataframe(df.head())
 else:
     st.warning("Please upload a dataset to proceed.")
     st.stop()
@@ -31,12 +31,11 @@ else:
 st.header("2. Basic Data Cleaning")
 
 st.write("This section contains a minimal cleaning workflow. Modify it as needed.")
-#df_clean = df.isnull().sum()
-#df_clean.columns.values.tolist()
-#df_clean = df.copy()
-#df.dtypes
-df[["Numeric", "Low", "High"]] = df[["Numeric", "Low", "High"]].astype("float")
 
+#df_clean = df.copy()
+
+df[["Numeric", "Low", "High"]] = df[["Numeric", "Low", "High"]].astype("float")
+df.dtypes
 #missing_data = df.isnull()
 #missing_data.columns.values.tolist()
 # Placeholder: user will customize cleaning steps
