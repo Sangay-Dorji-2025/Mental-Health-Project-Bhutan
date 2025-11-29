@@ -40,8 +40,9 @@ df_clean = df.copy()
 df_clean.drop_duplicates(inplace=True)
 df_clean.fillna(method="ffill", inplace=True)
 df_clean.fillna(method="bfill", inplace=True)
-df_clean.isnull().sum()
+#df_clean.isnull().sum()
 df_clean.shape
+df_clean.duplicated().sum()
 # -------------------------------------------------
 
 st.write("Cleaned dataset:")
