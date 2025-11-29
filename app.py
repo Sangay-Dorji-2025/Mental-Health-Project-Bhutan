@@ -32,10 +32,10 @@ st.header("2. Basic Data Cleaning")
 
 st.write("This section contains a minimal cleaning workflow. Modify it as needed.")
 
-#df_clean = df.copy()
+df_clean = df.copy()
 
-df[["Numeric", "Low", "High"]] = df[["Numeric", "Low", "High"]].astype("float")
-df.dtypes
+df_claean[["Numeric", "Low", "High"]] = df_clean[["Numeric", "Low", "High"]].astype("float")
+df_clean.dtypes
 #missing_data = df.isnull()
 #missing_data.columns.values.tolist()
 # Placeholder: user will customize cleaning steps
@@ -47,7 +47,7 @@ df.dtypes
 # -------------------------------------------------
 
 st.write("Cleaned dataset:")
-st.dataframe(df.head())
+st.dataframe(df_clean.head())
 
 # ----------------------------------------------------
 # SECTION 3: EXPLORATORY DATA ANALYSIS (EDIT AS NEEDED)
