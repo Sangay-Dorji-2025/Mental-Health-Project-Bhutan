@@ -29,7 +29,7 @@ else:
 # SECTION 2: BASIC DATA CLEANING (EDIT AS NEEDED)
 # ----------------------------------------------------
 st.header("2. Basic Data Cleaning")
-missing_data = df.notnull()
+#missing_data = df.notnull()
 df.isnull().sum()
 st.write("This section contains a minimal cleaning workflow. Modify it as needed.")
 
