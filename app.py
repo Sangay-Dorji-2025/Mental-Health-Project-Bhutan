@@ -30,7 +30,7 @@ else:
 # ----------------------------------------------------
 st.header("2. Basic Data Cleaning")
 
-st.write("This section mainly perform folloiwng task: a.Make a copy of original Dataframe. b. Remove duplicates. c. Handle NaN values. d. Converts numeric-looking object columns to float")
+st.write("This section mainly perform folloiwng task: a.Make a copy of original Dataframe. b. Remove duplicates.c. Handle NaN values. d. Converts numeric-looking object columns to float")
  # Make a copy of the original DataFrame
 df_clean = df.copy()
 
@@ -42,10 +42,13 @@ df_clean.drop_duplicates(inplace=True)
 # Handle NaN: forward fill then backward fill
 df_clean.fillna(method="ffill", inplace=True)
 df_clean.fillna(method="bfill", inplace=True)
-# Convert numeric-looking object columns to float
-cols_to_convert = ['Numeric', 'Low', 'High']
-# Convert columns to float, coercing errors to NaN
-for col in cols_to_convert:
+# Convert numeric-looking object columns to float coercing errors to NaN
+cols_to_convert_float= ['Numeric', 'Low', 'High']
+for col in cols_to_convert_float:
+   df_clean[col] = pd.to_numeric(df_clean[col], errors='coerce')
+# Convert numeric-looking object columns to Int coercing errors to NaN    
+cols_toconvert_int = ['YEAR', 'STARTYEAR', 'ENDYEAR']   
+for col in cols_to_convert_Int:
    df_clean[col] = pd.to_numeric(df_clean[col], errors='coerce')
 # -------------------------------------------------
 
