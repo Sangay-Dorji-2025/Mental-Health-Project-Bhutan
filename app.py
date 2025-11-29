@@ -82,6 +82,9 @@ if st.checkbox("Show column info"):
     }))
 
 # Optional chart
+exclude_cols = ['YEAR (DISPLAY)', 'STARTYEAR', 'ENDYEAR']
+numeric_cols = df_clean.select_dtypes(include='number').columns
+numeric_cols = [col for col in numeric_cols if col not in exclude_cols]
 if st.checkbox("Show sample histogram"):
     numeric_cols = df_clean.select_dtypes(include=[np.number]).columns.tolist()
     if numeric_cols:
