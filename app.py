@@ -63,7 +63,7 @@ for col in df_clean.columns:
 
 st.write("Cleaned dataset:")
 #st.dataframe(df_clean.head())
-st.dataframe(df_clean.head()
+st.dataframe(df_clean.head())
 # ----------------------------------------------------
 # SECTION 3: EXPLORATORY DATA ANALYSIS (EDIT AS NEEDED)
 # ----------------------------------------------------
