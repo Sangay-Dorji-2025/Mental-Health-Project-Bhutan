@@ -52,7 +52,7 @@ df_clean.fillna("NaN", inplace=True)
 # -------------------------------------------------
 
 st.write("Cleaned dataset:")
-st.dataframe(df_clean.head(20))
+st.dataframe(df_clean.head())
 
 # ----------------------------------------------------
 # SECTION 3: EXPLORATORY DATA ANALYSIS (EDIT AS NEEDED)
