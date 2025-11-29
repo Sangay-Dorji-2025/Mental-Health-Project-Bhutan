@@ -51,7 +51,7 @@ for col in df_clean.columns:
     if df_clean['Numeric', 'Low', 'High'].dtypes == 'object':
         #check object type
         try:
-            df_clean['Numeric', 'Low', 'High']=df_clean['Numeric', 'Low', 'High'].astype(float)
+            df_clean['Numeric', 'Low', 'High']= df_clean['Numeric', 'Low', 'High'].astype(float)
         except ValueError:
             # Ignore columns that cannot be converted 
             pass
@@ -63,7 +63,7 @@ for col in df_clean.columns:
 
 st.write("Cleaned dataset:")
 #st.dataframe(df_clean.head())
-st.dataframe(df_clean)
+st.dataframe(df_clean.head()
 # ----------------------------------------------------
 # SECTION 3: EXPLORATORY DATA ANALYSIS (EDIT AS NEEDED)
 # ----------------------------------------------------
