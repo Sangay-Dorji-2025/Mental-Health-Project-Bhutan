@@ -70,7 +70,10 @@ st.header("3. Exploratory Data Analysis (EDA)")
 st.write("Add your own analyses here. Below are optional placeholders.")
 
 if st.checkbox("Show summary statistics"):
-    st.write(df_clean.describe())
+    exclude_cols = ['YEAR(DISPLAY)', 'STARTYEAR', 'ENDYEAR']
+    numeric_cols = df_clean.select_dtypes(include='number').columns
+numeric_cols = [col for col in numeric_cols if col not in exclude_cols]
+    st.write(df_clean[numeric_cols].describe())
 
 if st.checkbox("Show column info"):
     st.write(pd.DataFrame({
