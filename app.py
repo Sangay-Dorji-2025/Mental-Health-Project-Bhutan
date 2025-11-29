@@ -37,16 +37,12 @@ df_clean = df.copy()
 # Placeholder: user will customize cleaning steps
 # -------------------------------------------------
 # Example steps (comment out or replace as needed)
-#df_clean.drop_duplicates(inplace=True)
-#df_clean.fillna(method="ffill", inplace=True)
-#df_clean.fillna(method="bfill", inplace=True)
-#df_clean.isnull().sum()
-#df_clean.shape
-#df_clean.duplicated().sum()
-#Handle NaN 
-df_clean = df.fillna(method='ffill').fillna(method='bfill')
-#Handle duplicate
-df_clean = df_clean.drop_duplicates()
+# Remove duplicates
+df_clean.drop_duplicates(inplace=True)
+# Handle NaN: forward fill then backward fill
+df_clean.fillna(method="ffill", inplace=True)
+df_clean.fillna(method="bfill", inplace=True)
+# Convert numeric-looking object columns to float 
 for col in df_clean.columns: 
     if df_clean['Numeric', 'Low', 'High'].dtypes == 'object':
         #check object type
@@ -62,8 +58,8 @@ for col in df_clean.columns:
 # -------------------------------------------------
 
 st.write("Cleaned dataset:")
-#st.dataframe(df_clean.head())
 st.dataframe(df_clean.head())
+
 # ----------------------------------------------------
 # SECTION 3: EXPLORATORY DATA ANALYSIS (EDIT AS NEEDED)
 # ----------------------------------------------------
