@@ -34,8 +34,9 @@ st.write("This section contains a minimal cleaning workflow. Modify it as needed
 #df_clean = df.isnull().sum()
 #df_clean.columns.values.tolist()
 #df_clean = df.copy()
+df.dtypes
 #missing_data = df.isnull()
-missing_data.columns.values.tolist()
+#missing_data.columns.values.tolist()
 # Placeholder: user will customize cleaning steps
 # -------------------------------------------------
 # Example steps (comment out or replace as needed)
@@ -45,7 +46,7 @@ missing_data.columns.values.tolist()
 # -------------------------------------------------
 
 st.write("Cleaned dataset:")
-st.dataframe(missing_data.head())
+st.dataframe(df.head())
 
 # ----------------------------------------------------
 # SECTION 3: EXPLORATORY DATA ANALYSIS (EDIT AS NEEDED)
