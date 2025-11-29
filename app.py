@@ -30,8 +30,8 @@ else:
 # ----------------------------------------------------
 st.header("2. Basic Data Cleaning")
 
-st.write("This section contains a minimal cleaning workflow. Modify it as needed.")
-
+st.write("This section mainly perform folloiwng task: a.Make a copy of original Dataframe. b. Remove duplicates. c. Handle NaN values. d. Converts numeric-looking object columns to float")
+ # Make a copy of the original DataFrame
 df_clean = df.copy()
 
 # Placeholder: user will customize cleaning steps
@@ -47,10 +47,6 @@ cols_to_convert = ['Numeric', 'Low', 'High']
 # Convert columns to float, coercing errors to NaN
 for col in cols_to_convert:
     df_clean[col] = pd.to_numeric(df_clean[col], errors='coerce')
-
-
-#df_clean.fillna(method="ffill", inplace=True)
-#df_clean.fillna(method="bfill", inplace=True)
 # -------------------------------------------------
 
 st.write("Cleaned dataset:")
