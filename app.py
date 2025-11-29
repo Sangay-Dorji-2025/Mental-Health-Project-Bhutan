@@ -2,149 +2,137 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-import os
 st.title("Mental Health Stress Level Predictor with Visualizations (Bhutan)")
-st.title("Bhutan Healthcare Data Science Project")
-st.write("This is a starter template for a healthcare analytics and prediction application using Streamlit.")
-# ----------------------------------------------------
-# SECTION 1: DATA LOADING
-# ----------------------------------------------------
-st.header("1. Load Healthcare Dataset")
 
-st.write("Upload your Bhutan healthcare dataset (CSV).")
+@st.cache_resource
+def load_data():
+    np.random.seed(42)
+    size = 600
 
-uploaded_file = st.file_uploader("Upload CSV", type=["csv"])
+    data = pd.DataFrame({
+        'age': np.random.randint(15, 60, size),
+        'sleep_hours': np.random.uniform(4, 10, size),
+        'social_interaction': np.random.randint(0, 7, size),
+        'work_stress': np.random.randint(1, 10, size),
+        'physical_activity': np.random.randint(0, 6, size),
+        'mood_score': np.random.randint(1, 10, size)
+    })
 
-if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file)
-    st.write("Preview of dataset:")
-    st.dataframe(df.head())
-else:
-    st.warning("Please upload a dataset to proceed.")
-    st.stop()
+    score = (data['work_stress'] * 0.5) + (10 - data['mood_score']) + (6 - data['physical_activity'])
 
-# ----------------------------------------------------
-# SECTION 2: BASIC DATA CLEANING (EDIT AS NEEDED)
-# ----------------------------------------------------
-st.header("2. Basic Data Cleaning")
+    conditions = [
+        (score < 8),
+        ((score >= 8) & (score < 14)),
+        (score >= 14)
+    ]
+    choices = ['low', 'medium', 'high']
 
-st.write("This section contains a minimal cleaning workflow. Modify it as needed.")
+    data['stress_level'] = np.select(conditions, choices, default='medium')
 
-df_clean = df.copy()
-
-# Placeholder: user will customize cleaning steps
-# -------------------------------------------------
-# Example steps (comment out or replace as needed)
-df_clean.drop_duplicates(inplace=True)
-df_clean.fillna(method="ffill", inplace=True)
-df_clean.fillna(method="bfill", inplace=True)
-# -------------------------------------------------
-
-st.write("Cleaned dataset:")
-st.dataframe(df_clean.head())
-
-# ----------------------------------------------------
-# SECTION 3: EXPLORATORY DATA ANALYSIS (EDIT AS NEEDED)
-# ----------------------------------------------------
-st.header("3. Exploratory Data Analysis (EDA)")
-
-st.write("Add your own analyses here. Below are optional placeholders.")
-
-if st.checkbox("Show summary statistics"):
-    st.write(df_clean.describe())
-
-if st.checkbox("Show column info"):
-    st.write(pd.DataFrame({
-        "Column": df_clean.columns,
-        "Dtype": df_clean.dtypes.astype(str)
-    }))
-
-# Optional chart
-if st.checkbox("Show sample histogram"):
-    numeric_cols = df_clean.select_dtypes(include=[np.number]).columns.tolist()
-    if numeric_cols:
-        col = st.selectbox("Choose a numeric column", numeric_cols)
-        st.bar_chart(df_clean[col])
-    else:
-        st.warning("No numeric columns available.")
-
-# ----------------------------------------------------
-# SECTION 4: FEATURE ENGINEERING (USER FILLS IN)
-# ----------------------------------------------------
-st.header("4. Feature Engineering")
-
-st.write("Create engineered features here. Add your own logic below.")
-
-# Placeholder
-df_features = df_clean.copy()
-
-st.write("Feature-engineered data preview:")
-st.dataframe(df_features.head())
+    return data
 
 
+@st.cache_resource
+def train_model(data):
+    X = data.drop("stress_level", axis=1)
+    y = data["stress_level"]
 
-# ----------------------------------------------------
-# SECTION 5: TRAIN OR LOAD MODEL (USER CHOOSES)
-# ----------------------------------------------------
-st.header("5. Machine Learning Model")
+    model = RandomForestClassifier()
+    model.fit(X, y)
 
-mode = st.radio("Choose model mode:", ["Load Existing Model", "Train New Model"])
-
-if mode == "Load Existing Model":
-    model_file = st.file_uploader("Upload trained .pkl model", type=["pkl"])
-    if model_file is not None:
-        model = joblib.load(model_file)
-        st.success("Model loaded successfully.")
-    else:
-        st.warning("Upload a model to continue.")
-        st.stop()
-
-else:
-    st.write("Add your model training code below.")
-    st.info("This template does not include a training implementation. Write your own training logic here.")
-
-    # Placeholder to prevent execution errors
-    model = None
+    return model
 
 
-# ----------------------------------------------------
-# SECTION 6: PREDICTION INTERFACE
-# ----------------------------------------------------
-st.header("6. Prediction Interface")
+data = load_data()
+model = train_model(data)
 
-st.write("Build your prediction input widgets here.")
+menu = st.sidebar.selectbox(
+    "Navigate",
+    ["Dataset Overview", "Visualizations", "Train Model Summary", "Predict Stress Level"]
+)
 
-# Placeholder: user defines input features
-# Example: numeric inputs based on numeric columns
-prediction_inputs = {}
+if menu == "Dataset Overview":
+    st.header("Dataset Overview")
+    st.dataframe(data.head())
+    st.header("Summary of Data")
+    st.dataframe(data.describe())
+    st.header("stress_level")
+    st.bar_chart(data["stress_level"].value_counts())
 
-if model is not None:
-    st.subheader("Provide inputs for prediction")
-    
-    numeric_cols = df_features.select_dtypes(include=[np.number]).columns.tolist()
-    
-    for col in numeric_cols:
-        val = st.number_input(f"Input for {col}", float(df_features[col].min()), float(df_features[col].max()))
-        prediction_inputs[col] = val
-    
+elif menu == "Visualizations":
+    st.header("Visualizations")
+
+    viz_type = st.selectbox(
+        "Choose chart type:",
+        [
+            "Correlation Heatmap",
+            "Line Chart",
+            "Bar Chart",
+            "Area Chart",
+            "Histogram",
+            "Scatter Plot"
+        ]
+    )
+
+    if viz_type == "Correlation Heatmap":
+        st.subheader("Correlation Heatmap")
+
+        numeric_data = data.select_dtypes(include=['number'])
+        corr = numeric_data.corr()
+
+        plt.figure(figsize=(8, 6))
+        sns.heatmap(corr, annot=True, cmap="coolwarm")
+        st.pyplot()
+
+    elif viz_type == "Line Chart":
+        st.line_chart(data.drop("stress_level", axis=1))
+
+    elif viz_type == "Bar Chart":
+        feature = st.selectbox("Select feature:", data.columns[:-1])
+        st.bar_chart(data[feature])
+
+    elif viz_type == "Area Chart":
+        st.area_chart(data.drop("stress_level", axis=1))
+
+    elif viz_type == "Histogram":
+        feature = st.selectbox("Select numeric feature:", data.columns[:-1])
+        plt.hist(data[feature], bins=20)
+        st.pyplot()
+
+    elif viz_type == "Scatter Plot":
+        x_axis = st.selectbox("X-axis:", data.columns[:-1])
+        y_axis = st.selectbox("Y-axis:", data.columns[:-1])
+        plt.scatter(data[x_axis], data[y_axis])
+        plt.xlabel(x_axis)
+        plt.ylabel(y_axis)
+        st.pyplot()
+
+elif menu == "Train Model Summary":
+    st.header("Model Training Summary")
+
+    X = data.drop("stress_level", axis=1)
+    feature_importances = model.feature_importances_
+
+    importance_df = pd.DataFrame({
+        "Feature": X.columns,
+        "Importance": feature_importances
+    }).sort_values(by="Importance", ascending=False)
+
+    st.bar_chart(importance_df.set_index("Feature"))
+    st.dataframe(importance_df)
+
+elif menu == "Predict Stress Level":
+    st.header("Predict Stress Level")
+
+    age = st.slider('Age', 15, 60, 25)
+    sleep_hours = st.slider('Sleep Hours', 4.0, 10.0, 7.0)
+    social_interaction = st.slider('Social Interaction', 0, 7, 3)
+    work_stress = st.slider('Work/Study Stress', 1, 10, 5)
+    physical_activity = st.slider('Physical Activity', 0, 6, 2)
+    mood_score = st.slider('Mood Score', 1, 10, 6)
+
     if st.button("Predict"):
-        try:
-            X_input = pd.DataFrame([prediction_inputs])
-            pred = model.predict(X_input)
-            st.success(f"Model Prediction: {pred[0]}")
-        except Exception as e:
-            st.error(f"Prediction failed: {e}")
-else:
-    st.warning("Model not available. Please train or upload a model.")
+        features = np.array([[age, sleep_hours, social_interaction, work_stress, physical_activity, mood_score]])
+        prediction = model.predict(features)[0]
+        st.success(f"Predicted Stress Level: {prediction}")
 
-
-# ----------------------------------------------------
-# SECTION 7: EXPORT PROCESSED DATA (OPTIONAL)
-# ----------------------------------------------------
-st.header("7. Export Processed Data")
-
-if st.button("Download cleaned dataset"):
-    cleaned_csv = df_clean.to_csv(index=False).encode("utf-8")
-    st.download_button("Download CSV", cleaned_csv, "cleaned_data.csv", "text/csv")
-
-st.write("End of template. Modify each section to build your complete healthcare analytics workflow.")
