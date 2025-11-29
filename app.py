@@ -41,6 +41,7 @@ df_clean.drop_duplicates(inplace=True)
 df_clean.fillna(method="ffill", inplace=True)
 df_clean.fillna(method="bfill", inplace=True)
 df_clean.isnull().sum()
+df_clean.shape
 # -------------------------------------------------
 
 st.write("Cleaned dataset:")
