@@ -32,7 +32,7 @@ st.header("2. Basic Data Cleaning")
 
 st.write("This section contains a minimal cleaning workflow. Modify it as needed.")
 #df_clean = df.isnull().sum()
-df_clean.columns.values.tolist()
+#df_clean.columns.values.tolist()
 #df_clean = df.copy()
 missing_data = df.isnull()
 missing_data.columns.values.tolist()
