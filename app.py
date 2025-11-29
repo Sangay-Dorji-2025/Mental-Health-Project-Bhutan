@@ -45,8 +45,8 @@ df_clean.fillna(method="bfill", inplace=True)
 # Convert numeric-looking object columns to float
 cols_to_convert = ['Numeric', 'Low', 'High']
 # Convert columns to float, coercing errors to NaN
-for col in cols_to_convert:
-    df_clean[col] = pd.to_numeric(df_clean[col], errors='coerce')
+#for col in cols_to_convert:
+ #   df_clean[col] = pd.to_numeric(df_clean[col], errors='coerce')
 # -------------------------------------------------
 
 st.write("Cleaned dataset:")
