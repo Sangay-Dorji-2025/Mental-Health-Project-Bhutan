@@ -29,7 +29,7 @@ else:
 # SECTION 2: BASIC DATA CLEANING (EDIT AS NEEDED)
 # ----------------------------------------------------
 st.header("2. Basic Data Cleaning")
-missing_data2 = df.notnull()
+missing_data = df.notnull()
 st.write("This section contains a minimal cleaning workflow. Modify it as needed.")
 
 df_clean = df.copy()
@@ -37,13 +37,13 @@ df_clean = df.copy()
 # Placeholder: user will customize cleaning steps
 # -------------------------------------------------
 # Example steps (comment out or replace as needed)
-df_clean.drop_duplicates(inplace=True)
-df_clean.fillna(method="ffill", inplace=True)
-df_clean.fillna(method="bfill", inplace=True)
+#df_clean.drop_duplicates(inplace=True)
+#df_clean.fillna(method="ffill", inplace=True)
+#df_clean.fillna(method="bfill", inplace=True)
 # -------------------------------------------------
 
-#st.write("Cleaned dataset:")
-#st.dataframe(df_clean.head())
+st.write("Cleaned dataset:")
+st.dataframe(df_clean.head())
 
 # ----------------------------------------------------
 # SECTION 3: EXPLORATORY DATA ANALYSIS (EDIT AS NEEDED)
