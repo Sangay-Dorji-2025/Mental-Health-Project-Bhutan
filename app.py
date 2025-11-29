@@ -48,7 +48,7 @@ for col in cols_to_convert_float:
    df_clean[col] = pd.to_numeric(df_clean[col], errors='coerce')
 # Convert numeric-looking object columns to Int coercing errors to NaN    
 cols_toconvert_int = ['YEAR', 'STARTYEAR', 'ENDYEAR']   
-for col in cols_to_convert_Int:
+for col in cols_to_convert_int:
    df_clean[col] = pd.to_numeric(df_clean[col], errors='coerce')
 # -------------------------------------------------
 
