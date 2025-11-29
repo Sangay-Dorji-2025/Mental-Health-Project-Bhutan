@@ -45,7 +45,7 @@ df_clean.fillna(method="bfill", inplace=True)
 # Convert numeric-looking object columns to float and integer coercing errors to NaN
 cols_to_convert = {
     'float': ['Numeric', 'Low', 'High'],
-    'int': ['YEAR(DISPLAY)', 'STARTYEAR', 'ENDYEAR']
+    'int': ['YEAR (DISPLAY)', 'STARTYEAR', 'ENDYEAR']
 }
 for dtype, cols in cols_to_convert.items():
     for col in cols:
