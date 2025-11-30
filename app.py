@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib
-matplotlib.use("Agg")  # ensures no GUI backend needed
+matplotlib.use("Agg")   # Headless backend for Streamlit / server
 import matplotlib.pyplot as plt
 # import joblib 
 import os
