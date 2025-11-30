@@ -72,9 +72,9 @@ st.header("3. Exploratory Data Analysis (EDA)")
 
 st.write("Add your own analyses here. Below are optional placeholders.")
 
-exclude_cols = ['YEAR (DISPLAY)', 'STARTYEAR', 'ENDYEAR']
-numeric_cols = df_clean.select_dtypes(include='number').columns
-numeric_cols = [col for col in numeric_cols if col not in exclude_cols]
+#exclude_cols = ['YEAR (DISPLAY)', 'STARTYEAR', 'ENDYEAR']
+#numeric_cols = df_clean.select_dtypes(include='number').columns
+#numeric_cols = [col for col in numeric_cols if col not in exclude_cols]
 if st.checkbox("Show summary statistics"):
     st.write(df_clean[numeric_cols].describe())
 
@@ -85,13 +85,6 @@ if st.checkbox("Show column info"):
     }))
 
 # Optional chart
-#exclude_cols = ['YEAR (DISPLAY)', 'STARTYEAR', 'ENDYEAR']
-
-# Numeric columns excluding the year columns
-#numeric_cols = [
-   # col for col in df_clean.select_dtypes(include='number').columns
-   # if col not in exclude_cols
-#]
 # Histogram section
 if st.checkbox("Show sample histogram"):
     if numeric_cols:
