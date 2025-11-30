@@ -98,9 +98,11 @@ if st.checkbox("Show sample histogram"):
     numeric_cols = df_clean.select_dtypes(include=['number']).columns.tolist()
     if numeric_cols:
         col = st.selectbox("Choose a numeric column", numeric_cols)
+        bins = st.slider("Number of bins", 5, 100, 30)
 
-        fig, ax = plt.subplots()
-        ax.hist(df_clean[col], bins=30)
+        fig, ax = plt.subplots(figsize=(8, 5))
+        data = df_clean[col].dropna()
+        ax.hist(data, bins=bins)
         ax.set_xlabel(col)
         ax.set_ylabel("Frequency")
         ax.set_title(f"Histogram of {col}")
