@@ -74,7 +74,7 @@ st.write("Add your own analyses here. Below are optional placeholders.")
 
 #exclude_cols = ['YEAR (DISPLAY)', 'STARTYEAR', 'ENDYEAR']
 numeric_cols = df_clean.select_dtypes(include='number').columns
-#numeric_cols = [col for col in numeric_cols if col not in exclude_cols]
+numeric_cols = [col for col in numeric_cols if col not in exclude_cols]
 if st.checkbox("Show summary statistics"):
     st.write(df_clean[numeric_cols].describe())
 
