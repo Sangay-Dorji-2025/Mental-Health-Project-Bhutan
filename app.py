@@ -93,24 +93,10 @@ numeric_cols = [
     if col not in exclude_cols
 ]
 # Histogram section
-#if st.checkbox("Show sample histogram"):
-  #  if numeric_cols:
-  #      col = st.selectbox("Choose a numeric column", numeric_cols)
-  #      st.bar_chart(df_clean[col])
- #   else:
- #       st.warning("No numeric columns available.")
 if st.checkbox("Show sample histogram"):
-    numeric_cols = df_clean.select_dtypes(include=['number']).columns.tolist()
     if numeric_cols:
         col = st.selectbox("Choose a numeric column", numeric_cols)
-
-        fig, ax = plt.subplots()
-        ax.hist(df_clean[col], bins=30)
-        ax.set_xlabel(col)
-        ax.set_ylabel("Frequency")
-        ax.set_title(f"Histogram of {col}")
-
-        st.pyplot(fig)
+        st.bar_chart(df_clean[col])
     else:
         st.warning("No numeric columns available.")
 
