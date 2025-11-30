@@ -2,7 +2,7 @@ streamlit
 pandas
 numpy
 scikit-learn
-matplotlib==3.10.7
+# matplotlib==3.10.7
 seaborn
 joblib
 pyyaml
