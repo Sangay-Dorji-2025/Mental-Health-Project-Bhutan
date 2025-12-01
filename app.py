@@ -87,13 +87,6 @@ if st.checkbox("Show column info"):
 
 # Optional chart
 # Histogram section
-#if st.checkbox("Show sample histogram"):
-   # numeric_cols = df_clean.select_dtypes(include=[np.number]).columns.tolist()
-  #  if numeric_cols:
-    #    col = st.selectbox("Choose a numeric column", numeric_cols)
-    #    st.bar_chart(df_clean[col])
- #   else:
-   #     st.warning("No numeric columns available.")
 if st.checkbox("Show sample histogram"):
     #numeric_cols = df_clean.select_dtypes(include=['number']).columns.tolist()
     if numeric_cols:
@@ -103,7 +96,7 @@ if st.checkbox("Show sample histogram"):
         fig, ax = plt.subplots(figsize=(8, 5))
         data = df_clean[col].dropna()
         ax.hist(data, bins=bins)
-        ax.set_xlabel(col)
+        ax.set_xlabel(f"{YEAR (DISPLAY)})
         ax.set_ylabel(f"Values")
         ax.set_title(f"Histogram of {col}")
         st.pyplot(fig)
