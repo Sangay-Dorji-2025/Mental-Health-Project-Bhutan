@@ -88,29 +88,41 @@ if st.checkbox("Show column info"):
 
 # Optional chart
 # Bar chart
-if st.checkbox("Show summary statistics"):
-    x = np.arange(len(df_clean['YEAR (DISPLAY)']))
-    width = 0.25
+st.subheader("Interactive Grouped Bar Chart")
 
-    fig, ax = plt.subplots(figsize=(10,6))
-    
-    # Grouped bars
-    ax.bar(x - width, df_clean['Low'], width, label='Low')
-    ax.bar(x, df_clean['Numeric'], width, label='Numeric')
-    ax.bar(x + width, df_clean['High'], width, label='High')
+# Checkbox to show chart
+if st.checkbox("Show grouped bar chart"):
 
-    # X-axis labels
-    ax.set_xticks(x)
-    ax.set_xticklabels(df_clean['YEAR (DISPLAY)'])
-    
-    # Labels and title
-    ax.set_xlabel('Year')
-    ax.set_ylabel('Value')
-    ax.set_title('Grouped Bar Chart: Low, Numeric, High')
-    ax.legend()
+    # Allow user to select which columns to display
+    options = st.multiselect(
+        "Select columns to display",
+        options=['Low', 'Numeric', 'High'],
+        default=['Low', 'Numeric', 'High']
+    )
 
-    # Show chart inside checkbox
-    st.pyplot(fig)
+    if options:  # if at least one column selected
+        x = np.arange(len(df_clean['YEAR (DISPLAY)']))
+        width = 0.8 / len(options)  # adjust width based on number of selected columns
+
+        fig, ax = plt.subplots(figsize=(12,6))
+
+        # Plot bars dynamically
+        for i, col in enumerate(options):
+            ax.bar(x + (i - len(options)/2) * width + width/2, df_clean[col], width, label=col)
+
+        # X-axis labels
+        ax.set_xticks(x)
+        ax.set_xticklabels(df_clean['YEAR (DISPLAY)'])
+
+        # Labels and title
+        ax.set_xlabel('Year')
+        ax.set_ylabel('Value')
+        ax.set_title('Grouped Bar Chart')
+        ax.legend()
+
+        st.pyplot(fig)
+    else:
+        st.warning("Please select at least one column to display.")
 # ----------------------------------------------------
 # SECTION 4: FEATURE ENGINEERING (USER FILLS IN)
 # ----------------------------------------------------
