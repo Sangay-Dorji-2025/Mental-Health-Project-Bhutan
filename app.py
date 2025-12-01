@@ -105,7 +105,7 @@ if st.checkbox("Show sample histogram"):
         ax.hist(data, bins=bins)
         ax.set_xlabel(Index)
         ax.set_ylabel("Values")
-        ax.set_title(f"Histogram of {Bhutan Helat care}")
+        ax.set_title(f"Histogram of Bhutan Helat care")
 
        # st.pyplot(fig)
         st.plt.show()
