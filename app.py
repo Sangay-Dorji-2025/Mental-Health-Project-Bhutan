@@ -88,27 +88,39 @@ if st.checkbox("Show column info"):
 
 # Optional chart
 # Scatter plot
-if st.checkbox("Show scatter matrix with highlights"):
+if st.checkbox("Show enhanced scatter matrix"):
     selected_cols = st.multiselect("Choose numeric columns", numeric_cols, default=numeric_cols)
 
     if selected_cols:
         # Create pairplot
-        pair_plot = sns.pairplot(df_clean[selected_cols], diag_kind='kde', plot_kws={'s': 80, 'alpha':0.7})
+        pair_plot = sns.pairplot(df_clean[selected_cols], diag_kind='kde', plot_kws={'s': 80, 'alpha':0.5})
 
-        # Highlight current year, low, and high for each column
-        current_year = df_clean["YEAR (DISPLAY)"].max()  # Change as needed
-        for i, col in enumerate(selected_cols):
-            low_val = df_clean[col].min()
-            high_val = df_clean[col].max()
-            current_val = df_clean.loc[df_clean["YEAR (DISPLAY)"] == current_year, col].values[0]
+        # Highlight key points
+        current_year = df_clean["YEAR (DISPLAY)"].max()  # or select dynamically
+        for i, x_col in enumerate(selected_cols):
+            for j, y_col in enumerate(selected_cols):
+                if i != j:  # off-diagonal scatter plots
+                    ax = pair_plot.axes[i, j]
 
-            # Annotate on diagonal (histogram/KDE)
-            ax = pair_plot.diag_axes[i]
-            ax.axvline(low_val, color='green', linestyle='--', label=f"Low: {low_val}")
-            ax.axvline(high_val, color='red', linestyle='--', label=f"High: {high_val}")
-            ax.axvline(current_val, color='orange', linestyle='-', label=f"{current_year} Value: {current_val}")
-            if i == 0:  # show legend only once
-                ax.legend()
+                    # Low values
+                    low_x = df_clean[x_col].min()
+                    low_y = df_clean[y_col].min()
+                    ax.scatter(low_x, low_y, color='green', s=120, marker='D', label='Low')
+
+                    # High values
+                    high_x = df_clean[x_col].max()
+                    high_y = df_clean[y_col].max()
+                    ax.scatter(high_x, high_y, color='red', s=120, marker='D', label='High')
+
+                    # Current year values
+                    current_x = df_clean.loc[df_clean["YEAR (DISPLAY)"]==current_year, x_col].values[0]
+                    current_y = df_clean.loc[df_clean["YEAR (DISPLAY)"]==current_year, y_col].values[0]
+                    ax.scatter(current_x, current_y, color='orange', s=150, marker='o', label=f"{current_year}")
+
+        # Only show one legend
+        handles, labels = ax.get_legend_handles_labels()
+        by_label = dict(zip(labels, handles))
+        pair_plot.fig.legend(by_label.values(), by_label.keys(), loc='upper right')
 
         st.pyplot(pair_plot)
     else:
