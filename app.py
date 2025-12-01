@@ -88,37 +88,17 @@ if st.checkbox("Show column info"):
 
 # Optional chart
 # Scatter plot
-st.subheader("Low–High Range Chart")
+fig, ax = plt.subplots(figsize=(8,5))
+cols = ["Numeric", "Low", "High"]
 
-# Check if required columns exist
-required_cols = ["YEAR (DISPLAY)", "Numeric", "Low", "High"]
+for col in cols:
+    ax.hist(df_clean[col].dropna(), bins=30, alpha=0.5, label=col)
 
-if all(col in df_clean.columns for col in required_cols):
-
-    # Select columns
-    year = df_clean["YEAR (DISPLAY)"]
-    value = df_clean["Numeric"]
-    low = df_clean["Low"]
-    high = df_clean["High"]
-
-    fig, ax = plt.subplots(figsize=(10, 6))
-
-    # Shaded low-high range
-    ax.fill_between(year, low, high, alpha=0.3, label="Low–High Range")
-
-    # Main line
-    ax.plot(year, value, marker='o', linewidth=2, label="Value")
-
-    # Labels
-    ax.set_xlabel("Year")
-    ax.set_ylabel("Value")
-    ax.set_title("Yearly Value with Low–High Range")
-    ax.legend()
-
-    st.pyplot(fig)
-
-else:
-    st.error("Required columns missing: Year, Numeric value, Low, High")
+ax.set_xlabel("Value")
+ax.set_ylabel("Frequency")
+ax.set_title("Overlapping Histograms")
+ax.legend()
+st.pyplot(fig)
 # ----------------------------------------------------
 # SECTION 4: FEATURE ENGINEERING (USER FILLS IN)
 # ----------------------------------------------------
