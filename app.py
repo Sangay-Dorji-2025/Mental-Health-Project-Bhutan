@@ -88,20 +88,19 @@ if st.checkbox("Show column info"):
 
 # Optional chart
 # Line chart
-st.title("Hospital Data Chart")
-# Plotting
 fig, ax = plt.subplots(figsize=(8,5))
 ax.plot(df['YEAR (DISPLAY)'], df['Numeric'], marker='o', label='Numeric')
 ax.plot(df['YEAR (DISPLAY)'], df['High'], marker='o', label='High')
 ax.plot(df['YEAR (DISPLAY)'], df['Low'], marker='o', label='Low')
 
-ax.set_xlabel("YEAR (DISPLAY)")
+ax.set_xlabel("Year")
 ax.set_ylabel("Values")
 ax.set_title("Hospital Data Over Years")
 ax.legend()
 ax.grid(True)
 
 st.pyplot(fig)
+plt.close(fig)  # prevents overlapping plots if rerun
 # ----------------------------------------------------
 # SECTION 4: FEATURE ENGINEERING (USER FILLS IN)
 # ----------------------------------------------------
