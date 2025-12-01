@@ -88,21 +88,21 @@ if st.checkbox("Show column info"):
 
 # Optional chart
 # Bar chart
-st.write("Group Bar Chart.")
-x = np.arange(len(df_clean['YEAR (DISPLAY)']))
-width = 0.25
+if st.checkbox("Show summary statistics"):
+    x = np.arange(len(df_clean['YEAR (DISPLAY)']))
+    width = 0.25
 
-fig, ax = plt.subplots(figsize=(10,6))
-ax.bar(x - width, df_clean['Low'], width, label='Low')
-ax.bar(x, df_clean['Numeric'], width, label='Numeric')
-ax.bar(x + width, df_clean['High'], width, label='High')
+    fig, ax = plt.subplots(figsize=(10,6))
+    ax.bar(x - width, df_clean['Low'], width, label='Low')
+    ax.bar(x, df_clean['Numeric'], width, label='Numeric')
+    ax.bar(x + width, df_clean['High'], width, label='High')
 
-ax.set_xticks(x)
-ax.set_xticklabels(df_clean['YEAR (DISPLAY)'])
-ax.set_xlabel('YEAR (DISPLAY)')
-ax.set_ylabel('Value')
-ax.set_title('Grouped Bar Chart')
-ax.legend()
+    ax.set_xticks(x)
+    ax.set_xticklabels(df_clean['YEAR (DISPLAY)'])
+    ax.set_xlabel('YEAR (DISPLAY)')
+    ax.set_ylabel('Value')
+    ax.set_title('Grouped Bar Chart')
+    ax.legend()
 
 st.pyplot(fig)
 # ----------------------------------------------------
