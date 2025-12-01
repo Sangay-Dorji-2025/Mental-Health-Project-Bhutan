@@ -108,7 +108,7 @@ if st.checkbox("Show sample histogram"):
         ax.set_title(f"Histogram of {col}")
 
        st.pyplot(fig)
-       st.plt.show()
+       #st.plt.show()
     else:
         st.warning("No numeric columns available.")
 
