@@ -89,7 +89,7 @@ if st.checkbox("Show column info"):
 # Optional chart
 # Bar chart
 
-   st.subheader("Grouped Bar Chart")
+st.subheader("Grouped Bar Chart")
 
 # Melt dataframe for Seaborn plotting
 df_melt = df_clean.melt(id_vars='YEAR (DISPLAY)', value_vars=['Low', 'Numeric', 'High'], 
