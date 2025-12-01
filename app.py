@@ -5,6 +5,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 # import joblib 
+import seaborn as sns
 import os
 st.set_page_config(page_title="Bhutan Healthcare Analytics", layout="wide")
 
