@@ -102,7 +102,7 @@ if st.checkbox("Show enhanced scatter matrix"):
         "Select year to highlight",
         options=years,
         index=len(years)-1  # default to the latest year
-        )
+     )
 
         for i, x_col in enumerate(selected_cols):
             for j, y_col in enumerate(selected_cols):
