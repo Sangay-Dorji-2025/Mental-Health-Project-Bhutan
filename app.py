@@ -88,8 +88,6 @@ if st.checkbox("Show column info"):
 
 # Optional chart
 # Bar chart
-st.subheader("Interactive Grouped Bar Chart")
-
 # Checkbox to show chart
 if st.checkbox("Show grouped bar chart"):
 
