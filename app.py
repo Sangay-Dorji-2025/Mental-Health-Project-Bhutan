@@ -97,8 +97,8 @@ if st.checkbox("Show sample histogram"):
         data = df_clean[col].dropna()
         ax.hist(data, bins=bins)
         ax.set_xlabel("YEAR (DISPLAY)")
-        ax.set_ylabel(f"Values")
-        ax.set_title(f"Histogram of {col}")
+        ax.set_ylabel(f"{col}")
+        ax.set_title(f"Histogram of Bhutan Health Care")
         st.pyplot(fig)
     else:
         st.warning("No numeric columns available.")
