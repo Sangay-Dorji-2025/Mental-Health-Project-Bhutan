@@ -114,12 +114,12 @@ for i, x_col in enumerate(selected_cols):
 
              # High values
             high_x = df_clean[x_col].max()
-             high_y = df_clean[y_col].max()
+            high_y = df_clean[y_col].max()
             ax.scatter(high_x, high_y, color='red', s=120, marker='D', label='High')
 
              # Current year values
             current_x = df_clean.loc[df_clean["YEAR (DISPLAY)"]==current_year, x_col].values[0]
-             current_y = df_clean.loc[df_clean["YEAR (DISPLAY)"]==current_year, y_col].values[0]
+            current_y = df_clean.loc[df_clean["YEAR (DISPLAY)"]==current_year, y_col].values[0]
             ax.scatter(current_x, current_y, color='orange', s=150, marker='o', label=f"{current_year}")
 
         # Only show one legend
