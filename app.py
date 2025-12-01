@@ -77,7 +77,7 @@ exclude_cols = ['STARTYEAR', 'ENDYEAR']
 numeric_cols = df_clean.select_dtypes(include=[np.number]).columns.tolist()
 numeric_cols = [col for col in numeric_cols if col not in exclude_cols]
 if st.checkbox("Show summary statistics"):
-    st.write(df_clean.describe())
+    st.write(df_clean[numeric_cols].describe())
 
 if st.checkbox("Show column info"):
     st.write(pd.DataFrame({
