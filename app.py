@@ -88,11 +88,29 @@ if st.checkbox("Show column info"):
 
 # Optional chart
 # Scatter plot
-if st.checkbox("Show scatter matrix"):
+if st.checkbox("Show scatter matrix with highlights"):
     selected_cols = st.multiselect("Choose numeric columns", numeric_cols, default=numeric_cols)
+
     if selected_cols:
-        fig = sns.pairplot(df_clean[selected_cols], diag_kind='kde', plot_kws={'s': 80, 'alpha':0.7})
-        st.pyplot(fig)
+        # Create pairplot
+        pair_plot = sns.pairplot(df_clean[selected_cols], diag_kind='kde', plot_kws={'s': 80, 'alpha':0.7})
+
+        # Highlight current year, low, and high for each column
+        current_year = df_clean["YEAR (DISPLAY)"].max()  # Change as needed
+        for i, col in enumerate(selected_cols):
+            low_val = df_clean[col].min()
+            high_val = df_clean[col].max()
+            current_val = df_clean.loc[df_clean["YEAR (DISPLAY)"] == current_year, col].values[0]
+
+            # Annotate on diagonal (histogram/KDE)
+            ax = pair_plot.diag_axes[i]
+            ax.axvline(low_val, color='green', linestyle='--', label=f"Low: {low_val}")
+            ax.axvline(high_val, color='red', linestyle='--', label=f"High: {high_val}")
+            ax.axvline(current_val, color='orange', linestyle='-', label=f"{current_year} Value: {current_val}")
+            if i == 0:  # show legend only once
+                ax.legend()
+
+        st.pyplot(pair_plot)
     else:
         st.warning("Please select at least one numeric column.")
 # ----------------------------------------------------
