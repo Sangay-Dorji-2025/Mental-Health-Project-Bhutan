@@ -89,7 +89,7 @@ if st.checkbox("Show column info"):
 # Optional chart
 # Bar chart
 # Checkbox to show chart
-if st.checkbox("Show grouped bar chart"):
+if st.checkbox("Show interactive grouped bar chart"):
 
     # Allow user to select which columns to display
     options = st.multiselect(
@@ -98,27 +98,30 @@ if st.checkbox("Show grouped bar chart"):
         default=['Low', 'Numeric', 'High']
     )
 
-    if options:  # if at least one column selected
-        x = np.arange(len(df_clean['YEAR (DISPLAY)']))
-        width = 0.8 / len(options)  # adjust width based on number of selected columns
+    if options:
+        fig = go.Figure()
 
-        fig, ax = plt.subplots(figsize=(12,6))
+        # Add each selected column as a separate bar trace
+        for col in options:
+            fig.add_trace(go.Bar(
+                x=df_clean['YEAR (DISPLAY)'],
+                y=df_clean[col],
+                name=col,
+                text=df_clean[col],
+                textposition='auto'
+            ))
 
-        # Plot bars dynamically
-        for i, col in enumerate(options):
-            ax.bar(x + (i - len(options)/2) * width + width/2, df_clean[col], width, label=col)
+        # Update layout for grouped bars
+        fig.update_layout(
+            barmode='group',
+            xaxis_title='Year',
+            yaxis_title='Value',
+            title='Grouped Bar Chart: Low, Numeric, High',
+            legend_title='Columns'
+        )
 
-        # X-axis labels
-        ax.set_xticks(x)
-        ax.set_xticklabels(df_clean['YEAR (DISPLAY)'])
+        st.plotly_chart(fig, use_container_width=True)
 
-        # Labels and title
-        ax.set_xlabel('Year')
-        ax.set_ylabel('Value')
-        ax.set_title('Grouped Bar Chart')
-        ax.legend()
-
-        st.pyplot(fig)
     else:
         st.warning("Please select at least one column to display.")
 # ----------------------------------------------------
