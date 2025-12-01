@@ -6,7 +6,6 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 # import joblib 
 import seaborn as sns
-import plotly.graph_objects as go
 import os
 st.set_page_config(page_title="Bhutan Healthcare Analytics", layout="wide")
 
