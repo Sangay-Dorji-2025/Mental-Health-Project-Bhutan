@@ -87,35 +87,18 @@ if st.checkbox("Show column info"):
     }))
 
 # Optional chart
-# Bar chart
-st.subheader("Grouped Bar Chart (Automatic Numeric Columns)")
+# Line chart
+plt.figure(figsize=(8,5))
+plt.plot(df['YEAR (DISPLAY)'], df['Numeric'], marker='o', label='Numeric')
+plt.plot(df['YEAR (DISPLAY'], df['High'], marker='o', label='High')
+plt.plot(df['YEAR (DISPLAY'], df['Low'], marker='o', label='Low')
 
-# Automatically detect numeric columns excluding YEAR
-numeric_cols = df_clean.select_dtypes(include='number').columns.tolist()
-id_col = 'YEAR (DISPLAY)'
-
-# Make sure id_col exists
-if id_col in df_clean.columns and numeric_cols:
-
-    # Melt the dataframe automatically
-    df_melt = df_clean.melt(
-        id_vars=id_col,
-        value_vars=numeric_cols,
-        var_name='Type',
-        value_name='Value'
-    )
-
-    fig, ax = plt.subplots(figsize=(12,6))
-    sns.barplot(x=id_col, y='Value', hue='Type', data=df_melt, palette='Set2', ax=ax)
-
-    ax.set_xlabel("Year")
-    ax.set_ylabel("Value")
-    ax.set_title("Grouped Bar Chart")
-    sns.despine()
-    st.pyplot(fig)
-
-else:
-    st.warning(f"Check your dataframe. Ensure '{id_col}' exists and numeric columns are present.")
+plt.title('Hospital Data Over Years')
+plt.xlabel('YEAR (DISPLAY')
+plt.ylabel('Values')
+plt.legend()
+plt.grid(True)
+plt.show()
 # ----------------------------------------------------
 # SECTION 4: FEATURE ENGINEERING (USER FILLS IN)
 # ----------------------------------------------------
