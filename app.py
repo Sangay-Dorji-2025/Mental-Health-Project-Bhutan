@@ -43,7 +43,6 @@ df_clean = df.copy()
 # Example steps (comment out or replace as needed)
 # Remove the first row of DataFrame seems like its not necessary
 df_clean = df_clean.drop(df_clean.index[0])
-df_clean = df_clean.sort_values(by="YEAR (DISPLAY)", ascending=True)
 # Remove duplicates
 df_clean.drop_duplicates(inplace=True)
 # Handle NaN: forward fill then backward fill
@@ -89,6 +88,7 @@ if st.checkbox("Show column info"):
 
 # Optional chart
 # Scatter plot
+df_clean = df_clean.sort_values(by="YEAR (DISPLAY)", ascending=True)
 if st.checkbox("Show enhanced scatter matrix"):
     selected_cols = st.multiselect("Choose numeric columns", numeric_cols, default=numeric_cols)
 
