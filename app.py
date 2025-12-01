@@ -104,25 +104,23 @@ if st.checkbox("Show enhanced scatter matrix"):
         index=len(years)-1  # default to the latest year
      )
 
-        for i, x_col in enumerate(selected_cols):
-            for j, y_col in enumerate(selected_cols):
-                if i != j:  # off-diagonal scatter plots
-                    ax = pair_plot.axes[i, j]
+for i, x_col in enumerate(selected_cols):
+    for j, y_col in enumerate(selected_cols):
+        if i != j:  # off-diagonal scatter plots
+            ax = pair_plot.axes[i, j] # Low values
+            low_x = df_clean[x_col].min()
+            low_y = df_clean[y_col].min()
+            ax.scatter(low_x, low_y, color='green', s=120, marker='D', label='Low')
 
-                    # Low values
-                    low_x = df_clean[x_col].min()
-                    low_y = df_clean[y_col].min()
-                    ax.scatter(low_x, low_y, color='green', s=120, marker='D', label='Low')
+             # High values
+            high_x = df_clean[x_col].max()
+             high_y = df_clean[y_col].max()
+            ax.scatter(high_x, high_y, color='red', s=120, marker='D', label='High')
 
-                    # High values
-                    high_x = df_clean[x_col].max()
-                    high_y = df_clean[y_col].max()
-                    ax.scatter(high_x, high_y, color='red', s=120, marker='D', label='High')
-
-                    # Current year values
-                    current_x = df_clean.loc[df_clean["YEAR (DISPLAY)"]==current_year, x_col].values[0]
-                    current_y = df_clean.loc[df_clean["YEAR (DISPLAY)"]==current_year, y_col].values[0]
-                    ax.scatter(current_x, current_y, color='orange', s=150, marker='o', label=f"{current_year}")
+             # Current year values
+            current_x = df_clean.loc[df_clean["YEAR (DISPLAY)"]==current_year, x_col].values[0]
+             current_y = df_clean.loc[df_clean["YEAR (DISPLAY)"]==current_year, y_col].values[0]
+            ax.scatter(current_x, current_y, color='orange', s=150, marker='o', label=f"{current_year}")
 
         # Only show one legend
         handles, labels = ax.get_legend_handles_labels()
