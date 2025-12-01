@@ -104,7 +104,7 @@ if st.checkbox("Show sample histogram"):
         data = df_clean[col].dropna()
         ax.hist(data, bins=bins)
         ax.set_xlabel(col)
-        ax.set_ylabel(f"Values ({YEAR (DISPLAY)})")
+        ax.set_ylabel(f"Values")
         ax.set_title(f"Histogram of {col}")
         st.pyplot(fig)
     else:
