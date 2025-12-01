@@ -99,9 +99,12 @@ if st.checkbox("Show enhanced scatter matrix"):
         # Highlight key points
         #current_year = df_clean["YEAR (DISPLAY)"].max()  # or select dynamically
         current_year = st.selectbox(
+   years = sorted(df_clean["YEAR (DISPLAY)"].unique())  # ascending order
+current_year = st.selectbox(
     "Select year to highlight",
-    options=df_clean["YEAR (DISPLAY)"].unique(),
-    index=len(df_clean["YEAR (DISPLAY)"].unique())-1  # default to last year
+    options=years,
+    index=len(years)-1  # default to the latest year
+)
 )
         for i, x_col in enumerate(selected_cols):
             for j, y_col in enumerate(selected_cols):
