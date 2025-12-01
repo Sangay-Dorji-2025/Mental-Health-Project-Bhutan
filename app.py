@@ -96,7 +96,12 @@ if st.checkbox("Show enhanced scatter matrix"):
         pair_plot = sns.pairplot(df_clean[selected_cols], diag_kind='kde', plot_kws={'s': 80, 'alpha':0.5})
 
         # Highlight key points
-        current_year = df_clean["YEAR (DISPLAY)"].max()  # or select dynamically
+        #current_year = df_clean["YEAR (DISPLAY)"].max()  # or select dynamically
+        current_year = st.selectbox(
+    "Select year to highlight",
+    options=df_clean["YEAR (DISPLAY)"].unique(),
+    index=len(df_clean["YEAR (DISPLAY)"].unique())-1  # default to last year
+)
         for i, x_col in enumerate(selected_cols):
             for j, y_col in enumerate(selected_cols):
                 if i != j:  # off-diagonal scatter plots
