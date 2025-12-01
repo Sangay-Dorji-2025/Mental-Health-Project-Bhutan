@@ -43,6 +43,7 @@ df_clean = df.copy()
 # Example steps (comment out or replace as needed)
 # Remove the first row of DataFrame seems like its not necessary
 df_clean = df_clean.drop(df_clean.index[0])
+df_clean = df_clean.sort_values(by="YEAR (DISPLAY)", ascending=True)
 # Remove duplicates
 df_clean.drop_duplicates(inplace=True)
 # Handle NaN: forward fill then backward fill
