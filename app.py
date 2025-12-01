@@ -88,70 +88,21 @@ if st.checkbox("Show column info"):
 
 # Optional chart
 # Bar chart
-st.title("Hospital Data Dashboard (Matplotlib Only)")
 
-# Sample columns: YEAR (DISPLAY), Numeric, Low, High
-required_cols = ["YEAR (DISPLAY)", "Numeric", "Low", "High"]
+   st.subheader("Grouped Bar Chart")
 
-if all(col in df_clean.columns for col in required_cols):
+# Melt dataframe for Seaborn plotting
+df_melt = df_clean.melt(id_vars='YEAR (DISPLAY)', value_vars=['Low', 'Numeric', 'High'], 
+                        var_name='Type', value_name='Value')
 
-    chart_type = st.selectbox(
-        "Select chart type",
-        ["Line Chart", "Grouped Bar Chart", "Histogram"]
-    )
+fig, ax = plt.subplots(figsize=(12,6))
+sns.barplot(x='YEAR (DISPLAY)', y='Value', hue='Type', data=df_melt, palette='Set2', ax=ax)
 
-    if chart_type == "Line Chart":
-        st.subheader("Line Chart with Low–High Range")
-        fig, ax = plt.subplots(figsize=(10,5))
-        ax.plot(df_clean["YEAR (DISPLAY)"], df_clean["Numeric"], marker='o', label="Numeric")
-        ax.fill_between(df_clean["YEAR (DISPLAY)"], df_clean["Low"], df_clean["High"], alpha=0.3, label="Low–High Range")
-        ax.set_xlabel("Year")
-        ax.set_ylabel("Value")
-        ax.set_title("Line Chart: Numeric with Low–High Range")
-        ax.legend()
-        st.pyplot(fig)
-
-    elif chart_type == "Grouped Bar Chart":
-        st.subheader("Grouped Bar Chart (Matplotlib)")
-
-        options = st.multiselect(
-            "Select columns to display",
-            options=['Low', 'Numeric', 'High'],
-            default=['Low', 'Numeric', 'High']
-        )
-
-        if options:
-            x = np.arange(len(df_clean['YEAR (DISPLAY)']))
-            width = 0.8 / len(options)
-
-            fig, ax = plt.subplots(figsize=(12,6))
-            for i, col in enumerate(options):
-                ax.bar(x + (i - len(options)/2) * width + width/2, df_clean[col], width, label=col)
-
-            ax.set_xticks(x)
-            ax.set_xticklabels(df_clean['YEAR (DISPLAY)'])
-            ax.set_xlabel("Year")
-            ax.set_ylabel("Value")
-            ax.set_title("Grouped Bar Chart")
-            ax.legend()
-
-            st.pyplot(fig)
-        else:
-            st.warning("Please select at least one column to display.")
-
-    elif chart_type == "Histogram":
-        st.subheader("Histogram")
-        col = st.selectbox("Select column for histogram", ["Numeric", "Low", "High"])
-        bins = st.slider("Number of bins", 5, 100, 30)
-        data = df_clean[col].dropna()
-        fig, ax = plt.subplots(figsize=(8,5))
-        ax.hist(data, bins=bins, color='skyblue', edgecolor='black')
-        ax.set_xlabel(col)
-        ax.set_ylabel("Frequency")
-        ax.set_title(f"Histogram of {col}")
-        st.pyplot(fig)
-else:
-    st.error("Required columns missing: YEAR (DISPLAY), Numeric, Low, High")
+ax.set_xlabel("Year")
+ax.set_ylabel("Value")
+ax.set_title("Grouped Bar Chart: Low, Numeric, High")
+sns.despine()
+st.pyplot(fig)
 # ----------------------------------------------------
 # SECTION 4: FEATURE ENGINEERING (USER FILLS IN)
 # ----------------------------------------------------
