@@ -128,7 +128,7 @@ for i, x_col in enumerate(selected_cols):
             pair_plot.fig.legend(by_label.values(), by_label.keys(), loc='upper right')
 
             st.pyplot(pair_plot)
-       else:
+        else:
            st.warning("Please select at least one numeric column.")
 # ----------------------------------------------------
 # SECTION 4: FEATURE ENGINEERING (USER FILLS IN)
