@@ -103,9 +103,9 @@ if st.checkbox("Show sample histogram"):
         fig, ax = plt.subplots(figsize=(8, 5))
         data = df_clean[col].dropna()
         ax.hist(data, bins=bins)
-        ax.set_xlabel(Index)
+        ax.set_xlabel(col)
         ax.set_ylabel("Values")
-        ax.set_title(f"Histogram of Bhutan Helat care")
+        ax.set_title(f"Histogram of {col}")
 
        # st.pyplot(fig)
         st.plt.show()
