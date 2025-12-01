@@ -88,17 +88,20 @@ if st.checkbox("Show column info"):
 
 # Optional chart
 # Line chart
-plt.figure(figsize=(8,5))
-plt.plot(df['YEAR (DISPLAY)'], df['Numeric'], marker='o', label='Numeric')
-plt.plot(df['YEAR (DISPLAY'], df['High'], marker='o', label='High')
-plt.plot(df['YEAR (DISPLAY'], df['Low'], marker='o', label='Low')
+st.title("Hospital Data Chart")
+# Plotting
+fig, ax = plt.subplots(figsize=(8,5))
+ax.plot(df['YEAR (DISPLAY)'], df['Numeric'], marker='o', label='Numeric')
+ax.plot(df['YEAR (DISPLAY)'], df['High'], marker='o', label='High')
+ax.plot(df['YEAR (DISPLAY)'], df['Low'], marker='o', label='Low')
 
-plt.title('Hospital Data Over Years')
-plt.xlabel('YEAR (DISPLAY')
-plt.ylabel('Values')
-plt.legend()
-plt.grid(True)
-plt.show()
+ax.set_xlabel("YEAR (DISPLAY)")
+ax.set_ylabel("Values")
+ax.set_title("Hospital Data Over Years")
+ax.legend()
+ax.grid(True)
+
+st.pyplot(fig)
 # ----------------------------------------------------
 # SECTION 4: FEATURE ENGINEERING (USER FILLS IN)
 # ----------------------------------------------------
