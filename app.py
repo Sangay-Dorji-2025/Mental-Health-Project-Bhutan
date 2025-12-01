@@ -93,18 +93,24 @@ if st.checkbox("Show summary statistics"):
     width = 0.25
 
     fig, ax = plt.subplots(figsize=(10,6))
+    
+    # Grouped bars
     ax.bar(x - width, df_clean['Low'], width, label='Low')
     ax.bar(x, df_clean['Numeric'], width, label='Numeric')
     ax.bar(x + width, df_clean['High'], width, label='High')
 
+    # X-axis labels
     ax.set_xticks(x)
     ax.set_xticklabels(df_clean['YEAR (DISPLAY)'])
-    ax.set_xlabel('YEAR (DISPLAY)')
+    
+    # Labels and title
+    ax.set_xlabel('Year')
     ax.set_ylabel('Value')
-    ax.set_title('Grouped Bar Chart')
+    ax.set_title('Grouped Bar Chart: Low, Numeric, High')
     ax.legend()
 
-st.pyplot(fig)
+    # Show chart inside checkbox
+    st.pyplot(fig)
 # ----------------------------------------------------
 # SECTION 4: FEATURE ENGINEERING (USER FILLS IN)
 # ----------------------------------------------------
