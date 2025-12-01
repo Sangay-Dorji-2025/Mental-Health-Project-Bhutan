@@ -94,7 +94,7 @@ if st.checkbox("Show enhanced scatter matrix"):
 
     if selected_cols:
     # Create pairplot
-    pair_plot = sns.pairplot(df_clean[selected_cols], diag_kind='kde', plot_kws={'s': 80, 'alpha':0.5})
+        pair_plot = sns.pairplot(df_clean[selected_cols], diag_kind='kde', plot_kws={'s': 80, 'alpha':0.5})
 
     # Highlight key points
     years = sorted(df_clean["YEAR (DISPLAY)"].unique())  # make sure years are sorted
