@@ -88,25 +88,31 @@ if st.checkbox("Show column info"):
 
 # Optional chart
 # Scatter plot
-if st.checkbox("Show sample scatter plot"):
-    if numeric_cols:
-        x_col = st.selectbox("Choose X-axis numeric column", numeric_cols)
-        y_col = st.selectbox("Choose Y-axis numeric column", numeric_cols)
+if st.checkbox("Show scatter plot with highlights"):
+    x_col = "YEAR (DISPLAY)"
+    y_col = st.selectbox("Choose numeric column", numeric_cols)
 
-        fig, ax = plt.subplots(figsize=(8, 5))
-        x_data = df_clean[x_col].dropna()
-        y_data = df_clean[y_col].dropna()
+    fig, ax = plt.subplots(figsize=(8,5))
+    sns.scatterplot(x=x_col, y=y_col, data=df_clean, ax=ax, s=100)
 
-        # Make sure the lengths match
-        min_len = min(len(x_data), len(y_data))
-        ax.scatter(x_data[:min_len], y_data[:min_len], color='blue', alpha=0.7)
+    # Highlight min, max, and current year
+    low_value = df_clean[y_col].min()
+    high_value = df_clean[y_col].max()
+    current_year = df_clean[x_col].max()  # You can change to any year
+    current_value = df_clean.loc[df_clean[x_col]==current_year, y_col].values[0]
 
-        ax.set_xlabel(f"{x_col}")
-        ax.set_ylabel(f"{y_col}")
-        ax.set_title("Scatter Plot of Bhutan Health Care Data")
-        st.pyplot(fig)
-    else:
-        st.warning("No numeric columns available.")
+    ax.scatter(current_year, current_value, color='orange', s=150, label=f"{current_year} Value")
+    ax.scatter(df_clean[x_col][df_clean[y_col]==low_value],
+               low_value, color='green', s=150, label=f"Low: {low_value}")
+    ax.scatter(df_clean[x_col][df_clean[y_col]==high_value],
+               high_value, color='red', s=150, label=f"High: {high_value}")
+
+    ax.set_xlabel(x_col)
+    ax.set_ylabel(y_col)
+    ax.set_title("Scatter Plot of Bhutan Health Care Data")
+    ax.legend()
+
+    st.pyplot(fig)
 # ----------------------------------------------------
 # SECTION 4: FEATURE ENGINEERING (USER FILLS IN)
 # ----------------------------------------------------
