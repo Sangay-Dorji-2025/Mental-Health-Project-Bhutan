@@ -88,42 +88,70 @@ if st.checkbox("Show column info"):
 
 # Optional chart
 # Bar chart
-# Checkbox to show chart
-if st.checkbox("Show interactive grouped bar chart"):
+st.title("Hospital Data Dashboard (Matplotlib Only)")
 
-    # Allow user to select which columns to display
-    options = st.multiselect(
-        "Select columns to display",
-        options=['Low', 'Numeric', 'High'],
-        default=['Low', 'Numeric', 'High']
+# Sample columns: YEAR (DISPLAY), Numeric, Low, High
+required_cols = ["YEAR (DISPLAY)", "Numeric", "Low", "High"]
+
+if all(col in df_clean.columns for col in required_cols):
+
+    chart_type = st.selectbox(
+        "Select chart type",
+        ["Line Chart", "Grouped Bar Chart", "Histogram"]
     )
 
-    if options:
-        fig = go.Figure()
+    if chart_type == "Line Chart":
+        st.subheader("Line Chart with Low–High Range")
+        fig, ax = plt.subplots(figsize=(10,5))
+        ax.plot(df_clean["YEAR (DISPLAY)"], df_clean["Numeric"], marker='o', label="Numeric")
+        ax.fill_between(df_clean["YEAR (DISPLAY)"], df_clean["Low"], df_clean["High"], alpha=0.3, label="Low–High Range")
+        ax.set_xlabel("Year")
+        ax.set_ylabel("Value")
+        ax.set_title("Line Chart: Numeric with Low–High Range")
+        ax.legend()
+        st.pyplot(fig)
 
-        # Add each selected column as a separate bar trace
-        for col in options:
-            fig.add_trace(go.Bar(
-                x=df_clean['YEAR (DISPLAY)'],
-                y=df_clean[col],
-                name=col,
-                text=df_clean[col],
-                textposition='auto'
-            ))
+    elif chart_type == "Grouped Bar Chart":
+        st.subheader("Grouped Bar Chart (Matplotlib)")
 
-        # Update layout for grouped bars
-        fig.update_layout(
-            barmode='group',
-            xaxis_title='Year',
-            yaxis_title='Value',
-            title='Grouped Bar Chart: Low, Numeric, High',
-            legend_title='Columns'
+        options = st.multiselect(
+            "Select columns to display",
+            options=['Low', 'Numeric', 'High'],
+            default=['Low', 'Numeric', 'High']
         )
 
-        st.plotly_chart(fig, use_container_width=True)
+        if options:
+            x = np.arange(len(df_clean['YEAR (DISPLAY)']))
+            width = 0.8 / len(options)
 
-    else:
-        st.warning("Please select at least one column to display.")
+            fig, ax = plt.subplots(figsize=(12,6))
+            for i, col in enumerate(options):
+                ax.bar(x + (i - len(options)/2) * width + width/2, df_clean[col], width, label=col)
+
+            ax.set_xticks(x)
+            ax.set_xticklabels(df_clean['YEAR (DISPLAY)'])
+            ax.set_xlabel("Year")
+            ax.set_ylabel("Value")
+            ax.set_title("Grouped Bar Chart")
+            ax.legend()
+
+            st.pyplot(fig)
+        else:
+            st.warning("Please select at least one column to display.")
+
+    elif chart_type == "Histogram":
+        st.subheader("Histogram")
+        col = st.selectbox("Select column for histogram", ["Numeric", "Low", "High"])
+        bins = st.slider("Number of bins", 5, 100, 30)
+        data = df_clean[col].dropna()
+        fig, ax = plt.subplots(figsize=(8,5))
+        ax.hist(data, bins=bins, color='skyblue', edgecolor='black')
+        ax.set_xlabel(col)
+        ax.set_ylabel("Frequency")
+        ax.set_title(f"Histogram of {col}")
+        st.pyplot(fig)
+else:
+    st.error("Required columns missing: YEAR (DISPLAY), Numeric, Low, High")
 # ----------------------------------------------------
 # SECTION 4: FEATURE ENGINEERING (USER FILLS IN)
 # ----------------------------------------------------
