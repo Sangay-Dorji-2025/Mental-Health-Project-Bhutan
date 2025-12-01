@@ -86,23 +86,26 @@ if st.checkbox("Show column info"):
     }))
 
 # Optional chart
-# Histogram section
-if st.checkbox("Show sample histogram"):
-    #numeric_cols = df_clean.select_dtypes(include=['number']).columns.tolist()
+# Scatter plot
+if st.checkbox("Show sample scatter plot"):
     if numeric_cols:
-        col = st.selectbox("Choose a numeric column", numeric_cols)
-        bins = st.slider("Number of bins", 5, 100, 30)
+        x_col = st.selectbox("Choose X-axis numeric column", numeric_cols)
+        y_col = st.selectbox("Choose Y-axis numeric column", numeric_cols)
 
         fig, ax = plt.subplots(figsize=(8, 5))
-        data = df_clean[col].dropna()
-        ax.hist(data, bins=bins)
-        ax.set_xlabel("YEAR (DISPLAY)")
-        ax.set_ylabel(f"{col}")
-        ax.set_title(f"Histogram of Bhutan Health Care")
+        x_data = df_clean[x_col].dropna()
+        y_data = df_clean[y_col].dropna()
+
+        # Make sure the lengths match
+        min_len = min(len(x_data), len(y_data))
+        ax.scatter(x_data[:min_len], y_data[:min_len], color='blue', alpha=0.7)
+
+        ax.set_xlabel(f"{x_col}")
+        ax.set_ylabel(f"{y_col}")
+        ax.set_title("Scatter Plot of Bhutan Health Care Data")
         st.pyplot(fig)
     else:
         st.warning("No numeric columns available.")
-
 # ----------------------------------------------------
 # SECTION 4: FEATURE ENGINEERING (USER FILLS IN)
 # ----------------------------------------------------
