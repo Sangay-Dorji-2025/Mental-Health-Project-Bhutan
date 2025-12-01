@@ -93,7 +93,7 @@ ax.plot(df['YEAR (DISPLAY)'], df['Numeric'], marker='o', label='Numeric')
 ax.plot(df['YEAR (DISPLAY)'], df['High'], marker='o', label='High')
 ax.plot(df['YEAR (DISPLAY)'], df['Low'], marker='o', label='Low')
 
-ax.set_xlabel("Year")
+ax.set_xlabel("YEAR (DISPLAY)")
 ax.set_ylabel("Values")
 ax.set_title("Hospital Data Over Years")
 ax.legend()
