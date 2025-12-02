@@ -179,7 +179,7 @@ ax.axvline(mean_val + std_val, color='green', linestyle=':', linewidth=1.3, labe
 ax.axvline(mean_val - std_val, color='yellow', linestyle=':', linewidth=1.3, label=f"-1 Std: {mean_val-std_val:.2f}")
 
 # --- Labels ---
-ax.set_title("Histogram of Bhutan Health Care (Filtered by Year)", fontsize=14, fontweight="bold")
+ax.set_title("Histogram of Bhutan Health Care {YEAR (DISPLAY)}", fontsize=14, fontweight="bold")
 ax.set_xlabel(col_selected)
 ax.set_ylabel("Frequency")
 ax.grid(axis='y', linestyle='--', alpha=0.5)
