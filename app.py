@@ -149,10 +149,10 @@ ax.legend()
 st.pyplot(fig)
 
 # ---Summary Statistics ---
-st.subheader("📘 Summary Statistics")
+st.subheader("Summary Statistics")
 st.write(data.describe())
 
-# --- 9️⃣ Optional Boxplot ---
+# --- Optional Boxplot ---
 if st.checkbox("Show Boxplot"):
     fig2, ax2 = plt.subplots(figsize=(6,4))
     ax2.boxplot(data)
