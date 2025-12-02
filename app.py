@@ -86,7 +86,7 @@ if st.checkbox("Show column info"):
         "Dtype": df_clean.dtypes.astype(str)
     }))
 
-# Optional chart
+# Optional chart (Histogram)
 if st.checkbox("Show sample histogram"):
 
     # 1. Get numeric columns
@@ -105,7 +105,7 @@ if st.checkbox("Show sample histogram"):
         # 4. Detailed labels
         ax.set_xlabel(f"{col} (Values)", fontsize=12)
         ax.set_ylabel("Frequency (Count)", fontsize=12)
-        ax.set_title(f"Histogram of {col}", fontsize=14, fontweight="bold")
+        ax.set_title(f"Histogram of Bhutan Health Care", fontsize=14, fontweight="bold")
 
         # 5. Add grid for clarity
         ax.grid(axis='y', linestyle='--', alpha=0.6)
