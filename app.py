@@ -119,7 +119,7 @@ if st.checkbox("Show Simple Histogram"):
         fig, ax = plt.subplots(figsize=(8,5))
         ax.hist(df_clean[col].dropna(), bins=30, edgecolor="black")
 
-        ax.set_title(f"Simple Histogram of {col}", fontsize=14, fontweight="bold")
+        ax.set_title(f"Simple Histogram of Bhutan Health Care", fontsize=14, fontweight="bold")
         ax.set_xlabel(col)
         ax.set_ylabel("Frequency")
         ax.grid(axis='y', linestyle='--', alpha=0.5)
@@ -137,7 +137,7 @@ st.subheader("⚙️ Feature Engineering Options")
 
 if st.checkbox("Enable Advanced Histogram Options"):
 
-    numeric_cols = df_clean.select_dtypes(include=[np.number]).columns.tolist()
+    #numeric_cols = df_clean.select_dtypes(include=[np.number]).columns.tolist()
 
     if numeric_cols:
 
@@ -175,7 +175,7 @@ if st.checkbox("Enable Advanced Histogram Options"):
         ax.axvline(mean_val + std_val, color='green', linestyle=':', linewidth=1.3, label=f"+1 Std: {mean_val+std_val:.2f}")
         ax.axvline(mean_val - std_val, color='green', linestyle=':', linewidth=1.3, label=f"-1 Std: {mean_val-std_val:.2f}")
 
-        ax.set_title(f"Advanced Histogram of {col}", fontsize=14, fontweight="bold")
+        ax.set_title(f"Advanced Histogram of Bhutan Health Care", fontsize=14, fontweight="bold")
         ax.set_xlabel(col)
         ax.set_ylabel("Frequency")
         ax.grid(axis='y', linestyle='--', alpha=0.5)
