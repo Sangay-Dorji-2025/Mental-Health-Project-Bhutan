@@ -90,7 +90,7 @@ if st.checkbox("Show column info"):
 if st.checkbox("Show sample histogram"):
 
     # 1. Get numeric columns
-    numeric_cols = df_clean.select_dtypes(include=[np.number]).columns.tolist()
+    #numeric_cols = df_clean.select_dtypes(include=[np.number]).columns.tolist()
 
     if numeric_cols:
 
