@@ -121,15 +121,127 @@ if st.checkbox("Show sample histogram"):
 # ----------------------------------------------------
 # SECTION 4: FEATURE ENGINEERING (USER FILLS IN)
 # ----------------------------------------------------
-st.header("4. Feature Engineering")
+###############################################################################
+#st.header("4. Feature Engineering")
 
-st.write("Create engineered features here. Add your own logic below.")
+#st.write("Create engineered features here. Add your own logic below.")
 
 # Placeholder
-df_features = df_clean.copy()
+#df_features = df_clean.copy()
 
-st.write("Feature-engineered data preview:")
-st.dataframe(df_features.head())
+#st.write("Feature-engineered data preview:")
+#st.dataframe(df_features.head())
+#############################################################################
+st.header("📊 Advanced Histogram Explorer")
+
+# --- YEAR FILTER ---
+years = st.multiselect(
+    "Select Year(s) to Filter (optional)",
+    df_clean["YEAR (DISPLAY)"].unique()
+)
+
+if years:
+    data_filtered = df_clean[df_clean["YEAR (DISPLAY)"].isin(years)]
+else:
+    data_filtered = df_clean
+
+# --- NUMERIC COLUMNS ---
+numeric_cols = data_filtered.select_dtypes(include=[np.number]).columns.tolist()
+
+if st.checkbox("Show Histogram Tool"):
+
+    if numeric_cols:
+
+        # COLUMN SELECTOR
+        col = st.selectbox("Choose a numeric column", numeric_cols)
+
+        # BIN SELECTOR
+        bins = st.slider("Number of bins", min_value=5, max_value=100, value=30)
+
+        # KDE OPTION
+        use_kde = st.checkbox("Add KDE (Smooth Density Curve)")
+
+        # LOG SCALE OPTION
+        log_scale = st.checkbox("Apply Log Transformation")
+
+        # PREPARE DATA
+        if log_scale:
+            data = np.log1p(data_filtered[col].dropna())
+        else:
+            data = data_filtered[col].dropna()
+
+        # --- PLOT HISTOGRAM ---
+        fig, ax = plt.subplots(figsize=(8, 5))
+
+        if use_kde:
+            sns.histplot(data, bins=bins, kde=True, ax=ax, edgecolor="black")
+        else:
+            ax.hist(data, bins=bins, edgecolor="black")
+
+        # --- MEAN / MEDIAN / STD LINES ---
+        mean_val = data.mean()
+        median_val = data.median()
+        std_val = data.std()
+
+        ax.axvline(mean_val, color='red', linestyle='--', linewidth=1.5, label=f"Mean: {mean_val:.2f}")
+        ax.axvline(median_val, color='blue', linestyle='-', linewidth=1.5, label=f"Median: {median_val:.2f}")
+        ax.axvline(mean_val + std_val, color='green', linestyle=':', linewidth=1.5, label=f"+1 Std: {mean_val+std_val:.2f}")
+        ax.axvline(mean_val - std_val, color='green', linestyle=':', linewidth=1.5, label=f"-1 Std: {mean_val-std_val:.2f}")
+
+        # --- LABELS & TITLES ---
+        ax.set_xlabel(f"{col} (Values)", fontsize=12)
+        ax.set_ylabel("Frequency (Count)", fontsize=12)
+        ax.set_title(f"Histogram of {col}", fontsize=14, fontweight="bold")
+
+        ax.grid(axis='y', linestyle='--', alpha=0.6)
+        ax.legend()
+
+        st.pyplot(fig)
+
+        # --- SUMMARY STATISTICS ---
+        st.subheader("📘 Summary Statistics")
+        st.write(data_filtered[col].describe())
+
+        # --- BOXPLOT OPTION ---
+        if st.checkbox("Show Boxplot"):
+            fig2, ax2 = plt.subplots()
+            ax2.boxplot(data_filtered[col].dropna())
+            ax2.set_title(f"Boxplot of {col}")
+            ax2.set_ylabel(col)
+            st.pyplot(fig2)
+
+    else:
+        st.warning("No numeric columns available.")
+
+# =======================================
+#       MULTI-HISTOGRAM COMPARISON
+# =======================================
+
+st.subheader("📈 Compare Low, Numeric, High (Optional)")
+
+compare_mode = st.checkbox("Show Comparison Histogram")
+
+if compare_mode:
+    required_cols = ["Low", "Numeric", "High"]
+
+    missing = [c for c in required_cols if c not in data_filtered.columns]
+
+    if missing:
+        st.error(f"Missing columns: {missing}")
+    else:
+        fig, ax = plt.subplots(figsize=(8,5))
+
+        ax.hist(data_filtered["Low"].dropna(), bins=30, alpha=0.5, label="Low")
+        ax.hist(data_filtered["Numeric"].dropna(), bins=30, alpha=0.5, label="Numeric")
+        ax.hist(data_filtered["High"].dropna(), bins=30, alpha=0.5, label="High")
+
+        ax.set_title("Comparison Histogram")
+        ax.set_xlabel("Value")
+        ax.set_ylabel("Frequency")
+        ax.grid(axis='y', linestyle='--', alpha=0.6)
+        ax.legend()
+
+        st.pyplot(fig)
 
 # ----------------------------------------------------
 # SECTION 5: TRAIN OR LOAD MODEL (USER CHOOSES)
