@@ -91,15 +91,13 @@ if st.checkbox("Show column info"):
 # SECTION 4: FEATURE ENGINEERING (USER FILLS IN)
 # ----------------------------------------------------
 ###############################################################################
-st.header("4. Feature Engineering - Histogram Analysis")
+st.header("4. Feature Engineering -Histogram and advance features")
 
 # =====================================================
 # SECTION 1 — SIMPLE HISTOGRAM (YEAR sorted when chosen)
 # =====================================================
-
-st.subheader("Simple Histogram Viewer")
-
-numeric_cols = df_clean.select_dtypes(include=['number']).columns.tolist()
+st.header("4.1 Simple Histogram")
+#numeric_cols = df_clean.select_dtypes(include=['number']).columns.tolist()
 
 if st.checkbox("Show Simple Histogram"):
     if numeric_cols:
@@ -118,7 +116,7 @@ if st.checkbox("Show Simple Histogram"):
         ax_simple.hist(data_simple, bins=20)
         ax_simple.set_xlabel(xlabel)
         ax_simple.set_ylabel("Frequency")
-        ax_simple.set_title(f"Histogram of {col}")
+        ax_simple.set_title(f"Histogram of Bhutan Health Care")
 
         st.pyplot(fig_simple)
 
@@ -130,7 +128,7 @@ if st.checkbox("Show Simple Histogram"):
 # SECTION 2 — ADVANCED FEATURE ENGINEERING HISTOGRAM
 # =====================================================
 
-st.header("Advanced Feature Engineering Histogram")
+st.header("4.2 Histogram (Advanced Feature Engineering) ")
 
 # --- Year selection ---
 years = st.multiselect(
@@ -178,7 +176,7 @@ std_val = data.std()
 ax.axvline(mean_val, color='red', linestyle='--', linewidth=1.3, label=f"Mean: {mean_val:.2f}")
 ax.axvline(median_val, color='blue', linestyle='-', linewidth=1.3, label=f"Median: {median_val:.2f}")
 ax.axvline(mean_val + std_val, color='green', linestyle=':', linewidth=1.3, label=f"+1 Std: {mean_val+std_val:.2f}")
-ax.axvline(mean_val - std_val, color='green', linestyle=':', linewidth=1.3, label=f"-1 Std: {mean_val-std_val:.2f}")
+ax.axvline(mean_val - std_val, color='yellow', linestyle=':', linewidth=1.3, label=f"-1 Std: {mean_val-std_val:.2f}")
 
 # --- Labels ---
 ax.set_title("Histogram of Bhutan Health Care (Filtered by Year)", fontsize=14, fontweight="bold")
