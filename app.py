@@ -101,9 +101,9 @@ if st.checkbox("Show column info"):
 #st.write("Feature-engineered data preview:")
 #st.dataframe(df_features.head())
 #############################################################################
-st.header("📊 Histogram with Year Filter & Multi-Columns")
+st.header("4. Feature Engineering - Histogram with multi features")
 
-# --- 1️⃣ Year selection ---
+# --- Year selection ---
 years = st.multiselect(
     "Select Year(s) to display",
     sorted(df_clean["YEAR (DISPLAY)"].unique())  # sorted ascending
@@ -117,21 +117,21 @@ else:
 
 df_filtered = df_filtered.sort_values(by="YEAR (DISPLAY)", ascending=True)
 
-# --- 2️⃣ Column selection ---
+# ---  Column selection ---
 col_options = ["Low", "Numeric", "High"]
 col_selected = st.selectbox("Choose a column", col_options)
 
-# --- 3️⃣ Advanced Options ---
+# --- Advanced Options such as bins, log scale and kde features---
 bins = st.slider("Number of bins", min_value=5, max_value=100, value=30)
 log_scale = st.checkbox("Apply Log Transformation")
 use_kde = st.checkbox("Add KDE Curve (Smooth Density)")
 
-# --- 4️⃣ Prepare Data ---
+# ---Prepare Data ---
 data = df_filtered[col_selected].dropna()
 if log_scale:
     data = np.log1p(data)
 
-# --- 5️⃣ Plot Histogram ---
+# --- Plot Histogram ---
 fig, ax = plt.subplots(figsize=(8,5))
 
 if use_kde:
@@ -139,7 +139,7 @@ if use_kde:
 else:
     ax.hist(data, bins=bins, edgecolor="black")
 
-# --- 6️⃣ Add Statistics Lines ---
+# --- Add Statistics Lines ---
 mean_val = data.mean()
 median_val = data.median()
 std_val = data.std()
@@ -149,7 +149,7 @@ ax.axvline(median_val, color='blue', linestyle='-', linewidth=1.3, label=f"Media
 ax.axvline(mean_val + std_val, color='green', linestyle=':', linewidth=1.3, label=f"+1 Std: {mean_val+std_val:.2f}")
 ax.axvline(mean_val - std_val, color='green', linestyle=':', linewidth=1.3, label=f"-1 Std: {mean_val-std_val:.2f}")
 
-# --- 7️⃣ Labels & Grid ---
+# --- Labels & Grid ---
 ax.set_title(f"Histogram of {col_selected} (Filtered by Year)", fontsize=14, fontweight="bold")
 ax.set_xlabel(col_selected)
 ax.set_ylabel("Frequency")
@@ -158,7 +158,7 @@ ax.legend()
 
 st.pyplot(fig)
 
-# --- 8️⃣ Summary Statistics ---
+# ---Summary Statistics ---
 st.subheader("📘 Summary Statistics")
 st.write(data.describe())
 
@@ -166,7 +166,7 @@ st.write(data.describe())
 if st.checkbox("Show Boxplot"):
     fig2, ax2 = plt.subplots(figsize=(6,4))
     ax2.boxplot(data)
-    ax2.set_title(f"Boxplot of {col_selected}")
+    ax2.set_title(f"Boxplot of Bhutan Health Care")
     ax2.set_ylabel(col_selected)
     st.pyplot(fig2)
 
