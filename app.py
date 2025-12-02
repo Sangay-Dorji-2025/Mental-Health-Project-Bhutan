@@ -92,18 +92,15 @@ st.title("Hospital Data Chart")
 
 # Line chart
 fig, ax = plt.subplots(figsize=(8,5))
-ax.plot(df['YEAR (DISPLAY)'], df['Numeric'], marker='o', color='blue', label='Numeric')
-ax.plot(df['YEAR (DISPLAY)'], df['High'], marker='o', color='red', label='High')
-ax.plot(df['YEAR (DISPLAY)'], df['Low'], marker='o', color='green', label='Low')
+
+ax.plot(df['YEAR (DISPLAY)'], df['Numeric'], marker='o', label='Numeric')
+ax.plot(df['YEAR (DISPLAY)'], df['High'], marker='o', label='High')
+ax.plot(df['YEAR (DISPLAY)'], df['Low'], marker='o', label='Low')
 
 ax.set_xlabel("Year")
 ax.set_ylabel("Values")
-ax.set_title("Hospital Data Over Years")
+ax.set_title("Trend by Year")
 ax.legend()
-ax.grid(True)
-
-st.pyplot(fig)
-plt.close(fig)
 # ----------------------------------------------------
 # SECTION 4: FEATURE ENGINEERING (USER FILLS IN)
 # ----------------------------------------------------
