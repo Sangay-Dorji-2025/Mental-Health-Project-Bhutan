@@ -88,10 +88,34 @@ if st.checkbox("Show column info"):
 
 # Optional chart
 if st.checkbox("Show sample histogram"):
-   # numeric_cols = df_clean.select_dtypes(include=[np.number]).columns.tolist()
+
+    # 1. Get numeric columns
+    numeric_cols = df_clean.select_dtypes(include=[np.number]).columns.tolist()
+
     if numeric_cols:
+
+        # 2. User chooses one numeric column
         col = st.selectbox("Choose a numeric column", numeric_cols)
-        st.bar_chart(df_clean[col])
+
+        # 3. Create histogram
+        fig, ax = plt.subplots(figsize=(8, 5))
+
+        ax.hist(df_clean[col], bins=30, edgecolor='black')
+
+        # 4. Detailed labels
+        ax.set_xlabel(f"{col} (Values)", fontsize=12)
+        ax.set_ylabel("Frequency (Count)", fontsize=12)
+        ax.set_title(f"Histogram of {col}", fontsize=14, fontweight="bold")
+
+        # 5. Add grid for clarity
+        ax.grid(axis='y', linestyle='--', alpha=0.6)
+
+        # 6. Improve tick readability
+        ax.tick_params(axis='both', labelsize=10)
+
+        # 7. Show on Streamlit
+        st.pyplot(fig)
+
     else:
         st.warning("No numeric columns available.")
 # ----------------------------------------------------
