@@ -101,102 +101,74 @@ if st.checkbox("Show column info"):
 #st.write("Feature-engineered data preview:")
 #st.dataframe(df_features.head())
 #############################################################################
-st.header("4. Feature Engineering")
-st.header("Histogram Viewer")
+st.header("📊 Histogram with Year Filter & Multi-Columns")
 
-# -------------------------------
-# STEP 1 — SIMPLE HISTOGRAM
-# -------------------------------
+# --- 1️⃣ Year selection ---
+years = st.multiselect(
+    "Select Year(s) to display",
+    sorted(df_clean["YEAR (DISPLAY)"].unique())  # sorted ascending
+)
 
-if st.checkbox("Show Simple Histogram"):
+# Filter and sort
+if years:
+    df_filtered = df_clean[df_clean["YEAR (DISPLAY)"].isin(years)]
+else:
+    df_filtered = df_clean.copy()
 
-   # numeric_cols = df_clean.select_dtypes(include=[np.number]).columns.tolist()
+df_filtered = df_filtered.sort_values(by="YEAR (DISPLAY)", ascending=True)
 
-    if numeric_cols:
-        col = st.selectbox("Choose a numeric column", numeric_cols, key="simple_hist")
+# --- 2️⃣ Column selection ---
+col_options = ["Low", "Numeric", "High"]
+col_selected = st.selectbox("Choose a column", col_options)
 
-        # Simple histogram (no settings)
-        fig, ax = plt.subplots(figsize=(8,5))
-        ax.hist(df_clean[col].dropna(), bins=30, edgecolor="black")
+# --- 3️⃣ Advanced Options ---
+bins = st.slider("Number of bins", min_value=5, max_value=100, value=30)
+log_scale = st.checkbox("Apply Log Transformation")
+use_kde = st.checkbox("Add KDE Curve (Smooth Density)")
 
-        ax.set_title(f"Simple Histogram of Bhutan Health Care", fontsize=14, fontweight="bold")
-        ax.set_xlabel(col)
-        ax.set_ylabel("Frequency")
-        ax.grid(axis='y', linestyle='--', alpha=0.5)
+# --- 4️⃣ Prepare Data ---
+data = df_filtered[col_selected].dropna()
+if log_scale:
+    data = np.log1p(data)
 
-        st.pyplot(fig)
+# --- 5️⃣ Plot Histogram ---
+fig, ax = plt.subplots(figsize=(8,5))
 
-    else:
-        st.warning("No numeric columns available.")
+if use_kde:
+    sns.histplot(data, bins=bins, kde=True, edgecolor="black", ax=ax)
+else:
+    ax.hist(data, bins=bins, edgecolor="black")
 
-# -----------------------------------
-# STEP 2 — ADVANCED OPTIONS
-# -----------------------------------
+# --- 6️⃣ Add Statistics Lines ---
+mean_val = data.mean()
+median_val = data.median()
+std_val = data.std()
 
-st.subheader("Feature Engineering Options")
+ax.axvline(mean_val, color='red', linestyle='--', linewidth=1.3, label=f"Mean: {mean_val:.2f}")
+ax.axvline(median_val, color='blue', linestyle='-', linewidth=1.3, label=f"Median: {median_val:.2f}")
+ax.axvline(mean_val + std_val, color='green', linestyle=':', linewidth=1.3, label=f"+1 Std: {mean_val+std_val:.2f}")
+ax.axvline(mean_val - std_val, color='green', linestyle=':', linewidth=1.3, label=f"-1 Std: {mean_val-std_val:.2f}")
 
-if st.checkbox("Enable Advanced Histogram Options"):
+# --- 7️⃣ Labels & Grid ---
+ax.set_title(f"Histogram of {col_selected} (Filtered by Year)", fontsize=14, fontweight="bold")
+ax.set_xlabel(col_selected)
+ax.set_ylabel("Frequency")
+ax.grid(axis='y', linestyle='--', alpha=0.5)
+ax.legend()
 
-    #numeric_cols = df_clean.select_dtypes(include=[np.number]).columns.tolist()
+st.pyplot(fig)
 
-    if numeric_cols:
+# --- 8️⃣ Summary Statistics ---
+st.subheader("📘 Summary Statistics")
+st.write(data.describe())
 
-        col = st.selectbox("Choose a numeric column", numeric_cols, key="advanced_hist")
-
-        # Choose number of bins
-        bins = st.slider("Number of bins", min_value=5, max_value=100, value=30)
-
-        # KDE option
-        use_kde = st.checkbox("Add KDE Curve (Smooth Density)")
-
-        # Log transform
-        log_scale = st.checkbox("Apply Log Transformation")
-
-        # Apply log transform if chosen
-        data = df_clean[col].dropna()
-        if log_scale:
-            data = np.log1p(data)
-
-        # ADVANCED HISTOGRAM
-        fig, ax = plt.subplots(figsize=(8,5))
-
-        if use_kde:
-            sns.histplot(data, bins=bins, kde=True, edgecolor="black", ax=ax)
-        else:
-            ax.hist(data, bins=bins, edgecolor="black")
-
-        # Add statistic lines
-        mean_val = data.mean()
-        median_val = data.median()
-        std_val = data.std()
-
-        ax.axvline(mean_val, color='red', linestyle='--', linewidth=1.3, label=f"Mean: {mean_val:.2f}")
-        ax.axvline(median_val, color='blue', linestyle='-', linewidth=1.3, label=f"Median: {median_val:.2f}")
-        ax.axvline(mean_val + std_val, color='green', linestyle=':', linewidth=1.3, label=f"+1 Std: {mean_val+std_val:.2f}")
-        ax.axvline(mean_val - std_val, color='green', linestyle=':', linewidth=1.3, label=f"-1 Std: {mean_val-std_val:.2f}")
-
-        ax.set_title(f"Advanced Histogram of Bhutan Health Care", fontsize=14, fontweight="bold")
-        ax.set_xlabel(col)
-        ax.set_ylabel("Frequency")
-        ax.grid(axis='y', linestyle='--', alpha=0.5)
-        ax.legend()
-
-        st.pyplot(fig)
-
-        # Summary statistics
-        st.write("Summary Statistics")
-        st.write(data.describe())
-
-        # Optional boxplot
-        if st.checkbox("Show Boxplot"):
-            fig2, ax2 = plt.subplots()
-            ax2.boxplot(data)
-            ax2.set_title(f"Boxplot of Bhutan Health Care")
-            ax2.set_ylabel(col)
-            st.pyplot(fig2)
-
-    else:
-        st.warning("No numeric columns available.")
+# --- 9️⃣ Optional Boxplot ---
+if st.checkbox("Show Boxplot"):
+    fig2, ax2 = plt.subplots(figsize=(6,4))
+    ax2.boxplot(data)
+    ax2.set_title(f"Boxplot of {col_selected}")
+    ax2.set_ylabel(col_selected)
+    st.pyplot(fig2)
 
 # ----------------------------------------------------
 # SECTION 5: TRAIN OR LOAD MODEL (USER CHOOSES)
