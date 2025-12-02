@@ -102,15 +102,15 @@ if st.checkbox("Show column info"):
 #st.dataframe(df_features.head())
 #############################################################################
 st.header("4. Feature Engineering")
-st.header("📊 Histogram Viewer")
+st.header("Histogram Viewer")
 
 # -------------------------------
-# 1️⃣ STEP 1 — SIMPLE HISTOGRAM
+# STEP 1 — SIMPLE HISTOGRAM
 # -------------------------------
 
 if st.checkbox("Show Simple Histogram"):
 
-    numeric_cols = df_clean.select_dtypes(include=[np.number]).columns.tolist()
+   # numeric_cols = df_clean.select_dtypes(include=[np.number]).columns.tolist()
 
     if numeric_cols:
         col = st.selectbox("Choose a numeric column", numeric_cols, key="simple_hist")
@@ -130,10 +130,10 @@ if st.checkbox("Show Simple Histogram"):
         st.warning("No numeric columns available.")
 
 # -----------------------------------
-# 2️⃣ STEP 2 — ADVANCED OPTIONS
+# STEP 2 — ADVANCED OPTIONS
 # -----------------------------------
 
-st.subheader("⚙️ Feature Engineering Options")
+st.subheader("Feature Engineering Options")
 
 if st.checkbox("Enable Advanced Histogram Options"):
 
@@ -184,14 +184,14 @@ if st.checkbox("Enable Advanced Histogram Options"):
         st.pyplot(fig)
 
         # Summary statistics
-        st.write("### 📘 Summary Statistics")
+        st.write("Summary Statistics")
         st.write(data.describe())
 
         # Optional boxplot
         if st.checkbox("Show Boxplot"):
             fig2, ax2 = plt.subplots()
             ax2.boxplot(data)
-            ax2.set_title(f"Boxplot of {col}")
+            ax2.set_title(f"Boxplot of Bhutan Health Care")
             ax2.set_ylabel(col)
             st.pyplot(fig2)
 
