@@ -87,20 +87,13 @@ if st.checkbox("Show column info"):
     }))
 
 # Optional chart
-# Line chart
-st.title("Hospital Data Chart")
-
-# Line chart
-fig, ax = plt.subplots(figsize=(8,5))
-
-ax.plot(df['YEAR (DISPLAY)'], df['Numeric'], marker='o', label='Numeric')
-ax.plot(df['YEAR (DISPLAY)'], df['High'], marker='o', label='High')
-ax.plot(df['YEAR (DISPLAY)'], df['Low'], marker='o', label='Low')
-
-ax.set_xlabel("Year")
-ax.set_ylabel("Values")
-ax.set_title("Trend by Year")
-ax.legend()
+if st.checkbox("Show sample histogram"):
+    numeric_cols = df_clean.select_dtypes(include=[np.number]).columns.tolist()
+    if numeric_cols:
+        col = st.selectbox("Choose a numeric column", numeric_cols)
+        st.bar_chart(df_clean[col])
+    else:
+        st.warning("No numeric columns available.")
 # ----------------------------------------------------
 # SECTION 4: FEATURE ENGINEERING (USER FILLS IN)
 # ----------------------------------------------------
