@@ -132,7 +132,7 @@ if st.checkbox("Show sample histogram"):
 #st.write("Feature-engineered data preview:")
 #st.dataframe(df_features.head())
 #############################################################################
-st.header("📊 Advanced Histogram Explorer")
+st.header("Advanced Histogram Explorer")
 
 # --- YEAR FILTER ---
 years = st.multiselect(
@@ -146,7 +146,7 @@ else:
     data_filtered = df_clean
 
 # --- NUMERIC COLUMNS ---
-numeric_cols = data_filtered.select_dtypes(include=[np.number]).columns.tolist()
+#numeric_cols = data_filtered.select_dtypes(include=[np.number]).columns.tolist()
 
 if st.checkbox("Show Histogram Tool"):
 
@@ -191,7 +191,7 @@ if st.checkbox("Show Histogram Tool"):
         # --- LABELS & TITLES ---
         ax.set_xlabel(f"{col} (Values)", fontsize=12)
         ax.set_ylabel("Frequency (Count)", fontsize=12)
-        ax.set_title(f"Histogram of {col}", fontsize=14, fontweight="bold")
+        ax.set_title(f"Histogram of Bhutan Health Care", fontsize=14, fontweight="bold")
 
         ax.grid(axis='y', linestyle='--', alpha=0.6)
         ax.legend()
@@ -199,14 +199,14 @@ if st.checkbox("Show Histogram Tool"):
         st.pyplot(fig)
 
         # --- SUMMARY STATISTICS ---
-        st.subheader("📘 Summary Statistics")
+        st.subheader("Summary Statistics")
         st.write(data_filtered[col].describe())
 
         # --- BOXPLOT OPTION ---
         if st.checkbox("Show Boxplot"):
             fig2, ax2 = plt.subplots()
             ax2.boxplot(data_filtered[col].dropna())
-            ax2.set_title(f"Boxplot of {col}")
+            ax2.set_title(f"Boxplot of Bhutan Health Care")
             ax2.set_ylabel(col)
             st.pyplot(fig2)
 
@@ -217,7 +217,7 @@ if st.checkbox("Show Histogram Tool"):
 #       MULTI-HISTOGRAM COMPARISON
 # =======================================
 
-st.subheader("📈 Compare Low, Numeric, High (Optional)")
+st.subheader("Compare Low, Numeric, High (Optional)")
 
 compare_mode = st.checkbox("Show Comparison Histogram")
 
