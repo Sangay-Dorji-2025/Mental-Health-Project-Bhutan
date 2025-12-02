@@ -132,7 +132,7 @@ if st.checkbox("Show sample histogram"):
 #st.write("Feature-engineered data preview:")
 #st.dataframe(df_features.head())
 #############################################################################
-st.header("4. Feature Engineering "Advanced Histogram Explorer")
+st.header("4. Feature Engineering - Advanced Histogram Explorer")
 
 # --- YEAR FILTER ---
 years = st.multiselect(
