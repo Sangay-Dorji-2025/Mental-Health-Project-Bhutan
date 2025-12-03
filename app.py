@@ -262,17 +262,18 @@ st.write(f"**Intercept:** {model.intercept_:.3f}")
 # --------------------------
 # 4. PLOT ACTUAL vs PREDICTED
 # --------------------------
-fig, ax = plt.subplots(figsize=(8, 5))
-ax.plot(df_clean["YEAR (DISPLAY)"], df_clean["Numeric"], marker='o', label='Actual')
-ax.plot(df_clean["YEAR (DISPLAY)"], df_clean["Predicted"], marker='o', linestyle='--', label='Predicted')
-
-ax.set_xlabel("YEAR (DISPLAY)")
-ax.set_ylabel("Numeric (Hospital Data)")
-ax.set_title("Linear Regression — Actual vs Predicted")
+fig, ax = plt.subplots(figsize=(6,6))
+ax.scatter(y_test, y_pred, color='blue', label='Predicted vs Actual')
+ax.plot([y_test.min(), y_test.max()],
+        [y_test.min(), y_test.max()],
+        color='red', linestyle='--', label='Perfect Prediction')
+ax.set_xlabel("Actual Numeric")
+ax.set_ylabel("Predicted Numeric")
+ax.set_title("Actual vs Predicted (Linear Regression)")
 ax.legend()
 ax.grid(True)
-
 st.pyplot(fig)
+
 
 # --------------------------
 # 5. PREDICT FUTURE YEAR
