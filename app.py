@@ -264,7 +264,7 @@ st.write(f"**Intercept:** {model.intercept_:.3f}")
 # --------------------------
 fig, ax = plt.subplots(figsize=(8, 5))
 ax.plot(df_filtered["YEAR (DISPLAY)"], df_clean["Numeric"], marker='o', label='Actual')
-ax.plot(df_filtered["YEAR (DISPLAY)"], df_filtered["Predicted"], marker='o', linestyle='--', label='Predicted')
+ax.plot(df_filtered["YEAR (DISPLAY)"], df_clean["Predicted"], marker='o', linestyle='--', label='Predicted')
 
 ax.set_xlabel("YEAR (DISPLAY)")
 ax.set_ylabel("Numeric (Hospital Data)")
