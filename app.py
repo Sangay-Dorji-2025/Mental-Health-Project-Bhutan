@@ -262,6 +262,17 @@ st.write(f"**Intercept:** {model.intercept_:.3f}")
 # --------------------------
 # 4. PLOT ACTUAL vs PREDICTED
 # --------------------------
+ig, ax = plt.subplots(figsize=(6,6))
+ax.scatter(y_test.values, y_pred, color='blue', label='Predicted vs Actual')
+ax.plot([y_test.min(), y_test.max()],
+        [y_test.min(), y_test.max()],
+        color='red', linestyle='--', label='Perfect Prediction')
+ax.set_xlabel("Actual Numeric")
+ax.set_ylabel("Predicted Numeric")
+ax.set_title("Actual vs Predicted (Linear Regression)")
+ax.legend()
+ax.grid(True)
+st.pyplot(fig)
 print("y_test shape:", y_test.shape)
 print("y_pred shape:", y_pred.shape)
 # --------------------------
