@@ -259,8 +259,8 @@ rmse = np.sqrt(mean_squared_error(y, df_clean["Predicted"]))
 st.write(" ## Model Summary")
 st.markdown(
     f"""
-    <div style='text-align: left;'>
-        <span>&#9679; Regression Equation: </span> $$y = {model.coef_[0]:.3f}x + {model.intercept_:.3f}$$<br>
+    <div style='text-align: left; font-size: 20px;'>
+        <span>&#9679; Regression Equation: </span> y = {model.coef_[0]:.3f}x + {model.intercept_:.3f}<br>
         <span>&#9679; Slope (β₁): </span> {model.coef_[0]:.3f} → Increase per year<br>
         <span>&#9679; Intercept (β₀): </span> {model.intercept_:.3f} → Value when YEAR = 0
     </div>
