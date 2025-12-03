@@ -241,6 +241,12 @@ st.write("### Sample Hospital Dataset")
 st.dataframe(df)
 
 # --------------------------
+st.title("Linear Regression for Hospital Data (Only LinearRegression)")
+
+st.write("### Sample Hospital Dataset")
+st.dataframe(df_clean)
+
+# --------------------------
 # 2. BUILD LINEAR REGRESSION MODEL
 # --------------------------
 X = df_clean[["YEAR (DISPLAY)"]]      # Feature
@@ -249,7 +255,7 @@ y = df_clean["Numeric"]               # Target
 model = LinearRegression()
 model.fit(X, y)
 
-# Predict values for line chart
+# Predict values
 df_clean["Predicted"] = model.predict(X)
 
 # --------------------------
@@ -260,11 +266,30 @@ st.write(f"**Slope:** {model.coef_[0]:.3f}")
 st.write(f"**Intercept:** {model.intercept_:.3f}")
 
 # --------------------------
-# 4. PLOT ACTUAL vs PREDICTED
+# 4. CLEAN PLOT (sorted by year)
 # --------------------------
+df_plot = df_clean.sort_values("YEAR (DISPLAY)")
+
 fig, ax = plt.subplots(figsize=(8, 5))
-ax.plot(df_clean["YEAR (DISPLAY)"], df_clean["Numeric"], marker='o', label='Actual')
-ax.plot(df_clean["YEAR (DISPLAY)"], df_clean["Predicted"], marker='o', linestyle='--', label='Predicted')
+
+# Actual values
+ax.plot(
+    df_plot["YEAR (DISPLAY)"],
+    df_plot["Numeric"],
+    marker='o',
+    color='blue',
+    label='Actual'
+)
+
+# Predicted values
+ax.plot(
+    df_plot["YEAR (DISPLAY)"],
+    df_plot["Predicted"],
+    marker='o',
+    linestyle='--',
+    color='orange',
+    label='Predicted'
+)
 
 ax.set_xlabel("YEAR (DISPLAY)")
 ax.set_ylabel("Numeric (Hospital Data)")
@@ -273,6 +298,8 @@ ax.legend()
 ax.grid(True)
 
 st.pyplot(fig)
+
+
 
    
 #----------------------------------------------------------------
