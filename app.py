@@ -230,17 +230,9 @@ if mode == "Load Existing Model":
         st.stop()
 
 else:
-    st.write("Add your model training code below.")
-    st.info("This template does not include a training implementation. Write your own training logic here.")
-
-    # Placeholder to prevent execution errors
-    #model = None
-
-# --------------------------
-st.title("📈 Linear Regression Dashboard — Hospital Data (Only LinearRegression)")
-
-st.write("### Sample Dataset")
-st.dataframe(df)
+    st.title("Linear Regression Dashboard — Bhutan Health Care")
+    st.write("Sample Dataset")
+    st.dataframe(df)
 
 # ---------------------------------------------------------
 # Build Linear Regression Model
@@ -264,7 +256,7 @@ rmse = np.sqrt(mean_squared_error(y, df_clean["Predicted"]))
 # ---------------------------------------------------------
 # Display Model Information
 # ---------------------------------------------------------
-st.write("## 📘 Model Summary")
+st.write("Model Summary")
 
 # Regression equation
 st.write(f"### 🔹 Regression Equation:")
@@ -275,7 +267,7 @@ st.write(f"- **Slope (β1):** {model.coef_[0]:.3f}  → Increase per year")
 st.write(f"- **Intercept (β0):** {model.intercept_:.3f}  → Value when year = 0")
 
 # Metrics
-st.write("### 🔹 Model Performance Metrics:")
+st.write("🔹 Model Performance Metrics:")
 st.write(f"- **R² Score:** {r2:.3f}")
 st.write(f"- **MAE (Mean Absolute Error):** {mae:.3f}")
 st.write(f"- **RMSE (Root Mean Squared Error):** {rmse:.3f}")
@@ -283,7 +275,7 @@ st.write(f"- **RMSE (Root Mean Squared Error):** {rmse:.3f}")
 # ---------------------------------------------------------
 # Plot Actual vs Predicted
 # ---------------------------------------------------------
-st.write("## 📊 Actual vs Predicted Plot")
+st.write("Actual vs Predicted Plot")
 
 fig, ax = plt.subplots(figsize=(9, 5))
 
