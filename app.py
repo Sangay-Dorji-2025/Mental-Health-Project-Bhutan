@@ -259,7 +259,7 @@ rmse = np.sqrt(mean_squared_error(y, df_clean["Predicted"]))
 st.write("Model Summary")
 
 # Regression equation
-st.write(f"### 🔹 Regression Equation:")
+st.write(f"### 🔹Regression Equation:")
 st.latex(r"y = {:.3f}x + {:.3f}".format(model.coef_[0], model.intercept_))
 
 # Coefficients explained
@@ -267,7 +267,7 @@ st.write(f"- **Slope (β1):** {model.coef_[0]:.3f}  → Increase per year")
 st.write(f"- **Intercept (β0):** {model.intercept_:.3f}  → Value when year = 0")
 
 # Metrics
-st.write("🔹 Model Performance Metrics:")
+st.write(f"###🔹 Model Performance Metrics:")
 st.write(f"- **R² Score:** {r2:.3f}")
 st.write(f"- **MAE (Mean Absolute Error):** {mae:.3f}")
 st.write(f"- **RMSE (Root Mean Squared Error):** {rmse:.3f}")
@@ -275,7 +275,7 @@ st.write(f"- **RMSE (Root Mean Squared Error):** {rmse:.3f}")
 # ---------------------------------------------------------
 # Plot Actual vs Predicted
 # ---------------------------------------------------------
-st.write("Actual vs Predicted Plot")
+st.write("f"### 🔹Actual vs Predicted Plot")
 
 fig, ax = plt.subplots(figsize=(9, 5))
 
