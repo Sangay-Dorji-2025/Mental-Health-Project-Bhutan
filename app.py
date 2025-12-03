@@ -263,7 +263,7 @@ st.write(f"**Intercept:** {model.intercept_:.3f}")
 # 4. PLOT ACTUAL vs PREDICTED
 # --------------------------
 fig, ax = plt.subplots(figsize=(6,6))
-ax.scatter(np.array(y_test), np.array(y_pred), color='blue', label='Predicted vs Actual')
+ax.scatter(y_test.values, y_pred, color='blue', label='Predicted vs Actual')
 ax.plot([y_test.min(), y_test.max()],
         [y_test.min(), y_test.max()],
         color='red', linestyle='--', label='Perfect Prediction')
