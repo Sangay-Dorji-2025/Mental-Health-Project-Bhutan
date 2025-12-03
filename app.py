@@ -259,7 +259,7 @@ rmse = np.sqrt(mean_squared_error(y, df_clean["Predicted"]))
 st.write(" ## Model Summary")
 
 # Regression equation
-#st.write(f"### 🔹Regression Equation:")
+st.write(f"### 🔹Regression Equation:")
 st.latex(r"y = {:.3f}x + {:.3f}".format(model.coef_[0], model.intercept_))
 
 # Coefficients explained
