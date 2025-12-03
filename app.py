@@ -271,7 +271,7 @@ evaluate_model(y_test, y_pred_lr, "Linear Regression")
 
 plt.figure(figsize=(8, 5))
 plt.plot(y_test.values, label="Actual", marker='o')
-plt.plot(y_pred_xgb, label="XGBoost Predicted", marker='o')
+#plt.plot(y_pred_xgb, label="XGBoost Predicted", marker='o')
 plt.xlabel("Test Sample Index")
 plt.ylabel("Numeric Value")
 plt.title("Actual vs Predicted Hospital Numeric Values")
