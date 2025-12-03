@@ -275,7 +275,7 @@ st.write(f"- **RMSE (Root Mean Squared Error):** {rmse:.3f}")
 # ---------------------------------------------------------
 # Plot Actual vs Predicted
 # ---------------------------------------------------------
-st.write("f"### 🔹Actual vs Predicted Plot")
+st.write(f"### 🔹Actual vs Predicted Plot")
 
 fig, ax = plt.subplots(figsize=(9, 5))
 
