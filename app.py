@@ -273,6 +273,15 @@ ax.legend()
 ax.grid(True)
 
 st.pyplot(fig)
+
+   
+#----------------------------------------------------------------
+# SECTION 6: PREDICTION INTERFACE
+# ----------------------------------------------------
+st.header("6. Prediction Interface")
+
+st.write("Build your prediction input widgets here.")
+##################################################################
 # --------------------------
 # 5. PREDICT FUTURE YEAR
 # --------------------------
@@ -283,14 +292,7 @@ if st.button("Predict"):
     predicted_value = model.predict([[future_year]])
     st.success(f"Predicted Numeric value for {future_year}: **{predicted_value[0]:.2f}**") 
 
-   
-#----------------------------------------------------------------
-# SECTION 6: PREDICTION INTERFACE
-# ----------------------------------------------------
-st.header("6. Prediction Interface")
-
-st.write("Build your prediction input widgets here.")
-
+#################################################################################
 # Placeholder: user defines input features
 # Example: numeric inputs based on numeric columns
 prediction_inputs = {}
