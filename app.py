@@ -259,12 +259,12 @@ rmse = np.sqrt(mean_squared_error(y, df_clean["Predicted"]))
 st.write(" ## Model Summary")
 
 # Regression equation
-st.write(f"### 🔹Regression Equation:")
+#st.write(f"### 🔹Regression Equation:")
 st.markdown(
     f"""
     <div style='text-align: left;'>
         <h3>🔹 Regression Equation:</h3>
-        $$y = {model.coef_[0]:.3f}x + {model.intercept_:.3f}$$
+        y = {model.coef_[0]:.3f}x + {model.intercept_:.3f}
     </div>
     """,
     unsafe_allow_html=True
