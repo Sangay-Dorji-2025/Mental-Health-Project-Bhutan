@@ -230,7 +230,7 @@ if mode == "Load Existing Model":
         st.stop()
 
 else:
-    st.title("Linear Regression Dashboard — Bhutan Health Care")
+    st.title("Bhutan Health Care Data Science(Supervised Learning Model:  Linear Regression)")
     st.write("Sample Dataset")
     st.dataframe(df)
 
