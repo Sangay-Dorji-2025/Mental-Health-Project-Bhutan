@@ -180,7 +180,7 @@ std_val = data.std()
 ax.axvline(mean_val, color='red', linestyle='--', linewidth=1.3, label=f"Mean: {mean_val:.2f}")
 ax.axvline(median_val, color='blue', linestyle='-', linewidth=1.3, label=f"Median: {median_val:.2f}")
 ax.axvline(mean_val + std_val, color='green', linestyle=':', linewidth=1.3, label=f"+1 Std: {mean_val+std_val:.2f}")
-ax.axvline(mean_val - std_val, color='yellow', linestyle=':', linewidth=1.3, label=f"-1 Std: {mean_val-std_val:.2f}")
+# ax.axvline(mean_val - std_val, color='yellow', linestyle=':', linewidth=1.3, label=f"-1 Std: {mean_val-std_val:.2f}")
 
 # --- Labels ---
 if years:
