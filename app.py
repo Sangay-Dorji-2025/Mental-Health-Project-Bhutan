@@ -272,7 +272,7 @@ st.markdown(
 #st.write(f"- **Intercept (β0):** {model.intercept_:.3f}  → Value when year = 0")
 
 # Metrics
-#st.write(" ## Model Performance Metrics:")
+st.write(" ## Model Performance Metrics:")
 st.markdown(
     f"""
     <div style='text-align: left; font-size: 20px;'>
