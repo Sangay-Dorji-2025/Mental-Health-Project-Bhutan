@@ -267,41 +267,17 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-# Regression equation
-#st.write(f"### 🔹Regression Equation:")
-#st.latex(r"y = {:.3f}x + {:.3f}".format(model.coef_[0], model.intercept_))
-
 # Coefficients explained
 #st.write(f"- **Slope (β1):** {model.coef_[0]:.3f}  → Increase per year")
 #st.write(f"- **Intercept (β0):** {model.intercept_:.3f}  → Value when year = 0")
 
 # Metrics
-st.write("### 🔹 Model Performance Metrics:")
+st.write(" ## Model Performance Metrics:")
 st.write(f"- **R² Score:** {r2:.3f}")
 st.write(f"- **MAE (Mean Absolute Error):** {mae:.3f}")
 st.write(f"- **RMSE (Root Mean Squared Error):** {rmse:.3f}")
 
-# ---------------------------------------------------------
-# Plot Actual vs Predicted
-# ---------------------------------------------------------
-st.write(f"### 🔹Actual vs Predicted Plot")
 
-fig, ax = plt.subplots(figsize=(9, 5))
-
-# Scatter actual values
-ax.scatter(df_clean["YEAR (DISPLAY)"], df_clean["Numeric"], s=80, label="Actual", alpha=0.8)
-
-# Line predicted
-ax.plot(df_clean["YEAR (DISPLAY)"], df_clean["Predicted"], linestyle='--', linewidth=2, label="Predicted")
-
-# Make plot clean
-ax.set_xlabel("YEAR (DISPLAY)", fontsize=12)
-ax.set_ylabel("Numeric (Hospital Data)", fontsize=12)
-ax.set_title("Linear Regression — Actual vs Predicted", fontsize=15, fontweight="bold")
-ax.grid(True, linestyle='--', alpha=0.4)
-ax.legend()
-
-st.pyplot(fig)
 
 # ---------------------------------------------------------
 # Table of Actual vs Predicted
@@ -324,6 +300,7 @@ future_year = st.number_input("Enter future year:", min_value=2021, max_value=20
 if st.button("Predict"):
     predicted_value = model.predict([[future_year]])
     st.success(f"Predicted Numeric value for {future_year}: **{predicted_value[0]:.2f}**") 
+    
 
 #################################################################################
 # Placeholder: user defines input features
@@ -348,6 +325,28 @@ if st.button("Predict"):
     #        st.error(f"Prediction failed: {e}")
 #else:
  #   st.warning("Model not available. Please train or upload a model.")
+
+# ---------------------------------------------------------
+# Plot Actual vs Predicted
+# ---------------------------------------------------------
+st.write(f"### 🔹Actual vs Predicted Plot")
+
+fig, ax = plt.subplots(figsize=(9, 5))
+
+# Scatter actual values
+ax.scatter(df_clean["YEAR (DISPLAY)"], df_clean["Numeric"], s=80, label="Actual", alpha=0.8)
+
+# Line predicted
+ax.plot(df_clean["YEAR (DISPLAY)"], df_clean["Predicted"], linestyle='--', linewidth=2, label="Predicted")
+
+# Make plot clean
+ax.set_xlabel("YEAR (DISPLAY)", fontsize=12)
+ax.set_ylabel("Numeric (Hospital Data)", fontsize=12)
+ax.set_title("Linear Regression — Actual vs Predicted", fontsize=15, fontweight="bold")
+ax.grid(True, linestyle='--', alpha=0.4)
+ax.legend()
+
+st.pyplot(fig)
 #####################################################################################################################
 # ----------------------------------------------------
 # SECTION 7: EXPORT PROCESSED DATA (OPTIONAL)
