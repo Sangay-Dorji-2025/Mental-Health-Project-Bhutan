@@ -256,7 +256,7 @@ rmse = np.sqrt(mean_squared_error(y, df_clean["Predicted"]))
 # ---------------------------------------------------------
 # Display Model Information
 # ---------------------------------------------------------
-st.write("Model Summary")
+st.write(" ## Model Summary")
 
 # Regression equation
 st.write(f"### 🔹Regression Equation:")
