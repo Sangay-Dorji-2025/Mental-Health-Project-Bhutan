@@ -260,7 +260,7 @@ st.write(" ## Model Summary")
 st.markdown(
     f"""
     <div style='text-align: left; font-size: 20px;'>
-        <span>&#9679; Regression Equation: </span> y = {model.coef_[0]:.3f}x + {model.intercept_:.3f}<br>
+        <span>&#9679; Regression Equation: </span>   y = {model.coef_[0]:.3f}x + {model.intercept_:.3f}<br>
         <span>&#9679; Slope (β₁): </span> {model.coef_[0]:.3f} → Increase per year<br>
         <span>&#9679; Intercept (β₀): </span> {model.intercept_:.3f} → Value when YEAR = 0
     </div>
@@ -276,7 +276,7 @@ st.markdown(
 #st.write(f"- **Intercept (β0):** {model.intercept_:.3f}  → Value when year = 0")
 
 # Metrics
-st.write(f"###🔹 Model Performance Metrics:")
+st.write("### 🔹 Model Performance Metrics:")
 st.write(f"- **R² Score:** {r2:.3f}")
 st.write(f"- **MAE (Mean Absolute Error):** {mae:.3f}")
 st.write(f"- **RMSE (Root Mean Squared Error):** {rmse:.3f}")
