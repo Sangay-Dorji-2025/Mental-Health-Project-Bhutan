@@ -294,7 +294,7 @@ st.markdown(
 # ---------------------------------------------------------
 # Table of Actual vs Predicted
 # ---------------------------------------------------------
-st.write("## 📄 Actual vs Predicted Table")
+st.write("##  Actual vs Predicted Table")
 st.dataframe(df_clean)
 #----------------------------------------------------------------
 # SECTION 6: PREDICTION INTERFACE
