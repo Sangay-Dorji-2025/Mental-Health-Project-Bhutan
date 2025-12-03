@@ -272,6 +272,7 @@ st.markdown(
 #st.write(f"- **Intercept (β0):** {model.intercept_:.3f}  → Value when year = 0")
 
 # Metrics
+#st.write(" ## Model Performance Metrics:")
 st.markdown(
     f"""
     <div style='text-align: left; font-size: 20px;'>
@@ -283,7 +284,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-#st.write(" ## Model Performance Metrics:")
+
 #st.write(f"- ***R² Score:** {r2:.3f}")
 #st.write(f"- **MAE (Mean Absolute Error):** {mae:.3f}")
 #st.write(f"- **RMSE (Root Mean Squared Error):** {rmse:.3f}")
