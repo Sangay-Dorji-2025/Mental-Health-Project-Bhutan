@@ -292,11 +292,7 @@ ax.set_title("Linear Regression — Actual vs Predicted")
 ax.legend()
 ax.grid(True)
 
-st.pyplot(fig)
-
-
-
-   
+st.pyplot(fig)  
 #----------------------------------------------------------------
 # SECTION 6: PREDICTION INTERFACE
 # ----------------------------------------------------
@@ -317,27 +313,27 @@ if st.button("Predict"):
 #################################################################################
 # Placeholder: user defines input features
 # Example: numeric inputs based on numeric columns
-prediction_inputs = {}
-
-if model is not None:
-    st.subheader("Provide inputs for prediction")
+# prediction_inputs = {}
+##############################################################################################
+#if model is not None:
+  #  st.subheader("Provide inputs for prediction")
+#    
+  #  numeric_cols = df_features.select_dtypes(include=[np.number]).columns.tolist()
     
-    numeric_cols = df_features.select_dtypes(include=[np.number]).columns.tolist()
+   # for col in numeric_cols:
+    #    val = st.number_input(f"Input for {col}", float(df_features[col].min()), float(df_features[col].max()))
+   #     prediction_inputs[col] = val
     
-    for col in numeric_cols:
-        val = st.number_input(f"Input for {col}", float(df_features[col].min()), float(df_features[col].max()))
-        prediction_inputs[col] = val
-    
-    if st.button("Predict"):
-        try:
-            X_input = pd.DataFrame([prediction_inputs])
-            pred = model.predict(X_input)
-            st.success(f"Model Prediction: {pred[0]}")
-        except Exception as e:
-            st.error(f"Prediction failed: {e}")
-else:
-    st.warning("Model not available. Please train or upload a model.")
-
+  #  if st.button("Predict"):
+  #      try:
+   #         X_input = pd.DataFrame([prediction_inputs])
+   #         pred = model.predict(X_input)
+    #        st.success(f"Model Prediction: {pred[0]}")
+    #    except Exception as e:
+    #        st.error(f"Prediction failed: {e}")
+#else:
+ #   st.warning("Model not available. Please train or upload a model.")
+#####################################################################################################################
 # ----------------------------------------------------
 # SECTION 7: EXPORT PROCESSED DATA (OPTIONAL)
 # ----------------------------------------------------
