@@ -235,49 +235,56 @@ else:
 
     # Placeholder to prevent execution errors
     #model = None
-    # 2) FEATURES & TARGET
-# -----------------------------------
-X = df_clean[["YEAR (DISPLAY)", "Low", "High"]]
-y = df_clean["Numeric"]
+st.title("Linear Regression for Hospital Data (Only LinearRegression)")
 
-# Train/Test split (80% / 20%)
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
-)
+st.write("### Sample Hospital Dataset")
+st.dataframe(df)
 
-# -----------------------------------
-# 3) TRAIN MODELS
-# -----------------------------------
-# Linear Regression
-lin_reg = LinearRegression()
-lin_reg.fit(X_train, y_train)
+# --------------------------
+# 2. BUILD LINEAR REGRESSION MODEL
+# --------------------------
+X = df_clean[["YEAR (DISPLAY)"]]      # Feature
+y = df_clean["Numeric"]               # Target
 
-# -----------------------------------
-# 4) PREDICTIONS
-# -----------------------------------
-y_pred_lr = lin_reg.predict(X_test)
-# ----------------------------------------------------
-# -----------------------------------
-# 5) EVALUATION
-# -----------------------------------
-def evaluate_model(y_true, y_pred, name):
-    print(f"\n----- {name} -----")
-    print("MAE :", mean_absolute_error(y_true, y_pred))
-    print("MSE :", mean_squared_error(y_true, y_pred))
-    print("RMSE:", np.sqrt(mean_squared_error(y_true, y_pred)))
-    print("R2  :", r2_score(y_true, y_pred))
+model = LinearRegression()
+model.fit(X, y)
 
-evaluate_model(y_test, y_pred_lr, "Linear Regression")
+# Predict values for line chart
+df_clean["Predicted"] = model.predict(X)
 
-plt.figure(figsize=(8, 5))
-plt.plot(y_test.values, label="Actual", marker='o')
-#plt.plot(y_pred_xgb, label="XGBoost Predicted", marker='o')
-plt.xlabel("Test Sample Index")
-plt.ylabel("Numeric Value")
-plt.title("Actual vs Predicted Hospital Numeric Values")
-plt.grid(True)
-plt.legend()
-plt.show()
+# --------------------------
+# 3. DISPLAY RESULTS
+# --------------------------
+st.write("### Model Coefficients")
+st.write(f"**Slope:** {model.coef_[0]:.3f}")
+st.write(f"**Intercept:** {model.intercept_:.3f}")
+
+# --------------------------
+# 4. PLOT ACTUAL vs PREDICTED
+# --------------------------
+fig, ax = plt.subplots(figsize=(8, 5))
+ax.plot(df_clean["YEAR (DISPLAY)"], df_clean["Numeric"], marker='o', label='Actual')
+ax.plot(df_clean["YEAR (DISPLAY)"], df_clean["Predicted"], marker='o', linestyle='--', label='Predicted')
+
+ax.set_xlabel("YEAR (DISPLAY)")
+ax.set_ylabel("Numeric (Hospital Data)")
+ax.set_title("Linear Regression — Actual vs Predicted")
+ax.legend()
+ax.grid(True)
+
+st.pyplot(fig)
+
+# --------------------------
+# 5. PREDICT FUTURE YEAR
+# --------------------------
+st.write("### Predict for Future Year")
+future_year = st.number_input("Enter future year:", min_value=2021, max_value=2050)
+
+if st.button("Predict"):
+    predicted_value = model.predict([[future_year]])
+    st.success(f"Predicted Numeric value for {future_year}: **{predicted_value[0]:.2f}**") 
+
+   
 #----------------------------------------------------------------
 # SECTION 6: PREDICTION INTERFACE
 # ----------------------------------------------------
