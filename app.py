@@ -257,14 +257,23 @@ rmse = np.sqrt(mean_squared_error(y, df_clean["Predicted"]))
 # Display Model Information
 # ---------------------------------------------------------
 st.write(" ## Model Summary")
-
+st.markdown(
+    f"""
+    <div style='text-align: left;'>
+        <span>&#9679; Regression Equation: </span> $$y = {model.coef_[0]:.3f}x + {model.intercept_:.3f}$$<br>
+        <span>&#9679; Slope (β₁): </span> {model.coef_[0]:.3f} → Increase per year<br>
+        <span>&#9679; Intercept (β₀): </span> {model.intercept_:.3f} → Value when YEAR = 0
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 # Regression equation
-st.write(f"### 🔹Regression Equation:")
-st.latex(r"y = {:.3f}x + {:.3f}".format(model.coef_[0], model.intercept_))
+#st.write(f"### 🔹Regression Equation:")
+#st.latex(r"y = {:.3f}x + {:.3f}".format(model.coef_[0], model.intercept_))
 
 # Coefficients explained
-st.write(f"- **Slope (β1):** {model.coef_[0]:.3f}  → Increase per year")
-st.write(f"- **Intercept (β0):** {model.intercept_:.3f}  → Value when year = 0")
+#st.write(f"- **Slope (β1):** {model.coef_[0]:.3f}  → Increase per year")
+#st.write(f"- **Intercept (β0):** {model.intercept_:.3f}  → Value when year = 0")
 
 # Metrics
 st.write(f"###🔹 Model Performance Metrics:")
