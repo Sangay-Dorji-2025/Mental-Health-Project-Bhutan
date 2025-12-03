@@ -262,10 +262,13 @@ st.write(f"**Intercept:** {model.intercept_:.3f}")
 # --------------------------
 # 4. PLOT ACTUAL vs PREDICTED
 # --------------------------
+y_test_np = np.array(y_test)
+y_pred_np = np.array(y_pred)
+
 fig, ax = plt.subplots(figsize=(6,6))
-ax.scatter(y_test.values, y_pred, color='blue', label='Predicted vs Actual')
-ax.plot([y_test.min(), y_test.max()],
-        [y_test.min(), y_test.max()],
+ax.scatter(y_test_np, y_pred_np, color='blue', label='Predicted vs Actual')
+ax.plot([y_test_np.min(), y_test_np.max()],
+        [y_test_np.min(), y_test_np.max()],
         color='red', linestyle='--', label='Perfect Prediction')
 ax.set_xlabel("Actual Numeric")
 ax.set_ylabel("Predicted Numeric")
@@ -273,8 +276,6 @@ ax.set_title("Actual vs Predicted (Linear Regression)")
 ax.legend()
 ax.grid(True)
 st.pyplot(fig)
-print("y_test shape:", y_test.shape)
-print("y_pred shape:", y_pred.shape)
 # --------------------------
 # 5. PREDICT FUTURE YEAR
 # --------------------------
