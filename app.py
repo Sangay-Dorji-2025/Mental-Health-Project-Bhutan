@@ -235,64 +235,78 @@ else:
 
     # Placeholder to prevent execution errors
     #model = None
-# --------------------------
-st.title("Linear Regression for Hospital Data (Only LinearRegression)")
-
-st.write("### Sample Hospital Dataset")
-st.dataframe(df_clean)
 
 # --------------------------
-# 2. BUILD LINEAR REGRESSION MODEL
-# --------------------------
-X = df_clean[["YEAR (DISPLAY)"]]      # Feature
-y = df_clean["Numeric"]               # Target
+st.title("📈 Linear Regression Dashboard — Hospital Data (Only LinearRegression)")
+
+st.write("### Sample Dataset")
+st.dataframe(df)
+
+# ---------------------------------------------------------
+# Build Linear Regression Model
+# ---------------------------------------------------------
+X = df_clean[["YEAR (DISPLAY)"]]
+y = df_clean["Numeric"]
 
 model = LinearRegression()
 model.fit(X, y)
 
-# Predict values
+# Predictions
 df_clean["Predicted"] = model.predict(X)
 
-# --------------------------
-# 3. DISPLAY RESULTS
-# --------------------------
-st.write("### Model Coefficients")
-st.write(f"**Slope:** {model.coef_[0]:.3f}")
-st.write(f"**Intercept:** {model.intercept_:.3f}")
+# ---------------------------------------------------------
+# Calculate Metrics
+# ---------------------------------------------------------
+r2 = r2_score(y, df_clean["Predicted"])
+mae = mean_absolute_error(y, df_clean["Predicted"])
+rmse = np.sqrt(mean_squared_error(y, df_clean["Predicted"]))
 
-# --------------------------
-# 4. CLEAN PLOT (sorted by year)
-# --------------------------
-df_plot = df_clean.sort_values("YEAR (DISPLAY)")
+# ---------------------------------------------------------
+# Display Model Information
+# ---------------------------------------------------------
+st.write("## 📘 Model Summary")
 
-fig, ax = plt.subplots(figsize=(8, 5))
+# Regression equation
+st.write(f"### 🔹 Regression Equation:")
+st.latex(r"y = {:.3f}x + {:.3f}".format(model.coef_[0], model.intercept_))
 
-# Actual values
-ax.plot(
-    df_plot["YEAR (DISPLAY)"],
-    df_plot["Numeric"],
-    marker='o',
-    color='blue',
-    label='Actual'
-)
+# Coefficients explained
+st.write(f"- **Slope (β1):** {model.coef_[0]:.3f}  → Increase per year")
+st.write(f"- **Intercept (β0):** {model.intercept_:.3f}  → Value when year = 0")
 
-# Predicted values
-ax.plot(
-    df_plot["YEAR (DISPLAY)"],
-    df_plot["Predicted"],
-    marker='o',
-    linestyle='--',
-    color='orange',
-    label='Predicted'
-)
+# Metrics
+st.write("### 🔹 Model Performance Metrics:")
+st.write(f"- **R² Score:** {r2:.3f}")
+st.write(f"- **MAE (Mean Absolute Error):** {mae:.3f}")
+st.write(f"- **RMSE (Root Mean Squared Error):** {rmse:.3f}")
 
-ax.set_xlabel("YEAR (DISPLAY)")
-ax.set_ylabel("Numeric (Hospital Data)")
-ax.set_title("Linear Regression — Actual vs Predicted")
+# ---------------------------------------------------------
+# Plot Actual vs Predicted
+# ---------------------------------------------------------
+st.write("## 📊 Actual vs Predicted Plot")
+
+fig, ax = plt.subplots(figsize=(9, 5))
+
+# Scatter actual values
+ax.scatter(df_clean["YEAR (DISPLAY)"], df_clean["Numeric"], s=80, label="Actual", alpha=0.8)
+
+# Line predicted
+ax.plot(df_clean["YEAR (DISPLAY)"], df_clean["Predicted"], linestyle='--', linewidth=2, label="Predicted")
+
+# Make plot clean
+ax.set_xlabel("YEAR (DISPLAY)", fontsize=12)
+ax.set_ylabel("Numeric (Hospital Data)", fontsize=12)
+ax.set_title("Linear Regression — Actual vs Predicted", fontsize=15, fontweight="bold")
+ax.grid(True, linestyle='--', alpha=0.4)
 ax.legend()
-ax.grid(True)
 
-st.pyplot(fig)  
+st.pyplot(fig)
+
+# ---------------------------------------------------------
+# Table of Actual vs Predicted
+# ---------------------------------------------------------
+st.write("## 📄 Actual vs Predicted Table")
+st.dataframe(df_clean)
 #----------------------------------------------------------------
 # SECTION 6: PREDICTION INTERFACE
 # ----------------------------------------------------
