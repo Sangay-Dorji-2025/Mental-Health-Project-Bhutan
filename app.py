@@ -277,20 +277,12 @@ st.markdown(
     f"""
     <div style='text-align: left; font-size: 20px;'>
         <p>&#9679; <strong>R² Score:</strong> {r2:.3f}</p>
-        <p>&#9679; <strong>MAE:</strong> {mae:.3f}</p>
-        <p>&#9679; <strong>RMSE:</strong> {rmse:.3f}</p>
+        <p>&#9679; <strong>Mean Absolute Error:</strong> {mae:.3f}</p>
+        <p>&#9679; <strong>Root Mean Squared Error:</strong> {rmse:.3f}</p>
     </div>
     """,
     unsafe_allow_html=True
 )
-
-
-#st.write(f"- ***R² Score:** {r2:.3f}")
-#st.write(f"- **Mean Absolute Error (MAE):** {mae:.3f}")
-#st.write(f"- **Root Mean Squared Error (RMSE):** {rmse:.3f}")
-
-
-
 # ---------------------------------------------------------
 # Table of Actual vs Predicted
 # ---------------------------------------------------------
