@@ -235,11 +235,6 @@ else:
 
     # Placeholder to prevent execution errors
     #model = None
-st.title("Linear Regression for Hospital Data (Only LinearRegression)")
-
-st.write("### Sample Hospital Dataset")
-st.dataframe(df)
-
 # --------------------------
 st.title("Linear Regression for Hospital Data (Only LinearRegression)")
 
