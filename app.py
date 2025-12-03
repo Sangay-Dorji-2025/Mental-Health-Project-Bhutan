@@ -245,8 +245,40 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
+# -----------------------------------
+# 3) TRAIN MODELS
+# -----------------------------------
+# Linear Regression
+lin_reg = LinearRegression()
+lin_reg.fit(X_train, y_train)
 
+# -----------------------------------
+# 4) PREDICTIONS
+# -----------------------------------
+y_pred_lr = lin_reg.predict(X_test)
 # ----------------------------------------------------
+# -----------------------------------
+# 5) EVALUATION
+# -----------------------------------
+def evaluate_model(y_true, y_pred, name):
+    print(f"\n----- {name} -----")
+    print("MAE :", mean_absolute_error(y_true, y_pred))
+    print("MSE :", mean_squared_error(y_true, y_pred))
+    print("RMSE:", np.sqrt(mean_squared_error(y_true, y_pred)))
+    print("R2  :", r2_score(y_true, y_pred))
+
+evaluate_model(y_test, y_pred_lr, "Linear Regression")
+
+plt.figure(figsize=(8, 5))
+plt.plot(y_test.values, label="Actual", marker='o')
+plt.plot(y_pred_xgb, label="XGBoost Predicted", marker='o')
+plt.xlabel("Test Sample Index")
+plt.ylabel("Numeric Value")
+plt.title("Actual vs Predicted Hospital Numeric Values")
+plt.grid(True)
+plt.legend()
+plt.show()
+#----------------------------------------------------------------
 # SECTION 6: PREDICTION INTERFACE
 # ----------------------------------------------------
 st.header("6. Prediction Interface")
