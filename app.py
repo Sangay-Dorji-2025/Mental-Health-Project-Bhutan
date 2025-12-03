@@ -286,8 +286,8 @@ st.markdown(
 
 
 #st.write(f"- ***R² Score:** {r2:.3f}")
-#st.write(f"- **MAE (Mean Absolute Error):** {mae:.3f}")
-#st.write(f"- **RMSE (Root Mean Squared Error):** {rmse:.3f}")
+#st.write(f"- **MAE (Mean Absolute Error):** {Mean Absolute Error:.3f}")
+#st.write(f"- **RMSE (Root Mean Squared Error):** {Root Mean Squared Error:.3f}")
 
 
 
