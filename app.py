@@ -234,7 +234,17 @@ else:
     st.info("This template does not include a training implementation. Write your own training logic here.")
 
     # Placeholder to prevent execution errors
-    model = None
+    #model = None
+    # 2) FEATURES & TARGET
+# -----------------------------------
+X = df_clean[["YEAR (DISPLAY)", "Low", "High"]]
+y = df_clean["Numeric"]
+
+# Train/Test split (80% / 20%)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
 
 # ----------------------------------------------------
 # SECTION 6: PREDICTION INTERFACE
