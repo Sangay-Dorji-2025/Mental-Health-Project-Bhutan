@@ -257,6 +257,7 @@ rmse = np.sqrt(mean_squared_error(y, df_clean["Predicted"]))
 # Display Model Information
 # ---------------------------------------------------------
 st.write(" ## Model Summary")
+# Coefficients explained
 st.markdown(
     f"""
     <div style='text-align: left; font-size: 20px;'>
@@ -267,18 +268,14 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-# Coefficients explained
-#st.write(f"- **Slope (β1):** {model.coef_[0]:.3f}  → Increase per year")
-#st.write(f"- **Intercept (β0):** {model.intercept_:.3f}  → Value when year = 0")
-
 # Metrics
 st.write(" ## Model Performance Metrics:")
 st.markdown(
     f"""
     <div style='text-align: left; font-size: 20px;'>
-        <p>&#9679; <strong>R² Score:</strong> {r2:.3f}</p>
-        <p>&#9679; <strong>Mean Absolute Error (MAE):</strong> {mae:.3f}</p>
-        <p>&#9679; <strong>Root Mean Squared Error (RMSE):</strong> {rmse:.3f}</p>
+        <p>&#9679; <strong>R Square (R²) Score:</strong> {r2:.3f}</p>
+        <p>&#9679; <strong>Mean Absolute Error Score (MAE):</strong> {mae:.3f}</p>
+        <p>&#9679; <strong>Root Mean Squared Error Score (RMSE):</strong> {rmse:.3f}</p>
     </div>
     """,
     unsafe_allow_html=True
