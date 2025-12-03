@@ -260,7 +260,16 @@ st.write(" ## Model Summary")
 
 # Regression equation
 st.write(f"### 🔹Regression Equation:")
-st.latex(r"y = {:.3f}x + {:.3f}".format(model.coef_[0], model.intercept_))
+st.markdown(
+    f"""
+    <div style='text-align: left;'>
+        <h3>🔹 Regression Equation:</h3>
+        $$y = {model.coef_[0]:.3f}x + {model.intercept_:.3f}$$
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+#st.latex(r"y = {:.3f}x + {:.3f}".format(model.coef_[0], model.intercept_))
 
 # Coefficients explained
 st.write(f"- **Slope (β1):** {model.coef_[0]:.3f}  → Increase per year")
