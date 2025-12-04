@@ -280,7 +280,14 @@ st.markdown(
 # Table of Actual vs Predicted
 # ---------------------------------------------------------
 st.write("##  Actual vs Predicted Table")
-st.dataframe(df_clean)
+#st.dataframe(df_clean)
+def highlight_predicted(col):
+    return ['background-color: yellow' if col.name == 'Predicted' else '' for _ in col]
+
+styled_df = df_clean.style.apply(highlight_predicted, axis=0)
+
+st.dataframe(styled_df)
+
 #----------------------------------------------------------------
 # SECTION 6: PREDICTION INTERFACE
 # ----------------------------------------------------
