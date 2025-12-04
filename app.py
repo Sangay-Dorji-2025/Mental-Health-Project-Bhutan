@@ -290,7 +290,7 @@ st.dataframe(df_clean)
 # ----------------------------------------------------
 st.header("6. Prediction Interface")
 
-st.write("Build your prediction input widgets here.")
+#st.write("Build your prediction input widgets here.")
 ##################################################################
 # --------------------------
 # 5. PREDICT FUTURE YEAR
