@@ -296,7 +296,7 @@ st.write("Build your prediction input widgets here.")
 # 5. PREDICT FUTURE YEAR
 # --------------------------
 st.write("### Predict for Future Year")
-future_year = st.number_input("Enter future year:", min_value=1960, max_value=2050)
+future_year = st.number_input("Enter future year:", min_value=2030, max_value=2050)
 
 if st.button("Predict"):
     predicted_value = model.predict([[future_year]])
