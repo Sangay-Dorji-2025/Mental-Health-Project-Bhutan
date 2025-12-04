@@ -277,7 +277,7 @@ mae = mean_absolute_error(y, df_clean["Predicted"])
 rmse = np.sqrt(mean_squared_error(y, df_clean["Predicted"]))
 
  # --- Add predictions to full df for plotting ---
-df_clean["Predicted"] = model.predict(df_clean[feature_cols])
+#df_clean["Predicted"] = model.predict(df_clean[feature_cols])
 
  # --- Plot Actual vs Predicted ---
 fig, ax = plt.subplots(figsize=(10,5))
