@@ -238,8 +238,8 @@ else:
 # Build Linear Regression Model
 # ---------------------------------------------------------
 numeric_cols = df.select_dtypes(include=np.number).columns.tolist()
-    target_col = st.selectbox("Select Target Column", numeric_cols)
-    feature_cols = st.multiselect("Select Feature Columns", [c for c in numeric_cols if c != target_col], default=[c for c in numeric_cols if c != target_col])
+target_col = st.selectbox("Select Target Column", numeric_cols)
+feature_cols = st.multiselect("Select Feature Columns", [c for c in numeric_cols if c != target_col], default=[c for c in numeric_cols if c != target_col])
 
     if feature_cols:
         X = df[feature_cols]
