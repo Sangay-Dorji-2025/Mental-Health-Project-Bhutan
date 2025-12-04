@@ -251,17 +251,17 @@ y = df_clean["Numeric"]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
  # --- Model Selection ---
- model_option = st.selectbox("Select Regression Model", ["Linear Regression", "Polynomial Regression (deg 2)", "Random Forest"])
-    if model_option == "Linear Regression":
-        model = LinearRegression()
-    elif model_option == "Polynomial Regression (deg 2)":
-         model = make_pipeline(PolynomialFeatures(degree=2), LinearRegression())
-    else:
-        model = RandomForestRegressor(n_estimators=100, random_state=42)
+model_option = st.selectbox("Select Regression Model", ["Linear Regression", "Polynomial Regression (deg 2)", "Random Forest"])
+if model_option == "Linear Regression":
+    model = LinearRegression()
+elif model_option == "Polynomial Regression (deg 2)":
+    model = make_pipeline(PolynomialFeatures(degree=2), LinearRegression())
+else:
+    model = RandomForestRegressor(n_estimators=100, random_state=42)
 
 # --- Fit Model ---
-        model.fit(X_train, y_train)
-        y_pred = model.predict(X_test)
+ model.fit(X_train, y_train)
+ y_pred = model.predict(X_test)
  # --- Flatten predictions to 1D array to avoid TypeError ---
         y_pred = np.ravel(y_pred)
         y_test = np.ravel(y_test)
