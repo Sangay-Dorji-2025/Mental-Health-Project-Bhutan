@@ -37,6 +37,7 @@ else:
 # SECTION 2: BASIC DATA CLEANING (EDIT AS NEEDED)
 # ----------------------------------------------------
 st.header("2. Basic Data Cleaning")
+df_clean = df.copy()
 indicator_list = sorted(df_clean["GHO (DISPLAY)"].unique())
 selected_indicator = st.selectbox("Choose an Indicator:", indicator_list)
 
