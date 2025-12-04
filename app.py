@@ -263,8 +263,8 @@ else:
 model.fit(X_train, y_train)
 df_clean["Predicted"] = model.predict(X)
  # --- Flatten predictions to 1D array to avoid TypeError ---
+y_pred = model.predict(X_test)
 y_pred = np.ravel(y_pred)
-y_test = np.ravel(y_test)
 
  # --- Metrics ---
 mae = mean_absolute_error(y_test, y_pred)
