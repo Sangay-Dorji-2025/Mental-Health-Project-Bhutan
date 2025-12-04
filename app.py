@@ -78,8 +78,8 @@ indicator_list = sorted(df_clean["GHO (DISPLAY)"].unique())
 selected_indicator = st.selectbox("Choose an Indicator:", indicator_list)
 
 # Filter dataset
+df_clean = df.copy()
 df_filtered = df_clean[df_clean["GHO (DISPLAY)"] == selected_indicator].copy()
-
 st.write("### Filtered Data")
 st.dataframe(df_filtered)
 
