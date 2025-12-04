@@ -37,7 +37,18 @@ else:
 # SECTION 2: BASIC DATA CLEANING (EDIT AS NEEDED)
 # ----------------------------------------------------
 st.header("2. Basic Data Cleaning")
+indicator_list = sorted(df_clean["GHO (DISPLAY)"].unique())
+selected_indicator = st.selectbox("Choose an Indicator:", indicator_list)
 
+# Filter dataset
+df_filtered = df_clean[df_clean["GHO (DISPLAY)"] == selected_indicator].copy()
+
+st.write("### Filtered Data")
+st.dataframe(df_filtered)
+
+if df_filtered.shape[0] < 3:
+    st.warning("⚠ Not enough data points for modeling. Need at least 3 years.")
+    st.stop()
 
 # ----------------------------------------------------
 # SECTION 3: EXPLORATORY DATA ANALYSIS (EDIT AS NEEDED)
