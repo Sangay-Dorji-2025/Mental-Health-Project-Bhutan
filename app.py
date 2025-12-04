@@ -260,32 +260,31 @@ else:
     model = RandomForestRegressor(n_estimators=100, random_state=42)
 
 # --- Fit Model ---
- model.fit(X_train, y_train)
- y_pred = model.predict(X_test)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
  # --- Flatten predictions to 1D array to avoid TypeError ---
-        y_pred = np.ravel(y_pred)
-        y_test = np.ravel(y_test)
+y_pred = np.ravel(y_pred)
+y_test = np.ravel(y_test)
 
  # --- Metrics ---
-        mae = mean_absolute_error(y_test, y_pred)
-        rmse = mean_squared_error(y_test, y_pred, squared=False)
-        r2 = r2_score(y_test, y_pred)
-        st.write(f"**MAE:** {mae:.3f}, **RMSE:** {rmse:.3f}, **R² Score:** {r2:.3f}")
+mae = mean_absolute_error(y_test, y_pred)
+rmse = mean_squared_error(y_test, y_pred, squared=False)
+r2 = r2_score(y_test, y_pred)
+st.write(f"**MAE:** {mae:.3f}, **RMSE:** {rmse:.3f}, **R² Score:** {r2:.3f}")
         
+ # --- Add predictions to full df for plotting ---
+df_clean["Predicted"] = model.predict(df_clean[feature_cols])
 
-        # --- Add predictions to full df for plotting ---
-        df_clean["Predicted"] = model.predict(df_clean[feature_cols])
-
-        # --- Plot Actual vs Predicted ---
-        fig, ax = plt.subplots(figsize=(10,5))
-        ax.scatter(df.index, df_clean[target_col], s=100, alpha=0.8, edgecolor="black", label="Actual", color="blue")
-        ax.plot(df.index, df_clean["Predicted"], color="red", marker='o', linewidth=2, markersize=6, label="Predicted")
-        ax.set_title(f"Actual vs Predicted - {model_option}", fontsize=16, fontweight="bold")
-        ax.set_xlabel("Index", fontsize=12)
-        ax.set_ylabel(target_col, fontsize=12)
-        ax.grid(True, linestyle='--', alpha=0.35)
-        ax.legend()
-        st.pyplot(fig)
+ # --- Plot Actual vs Predicted ---
+fig, ax = plt.subplots(figsize=(10,5))
+ax.scatter(df.index, df_clean[target_col], s=100, alpha=0.8, edgecolor="black", label="Actual", color="blue")
+ax.plot(df.index, df_clean["Predicted"], color="red", marker='o', linewidth=2, markersize=6, label="Predicted")
+ax.set_title(f"Actual vs Predicted - {model_option}", fontsize=16, fontweight="bold")
+ax.set_xlabel("Index", fontsize=12)
+ax.set_ylabel(target_col, fontsize=12)
+ax.grid(True, linestyle='--', alpha=0.35)
+ax.legend()
+st.pyplot(fig)
         
 # ----------------------------------------------------
 # SECTION 7: EXPORT PROCESSED DATA (OPTIONAL)
