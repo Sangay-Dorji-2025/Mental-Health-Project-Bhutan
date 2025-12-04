@@ -111,7 +111,7 @@ if mode == "Load Existing Model":
 else:
     st.title("Bhutan Health Care Data Science(Supervised Learning Model:  Linear Regression)")
     st.write(" ## Sample Dataset")
-    st.dataframe(df)
+    st.dataframe(df_filtered)
 
 # ---------------------------------------------------------
 # Build Linear Regression Model
