@@ -267,11 +267,15 @@ y_pred = model.predict(X_test)
 y_pred = np.ravel(y_pred)
 
  # --- Metrics ---
-mae = mean_absolute_error(y_test, y_pred)
-rmse = mean_squared_error(y_test, y_pred, squared=False)
-r2 = r2_score(y_test, y_pred)
-st.write(f"**MAE:** {mae:.3f}, **RMSE:** {rmse:.3f}, **R² Score:** {r2:.3f}")
-        
+#mae = mean_absolute_error(y_test, y_pred)
+#rmse = mean_squared_error(y_test, y_pred, squared=False)
+#r2 = r2_score(y_test, y_pred)
+#st.write(f"**MAE:** {mae:.3f}, **RMSE:** {rmse:.3f}, **R² Score:** {r2:.3f}")
+
+r2 = r2_score(y, df_clean["Predicted"])
+mae = mean_absolute_error(y, df_clean["Predicted"])
+rmse = np.sqrt(mean_squared_error(y, df_clean["Predicted"]))
+
  # --- Add predictions to full df for plotting ---
 df_clean["Predicted"] = model.predict(df_clean[feature_cols])
 
