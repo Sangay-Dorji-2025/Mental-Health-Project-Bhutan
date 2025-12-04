@@ -294,7 +294,7 @@ st.header("6. Prediction Interface")
 # 5. PREDICT FUTURE YEAR
 # --------------------------
 st.write("### Predict for Future Year")
-#st.write("Existing data predicted between 1961 to 2030. Now you can predict after 2030 for next 100 years")
+st.write("Existing data predicted between 1961 to 2030. Now you can predict after 2030 for next 100 years")
 future_year = st.number_input("Enter future year:", min_value=2030, max_value=2130)
 if st.button("Predict"):
     predicted_value = model.predict([[future_year]])
@@ -328,7 +328,7 @@ if st.button("Predict"):
 # ---------------------------------------------------------
 # Plot Actual vs Predicted
 # ---------------------------------------------------------
-st.write(f"### 🔹Actual vs Predicted Plot")
+st.write(f"### Actual vs Predicted Plot")
 
 fig, ax = plt.subplots(figsize=(9, 5))
 
