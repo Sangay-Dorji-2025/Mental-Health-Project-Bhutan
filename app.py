@@ -237,13 +237,13 @@ else:
 # ---------------------------------------------------------
 # Build Linear Regression Model
 # ---------------------------------------------------------
-numeric_cols = df.select_dtypes(include=np.number).columns.tolist()
+numeric_cols = df_clean.select_dtypes(include=np.number).columns.tolist()
 target_col = st.selectbox("Select Target Column", numeric_cols)
 feature_cols = st.multiselect("Select Feature Columns", [c for c in numeric_cols if c != target_col], default=[c for c in numeric_cols if c != target_col])
 
 if feature_cols:
-    X = df[feature_cols]
-    y = df[target_col]
+    X = df_clean[feature_cols]
+    y = df_clean[target_col]
 
  # --- Train/Test Split ---
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -268,12 +268,12 @@ if feature_cols:
         st.write(f"**MAE:** {mae:.3f}, **RMSE:** {rmse:.3f}, **R² Score:** {r2:.3f}")
 
         # --- Add predictions to full df for plotting ---
-        df["Predicted"] = model.predict(df[feature_cols])
+        df_clean["Predicted"] = model.predict(df_clean[feature_cols])
 
         # --- Plot Actual vs Predicted ---
         fig, ax = plt.subplots(figsize=(10,5))
-        ax.scatter(df.index, df[target_col], s=100, alpha=0.8, edgecolor="black", label="Actual", color="blue")
-        ax.plot(df.index, df["Predicted"], color="red", marker='o', linewidth=2, markersize=6, label="Predicted")
+        ax.scatter(df.index, df_clean[target_col], s=100, alpha=0.8, edgecolor="black", label="Actual", color="blue")
+        ax.plot(df.index, df_clean["Predicted"], color="red", marker='o', linewidth=2, markersize=6, label="Predicted")
         ax.set_title(f"Actual vs Predicted - {model_option}", fontsize=16, fontweight="bold")
         ax.set_xlabel("Index", fontsize=12)
         ax.set_ylabel(target_col, fontsize=12)
