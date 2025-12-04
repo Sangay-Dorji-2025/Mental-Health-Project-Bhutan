@@ -280,20 +280,7 @@ st.markdown(
 # Table of Actual vs Predicted
 # ---------------------------------------------------------
 st.write("##  Actual vs Predicted Table")
-#st.dataframe(df_clean)
-#df = df_clean.copy()
-# Name of the predicted column
-pred_col = "Predicted"   # change if different
-
-# Convert dataframe to HTML with styling
-def highlight_column(df, column):
-    return df.style.set_properties(
-        **{"background-color": "yellow"}, subset=[column]
-    ).to_html()
-html = highlight_column(df, pred_col)
-# Render HTML table safely
-st.markdown(html, unsafe_allow_html=True)
-
+st.dataframe(df_clean)
 #----------------------------------------------------------------
 # SECTION 6: PREDICTION INTERFACE
 # ----------------------------------------------------
