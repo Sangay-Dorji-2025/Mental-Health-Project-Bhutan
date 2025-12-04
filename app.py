@@ -113,7 +113,39 @@ st.markdown(
 # ---------------------------------------------------------
 st.write("### Actual vs Predicted Table")
 st.dataframe(df_filtered[["YEAR (DISPLAY)", "Numeric", "Predicted"]])
-        
+
+future_year = st.number_input(
+    "Enter future year to predict:",
+    min_value=int(df_filtered["YEAR (DISPLAY)"].max()),
+    max_value=2200
+)
+
+if st.button("Predict Future Value"):
+    future_value = model.predict([[future_year]])[0]
+    st.success(f"Predicted value for {future_year}: **{future_value:.2f}**")
+
+# ---------------------------------------------------------
+# PLOT
+# ---------------------------------------------------------
+st.header("4. Actual vs Predicted Plot")
+
+fig, ax = plt.subplots(figsize=(9, 5))
+
+# Scatter actual
+ax.scatter(df_filtered["YEAR (DISPLAY)"], df_filtered["Numeric"], 
+           label="Actual", s=80, alpha=0.8)
+
+# Line predicted
+ax.plot(df_filtered["YEAR (DISPLAY)"], df_filtered["Predicted"], 
+        linestyle='--', linewidth=2, color='red', label="Predicted")
+
+ax.set_xlabel("Year", fontsize=12)
+ax.set_ylabel(selected_indicator, fontsize=12)
+ax.set_title(f"Trend for: {selected_indicator}", fontsize=15, fontweight="bold")
+ax.grid(True, linestyle='--', alpha=0.4)
+ax.legend()
+
+st.pyplot(fig)
 # ----------------------------------------------------
 # SECTION 7: EXPORT PROCESSED DATA (OPTIONAL)
 # ----------------------------------------------------
