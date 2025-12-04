@@ -239,12 +239,13 @@ else:
 # Build Linear Regression Model
 # ---------------------------------------------------------
 #numeric_cols = df_clean.select_dtypes(include=np.number).columns.tolist()
-target_col = st.selectbox("Select Target Column", numeric_cols)
-feature_cols = st.multiselect("Select Feature Columns", [c for c in numeric_cols if c != target_col], default=[c for c in numeric_cols if c != target_col])
-
-if feature_cols:
-    X = df_clean[feature_cols]
-    y = df_clean[target_col]
+#target_col = st.selectbox("Select Target Column", numeric_cols)
+#feature_cols = st.multiselect("Select Feature Columns", [c for c in numeric_cols if c != target_col], default=[c for c in numeric_cols if c != target_col])
+X = df_clean[["YEAR (DISPLAY)"]]
+y = df_clean["Numeric"]
+#if feature_cols:
+   # X = df_clean[feature_cols]
+   # y = df_clean[target_col]
 
  # --- Train/Test Split ---
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
