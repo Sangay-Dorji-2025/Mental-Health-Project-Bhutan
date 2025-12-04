@@ -286,8 +286,8 @@ def highlight_predicted(col):
 
 styled_df = df_clean.style.apply(highlight_predicted, axis=0)
 
-st.dataframe(styled_df)
-
+# Use st.write for Styler
+st.write(styled_df)
 #----------------------------------------------------------------
 # SECTION 6: PREDICTION INTERFACE
 # ----------------------------------------------------
