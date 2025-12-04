@@ -4,12 +4,10 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-# import joblib 
 import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
-#from xgboost import XGBRegressor
 import os
 st.set_page_config(page_title="Bhutan Healthcare Analytics", layout="wide")
 
@@ -89,8 +87,6 @@ if st.checkbox("Show column info"):
         "Column": df_clean.columns,
         "Dtype": df_clean.dtypes.astype(str)
     }))
-
-
 # ----------------------------------------------------
 # SECTION 4: FEATURE ENGINEERING (USER FILLS IN)
 # ----------------------------------------------------
@@ -300,31 +296,6 @@ if st.button("Predict"):
     predicted_value = model.predict([[future_year]])
     st.success(f"Predicted Numeric value for {future_year}: **{predicted_value[0]:.2f}**") 
     
-
-#################################################################################
-# Placeholder: user defines input features
-# Example: numeric inputs based on numeric columns
-# prediction_inputs = {}
-##############################################################################################
-#if model is not None:
-  #  st.subheader("Provide inputs for prediction")
-#    
-  #  numeric_cols = df_features.select_dtypes(include=[np.number]).columns.tolist()
-    
-   # for col in numeric_cols:
-    #    val = st.number_input(f"Input for {col}", float(df_features[col].min()), float(df_features[col].max()))
-   #     prediction_inputs[col] = val
-    
-  #  if st.button("Predict"):
-  #      try:
-   #         X_input = pd.DataFrame([prediction_inputs])
-   #         pred = model.predict(X_input)
-    #        st.success(f"Model Prediction: {pred[0]}")
-    #    except Exception as e:
-    #        st.error(f"Prediction failed: {e}")
-#else:
- #   st.warning("Model not available. Please train or upload a model.")
-
 # ---------------------------------------------------------
 # Plot Actual vs Predicted
 # ---------------------------------------------------------
