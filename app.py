@@ -151,7 +151,6 @@ if years:
     df_filtered = df_clean[df_clean["YEAR (DISPLAY)"].isin(years)]
 else:
     df_filtered = df_clean.copy()
-
 # Always sort by year
 df_filtered = df_filtered.sort_values(by="YEAR (DISPLAY)", ascending=True)
 
