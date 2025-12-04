@@ -76,10 +76,9 @@ st.header("3. Exploratory Data Analysis (EDA)")
 
 indicator_list = sorted(df_clean["GHO (DISPLAY)"].unique())
 selected_indicator = st.selectbox("Choose an Indicator:", indicator_list)
+df_filtered = df_clean[df_clean["GHO (DISPLAY)"] == selected_indicator].copy()
 # Remove the first row
 df_filtered = df_filtered.iloc[1:]
-df_filtered = df_clean[df_clean["GHO (DISPLAY)"] == selected_indicator].copy()
-
 st.write("### Filtered Data")
 st.dataframe(df_filtered)
 
