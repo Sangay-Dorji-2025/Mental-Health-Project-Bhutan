@@ -65,6 +65,30 @@ st.write("Add your own analyses here. Below are optional placeholders.")
 ###############################################################################
 st.header("4. Feature Engineering -Histogram and advance features")
 
+# ----------------------------------------------------
+# SECTION 5: TRAIN OR LOAD MODEL (USER CHOOSES)
+# ----------------------------------------------------
+st.header("5. Machine Learning Model")
+
+mode = st.radio("Choose model mode:", ["Load Existing Model", "Train New Model"])
+
+if mode == "Load Existing Model":
+    model_file = st.file_uploader("Upload trained .pkl model", type=["pkl"])
+    if model_file is not None:
+        model = joblib.load(model_file)
+        st.success("Model loaded successfully.")
+    else:
+        st.warning("Upload a model to continue.")
+        st.stop()
+
+else:
+    st.title("Bhutan Health Care Data Science(Supervised Learning Model:  Linear Regression)")
+    st.write(" ## Sample Dataset")
+    st.dataframe(df)
+
+# ---------------------------------------------------------
+# Build Linear Regression Model
+# ---------------------------------------------------------
 
 X = df_filtered[["YEAR (DISPLAY)"]]
 y = df_filtered["Numeric"]
