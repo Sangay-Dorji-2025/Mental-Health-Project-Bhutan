@@ -73,11 +73,11 @@ st.dataframe(df_clean.head())
 # ----------------------------------------------------
 st.header("3. Exploratory Data Analysis (EDA)")
 #st.write("Add your own analyses here. Below are optional placeholders.")
-# Remove the first row
-df_filtered = df_filtered.iloc[1:]
+
 indicator_list = sorted(df_clean["GHO (DISPLAY)"].unique())
 selected_indicator = st.selectbox("Choose an Indicator:", indicator_list)
-
+# Remove the first row
+df_filtered = df_filtered.iloc[1:]
 df_filtered = df_clean[df_clean["GHO (DISPLAY)"] == selected_indicator].copy()
 
 st.write("### Filtered Data")
