@@ -304,7 +304,7 @@ st.write(f"### Actual vs Predicted Plot")
 
 fig, ax = plt.subplots(figsize=(9, 5))
 
- Scatter actual values
+ #Scatter actual values
 ax.scatter(df_clean["YEAR (DISPLAY)"], df_clean["Numeric"], s=80, label="Actual", alpha=0.8)
 
 # Line predicted
