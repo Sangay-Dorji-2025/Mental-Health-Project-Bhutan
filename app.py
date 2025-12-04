@@ -281,13 +281,19 @@ st.markdown(
 # ---------------------------------------------------------
 st.write("##  Actual vs Predicted Table")
 #st.dataframe(df_clean)
-def highlight_predicted(col):
-    return ['background-color: yellow' if col.name == 'Predicted' else '' for _ in col]
+df = df_clean.copy()
+# Name of the predicted column
+pred_col = "Predicted"   # change if different
 
-styled_df = df_clean.style.apply(highlight_predicted, axis=0)
+# Convert dataframe to HTML with styling
+def highlight_column(df, column):
+    return df.style.set_properties(
+        **{"background-color": "yellow"}, subset=[column]
+    ).to_html()
+html = highlight_column(df, pred_col)
+# Render HTML table safely
+st.markdown(html, unsafe_allow_html=True)
 
-# Use st.write for Styler
-st.write(styled_df)
 #----------------------------------------------------------------
 # SECTION 6: PREDICTION INTERFACE
 # ----------------------------------------------------
