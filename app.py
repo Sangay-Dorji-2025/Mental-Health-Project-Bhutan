@@ -302,79 +302,23 @@ if st.button("Predict"):
 # ---------------------------------------------------------
 st.write(f"### Actual vs Predicted Plot")
 
-#fig, ax = plt.subplots(figsize=(9, 5))
+fig, ax = plt.subplots(figsize=(9, 5))
 
-# Scatter actual values
-#ax.scatter(df_clean["YEAR (DISPLAY)"], df_clean["Numeric"], s=80, label="Actual", alpha=0.8)
+ Scatter actual values
+ax.scatter(df_clean["YEAR (DISPLAY)"], df_clean["Numeric"], s=80, label="Actual", alpha=0.8)
 
 # Line predicted
-#ax.plot(df_clean["YEAR (DISPLAY)"], df_clean["Predicted"], linestyle='--', linewidth=2, label="Predicted")
+ax.plot(df_clean["YEAR (DISPLAY)"], df_clean["Predicted"], linestyle='--', linewidth=2, label="Predicted")
 
 # Make plot clean
-#ax.set_xlabel("YEAR (DISPLAY)", fontsize=12)
-#ax.set_ylabel("Numeric (Hospital Data)", fontsize=12)
-#ax.set_title("Linear Regression — Actual vs Predicted", fontsize=15, fontweight="bold")
-#ax.grid(True, linestyle='--', alpha=0.4)
-#ax.legend()
-
-#st.pyplot(fig)
-##########################################################################################
-# --- Create Figure ---
-fig, ax = plt.subplots(figsize=(10, 5))
-
-# --- Scatter: Actual Values ---
-ax.scatter(
-    df_clean["YEAR (DISPLAY)"],
-    df_clean["Numeric"],
-    s=120,
-    alpha=0.85,
-    edgecolor="black",
-    linewidth=0.7,
-    label="Actual Values"
-)
-
-# --- Line: Predicted Values ---
-ax.plot(
-    df_clean["YEAR (DISPLAY)"],
-    df_clean["Predicted"],
-    linestyle='-',
-    linewidth=3,
-    marker='o',
-    markersize=7,
-    label="Predicted Trend"
-)
-
-# --- Title & Labels ---
-ax.set_title(
-    "📈 Linear Regression — Actual vs Predicted",
-    fontsize=16,
-    fontweight="bold",
-    pad=15
-)
-
-ax.set_xlabel("Year (Display)", fontsize=13)
-ax.set_ylabel("Numeric (Hospital Data)", fontsize=13)
-
-# --- Beautification ---
-ax.grid(True, linestyle='--', alpha=0.35)
-ax.spines['top'].set_visible(False)
-ax.spines['right'].set_visible(False)
-
-# Thicker ticks
-ax.tick_params(axis='both', labelsize=11, width=1)
-
-# Legend styling
-legend = ax.legend(
-    fontsize=11,
-    frameon=True,
-    facecolor="white",
-    edgecolor="gray",
-    loc="best"
-)
+ax.set_xlabel("YEAR (DISPLAY)", fontsize=12)
+ax.set_ylabel("Numeric (Hospital Data)", fontsize=12)
+ax.set_title("Linear Regression — Actual vs Predicted", fontsize=15, fontweight="bold")
+ax.grid(True, linestyle='--', alpha=0.4)
+ax.legend()
 
 st.pyplot(fig)
 
-#####################################################################################################################
 # ----------------------------------------------------
 # SECTION 7: EXPORT PROCESSED DATA (OPTIONAL)
 # ----------------------------------------------------
