@@ -91,6 +91,122 @@ if df_filtered.shape[0] < 3:
 # ----------------------------------------------------
 ###############################################################################
 st.header("4. Feature Engineering -Histogram and advance features")
+# =====================================================
+# SECTION 1 — SIMPLE HISTOGRAM (YEAR sorted when chosen)
+# =====================================================
+st.header("4.1 Simple Histogram")
+#numeric_cols = df_clean.select_dtypes(include=['number']).columns.tolist()
+
+if st.checkbox("Show Simple Histogram"):
+    if numeric_cols:
+        col = st.selectbox("Choose a numeric column", numeric_cols)
+
+        # If YEAR selected → sort ascending before plotting
+        if col == "YEAR (DISPLAY)":
+            df_sorted = df_clean.sort_values(by="YEAR (DISPLAY)")
+            data_simple = df_sorted[col]
+            xlabel = "YEAR (DISPLAY) – sorted ascending"
+        else:
+            data_simple = df_clean[col]
+            xlabel = col
+
+        fig_simple, ax_simple = plt.subplots()
+        ax_simple.hist(data_simple, bins=20)
+        ax_simple.set_xlabel(xlabel)
+        ax_simple.set_ylabel("Frequency")
+        ax_simple.set_title(f"Histogram of Bhutan Health Care")
+
+        st.pyplot(fig_simple)
+
+    else:
+        st.warning("No numeric columns available.")
+
+
+# =====================================================
+# SECTION 2 — ADVANCED FEATURE ENGINEERING HISTOGRAM
+# =====================================================
+
+st.header("4.2 Histogram (Advanced Feature Engineering) ")
+
+# --- Year selection ---
+years = st.multiselect(
+    "Select Year(s) to display",
+    sorted(df_clean["YEAR (DISPLAY)"].unique())   # sorted ascending
+)
+
+# Filter by year
+if years:
+    df_filtered = df_clean[df_clean["YEAR (DISPLAY)"].isin(years)]
+else:
+    df_filtered = df_clean.copy()
+
+# Always sort by year
+df_filtered = df_filtered.sort_values(by="YEAR (DISPLAY)", ascending=True)
+
+# --- Column selection ---
+col_options = ["Low", "Numeric", "High"]
+col_selected = st.selectbox("Choose a column", col_options)
+
+# --- Advanced options ---
+bins = st.slider("Number of bins", min_value=5, max_value=100, value=30)
+log_scale = st.checkbox("Apply Log Transformation")
+use_kde = st.checkbox("Add KDE Curve (Smooth Density)")
+
+# --- Prepare data ---
+data = df_filtered[col_selected].dropna()
+
+if log_scale:
+    data = np.log1p(data)
+
+# --- Plot histogram ---
+fig, ax = plt.subplots(figsize=(8,5))
+
+if use_kde:
+    sns.histplot(data, bins=bins, kde=True, edgecolor="black", ax=ax)
+else:
+    ax.hist(data, bins=bins, edgecolor="black")
+
+# --- Mean / Median / Std lines ---
+mean_val = data.mean()
+median_val = data.median()
+std_val = data.std()
+
+ax.axvline(mean_val, color='red', linestyle='--', linewidth=1.3, label=f"Mean: {mean_val:.2f}")
+ax.axvline(median_val, color='blue', linestyle='-', linewidth=1.3, label=f"Median: {median_val:.2f}")
+ax.axvline(mean_val + std_val, color='green', linestyle=':', linewidth=1.3, label=f"+1 Std: {mean_val+std_val:.2f}")
+# ax.axvline(mean_val - std_val, color='yellow', linestyle=':', linewidth=1.3, label=f"-1 Std: {mean_val-std_val:.2f}")
+
+# --- Labels ---
+if years:
+    year_text = ", ".join(map(str, years))   # selected years
+else:
+    year_text = "All Years"
+
+ax.set_title(
+    f"Histogram of Bhutan Health Care ({year_text})",
+    fontsize=14,
+    fontweight="bold"
+)
+
+ax.set_xlabel(col_selected)
+ax.set_ylabel("Frequency")
+ax.grid(axis='y', linestyle='--', alpha=0.5)
+ax.legend()
+
+st.pyplot(fig)
+
+# --- Summary statistics ---
+st.subheader("Summary Statistics")
+st.write(data.describe())
+
+# --- Optional boxplot ---
+if st.checkbox("Show Boxplot"):
+    fig2, ax2 = plt.subplots(figsize=(6,4))
+    ax2.boxplot(data)
+    ax2.set_title("Boxplot of Bhutan Health Care")
+    ax2.set_ylabel(col_selected)
+    st.pyplot(fig2)
+
 
 # ----------------------------------------------------
 # SECTION 5: TRAIN OR LOAD MODEL (USER CHOOSES)
