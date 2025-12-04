@@ -238,7 +238,7 @@ else:
 # ---------------------------------------------------------
 # Build Linear Regression Model
 # ---------------------------------------------------------
-X = df_clean[["YEAR (DISPLAY)"]]
+X = df_clean[["GHO (DISPLAY)"]]
 y = df_clean["Numeric"]
 
 model = RandomForestRegressor(
@@ -315,14 +315,14 @@ st.write(f"### Actual vs Predicted Plot")
 fig, ax = plt.subplots(figsize=(9, 5))
 
 # Scatter actual values
-ax.scatter(df_clean["YEAR (DISPLAY)"], df_clean["Numeric"], s=80, label="Actual", alpha=0.8)
+ax.scatter(df_clean["GHO (DISPLAY)"], df_clean["Numeric"], s=80, label="Actual", alpha=0.8)
 
 # Line predicted
-ax.plot(df_clean["YEAR (DISPLAY)"], df_clean["Predicted"], linestyle='--',
+ax.plot(df_clean["GHO (DISPLAY)"], df_clean["Predicted"], linestyle='--',
         linewidth=2, color='red', label="Predicted")
 
 # Make plot clean
-ax.set_xlabel("YEAR (DISPLAY)", fontsize=12)
+ax.set_xlabel("GHO (DISPLAY)", fontsize=12)
 ax.set_ylabel("Numeric (Hospital Data)", fontsize=12)
 ax.set_title("Random Forest — Actual vs Predicted", fontsize=15, fontweight="bold")
 ax.grid(True, linestyle='--', alpha=0.4)
