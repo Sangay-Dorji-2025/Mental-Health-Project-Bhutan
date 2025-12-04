@@ -281,8 +281,8 @@ rmse = np.sqrt(mean_squared_error(y, df_clean["Predicted"]))
 
  # --- Plot Actual vs Predicted ---
 fig, ax = plt.subplots(figsize=(10,5))
-ax.scatter(df.index, df_clean[target_col], s=100, alpha=0.8, edgecolor="black", label="Actual", color="blue")
-ax.plot(df.index, df_clean["Predicted"], color="red", marker='o', linewidth=2, markersize=6, label="Predicted")
+ax.scatter(df_clean.index, df_clean[target_col], s=100, alpha=0.8, edgecolor="black", label="Actual", color="blue")
+ax.plot(df_clean.index, df_clean["Predicted"], color="red", marker='o', linewidth=2, markersize=6, label="Predicted")
 ax.set_title(f"Actual vs Predicted - {model_option}", fontsize=16, fontweight="bold")
 ax.set_xlabel("Index", fontsize=12)
 ax.set_ylabel(target_col, fontsize=12)
