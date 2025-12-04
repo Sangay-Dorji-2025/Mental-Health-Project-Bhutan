@@ -241,116 +241,88 @@ else:
 X = df_clean[["YEAR (DISPLAY)"]]
 y = df_clean["Numeric"]
 
-# Split (so metrics are realistic)
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
-)
-
-# Train model
-model = RandomForestRegressor(
-    n_estimators=300,
-    max_depth=None,
-    random_state=42
-)
-model.fit(X_train, y_train)
+model = LinearRegression()
+model.fit(X, y)
 
 # Predictions
-y_pred = model.predict(X_test)
-
-# Add predictions to df_clean for plotting
 df_clean["Predicted"] = model.predict(X)
 
 # ---------------------------------------------------------
 # Calculate Metrics
 # ---------------------------------------------------------
-# Convert to numeric 1D arrays
-y_test = np.array(y_test, dtype=float).ravel()
-y_pred = np.array(y_pred, dtype=float).ravel()
-
-r2 = r2_score(y_test, y_pred)
-mae = mean_absolute_error(y_test, y_pred)
-rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+r2 = r2_score(y, df_clean["Predicted"])
+mae = mean_absolute_error(y, df_clean["Predicted"])
+rmse = np.sqrt(mean_squared_error(y, df_clean["Predicted"]))
 
 # ---------------------------------------------------------
 # Display Model Information
 # ---------------------------------------------------------
-st.write(" ## Model Summary (Random Forest)")
-
+st.write(" ## Model Summary")
+# Coefficients explained
 st.markdown(
     f"""
     <div style='text-align: left; font-size: 20px;'>
-        <span>&#9679; <strong>Algorithm:</strong> RandomForestRegressor</span><br>
-        <span>&#9679; <strong>Trees Used:</strong> 300</span><br>
-        <span>&#9679; <strong>Train/Test Split:</strong> 80% / 20%</span>
+        <span>&#9679; Regression Equation: </span>   y = {model.coef_[0]:.3f}x + {model.intercept_:.3f}<br>
+        <span>&#9679; Slope (β₁): </span> {model.coef_[0]:.3f} → Increase per year<br>
+        <span>&#9679; Intercept (β₀): </span> {model.intercept_:.3f} → Value when YEAR = 0
     </div>
     """,
     unsafe_allow_html=True
 )
-
 # Metrics
 st.write(" ## Model Performance Metrics:")
 st.markdown(
     f"""
     <div style='text-align: left; font-size: 20px;'>
         <p>&#9679; <strong>R Square (R²) Score:</strong> {r2:.3f}</p>
-        <p>&#9679; <strong>Mean Absolute Error (MAE):</strong> {mae:.3f}</p>
-        <p>&#9679; <strong>Root Mean Squared Error (RMSE):</strong> {rmse:.3f}</p>
+        <p>&#9679; <strong>Mean Absolute Error Score (MAE):</strong> {mae:.3f}</p>
+        <p>&#9679; <strong>Root Mean Squared Error Score (RMSE):</strong> {rmse:.3f}</p>
     </div>
     """,
     unsafe_allow_html=True
 )
-
 # ---------------------------------------------------------
-# Actual vs Predicted Table
+# Table of Actual vs Predicted
 # ---------------------------------------------------------
-st.write("## Actual vs Predicted Table")
-st.dataframe(df_clean[["YEAR (DISPLAY)", "Numeric", "Predicted"]])
-
-# ---------------------------------------------------------
-# Future Prediction Interface
-# ---------------------------------------------------------
+st.write("##  Actual vs Predicted Table")
+df = df_clean.copy()
+st.dataframe(df_clean)
+#----------------------------------------------------------------
+# SECTION 6: PREDICTION INTERFACE
+# ----------------------------------------------------
+st.header("6. Prediction Interface")
+##################################################################
+# --------------------------
+# 5. PREDICT FUTURE YEAR
+# --------------------------
 st.write("### Predict for Future Year")
+st.write("Existing data predicted between 1961 to 2030. Now you can predict after 2030 for next 100 years")
 future_year = st.number_input("Enter future year:", min_value=2030, max_value=2130)
-
-if st.button("Predict Future Value"):
-    future_pred = model.predict([[future_year]])
-    st.success(f"Predicted Numeric value for {future_year}: **{future_pred[0]:.2f}**")
-
+if st.button("Predict"):
+    predicted_value = model.predict([[future_year]])
+    st.success(f"Predicted Numeric value for {future_year}: **{predicted_value[0]:.2f}**") 
+    
 # ---------------------------------------------------------
 # Plot Actual vs Predicted
 # ---------------------------------------------------------
-st.write("### Actual vs Predicted Plot (Random Forest)")
+st.write(f"### Actual vs Predicted Plot")
 
 fig, ax = plt.subplots(figsize=(9, 5))
 
-# Scatter actual
-ax.scatter(
-    df_clean["YEAR (DISPLAY)"],
-    df_clean["Numeric"],
-    s=80,
-    label="Actual",
-    alpha=0.8
-)
+ #Scatter actual values
+ax.scatter(df_clean["YEAR (DISPLAY)"], df_clean["Numeric"], s=80, label="Actual", alpha=0.8)
 
-# Random Forest predicted line
-ax.plot(
-    df_clean["YEAR (DISPLAY)"],
-    df_clean["Predicted"],
-    linestyle='--',
-    linewidth=3,
-    color='red',
-    label="Predicted (RF)"
-)
+# Line predicted
+ax.plot(df_clean["YEAR (DISPLAY)"], df_clean["Predicted"], linestyle='--', linewidth=2,color ='red', label="Predicted")
 
-# Labels
+# Make plot clean
 ax.set_xlabel("YEAR (DISPLAY)", fontsize=12)
 ax.set_ylabel("Numeric (Hospital Data)", fontsize=12)
-ax.set_title("Random Forest — Actual vs Predicted", fontsize=15, fontweight="bold")
+ax.set_title("Linear Regression — Actual vs Predicted", fontsize=15, fontweight="bold")
 ax.grid(True, linestyle='--', alpha=0.4)
 ax.legend()
 
 st.pyplot(fig)
-
         
 # ----------------------------------------------------
 # SECTION 7: EXPORT PROCESSED DATA (OPTIONAL)
