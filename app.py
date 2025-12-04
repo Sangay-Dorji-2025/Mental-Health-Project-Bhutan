@@ -241,21 +241,21 @@ numeric_cols = df.select_dtypes(include=np.number).columns.tolist()
 target_col = st.selectbox("Select Target Column", numeric_cols)
 feature_cols = st.multiselect("Select Feature Columns", [c for c in numeric_cols if c != target_col], default=[c for c in numeric_cols if c != target_col])
 
-    if feature_cols:
-        X = df[feature_cols]
-        y = df[target_col]
+if feature_cols:
+    X = df[feature_cols]
+    y = df[target_col]
 
-        # --- Train/Test Split ---
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+ # --- Train/Test Split ---
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-        # --- Model Selection ---
-        model_option = st.selectbox("Select Regression Model", ["Linear Regression", "Polynomial Regression (deg 2)", "Random Forest"])
-        if model_option == "Linear Regression":
-            model = LinearRegression()
-        elif model_option == "Polynomial Regression (deg 2)":
-            model = make_pipeline(PolynomialFeatures(degree=2), LinearRegression())
-        else:
-            model = RandomForestRegressor(n_estimators=100, random_state=42)
+ # --- Model Selection ---
+    model_option = st.selectbox("Select Regression Model", ["Linear Regression", "Polynomial Regression (deg 2)", "Random Forest"])
+    if model_option == "Linear Regression":
+        model = LinearRegression()
+    elif model_option == "Polynomial Regression (deg 2)":
+         model = make_pipeline(PolynomialFeatures(degree=2), LinearRegression())
+    else:
+        model = RandomForestRegressor(n_estimators=100, random_state=42)
 # ----------------------------------------------------
 # SECTION 7: EXPORT PROCESSED DATA (OPTIONAL)
 # ----------------------------------------------------
