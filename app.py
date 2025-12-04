@@ -73,7 +73,19 @@ st.dataframe(df_clean.head())
 # ----------------------------------------------------
 st.header("3. Exploratory Data Analysis (EDA)")
 #st.write("Add your own analyses here. Below are optional placeholders.")
+exclude_cols = ['YEAR (DISPLAY)', 'STARTYEAR', 'ENDYEAR']
+#numeric_cols = df_clean.select_dtypes(include='number').columns
+numeric_cols = df_clean.select_dtypes(include=[np.number]).columns.tolist()
+numeric_cols = [col for col in numeric_cols if col not in exclude_cols]
+if st.checkbox("Show summary statistics"):
+    st.write(df_clean[numeric_cols].describe())
 
+if st.checkbox("Show column info"):
+    st.write(pd.DataFrame({
+        "Column": df_clean.columns,
+        "Dtype": df_clean.dtypes.astype(str)
+    }))
+#--------------------------------------------------------------------------
 indicator_list = sorted(df_clean["GHO (DISPLAY)"].unique())
 selected_indicator = st.selectbox("Choose an Indicator:", indicator_list)
 df_filtered = df_clean[df_clean["GHO (DISPLAY)"] == selected_indicator].copy()
