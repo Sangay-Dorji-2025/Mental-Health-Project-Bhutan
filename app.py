@@ -37,6 +37,42 @@ else:
 # SECTION 2: BASIC DATA CLEANING (EDIT AS NEEDED)
 # ----------------------------------------------------
 st.header("2. Basic Data Cleaning")
+st.write("This section mainly perform folloiwng task: a.Make a copy of original Dataframe. b. Remove duplicates.c. Handle NaN values. d. Converts numeric-looking object columns to float")
+ # Make a copy of the original DataFrame
+df_clean = df.copy()
+
+# Placeholder: user will customize cleaning steps
+# -------------------------------------------------
+# Example steps (comment out or replace as needed)
+# Remove the first row of DataFrame seems like its not necessary
+df_clean = df_clean.drop(df_clean.index[0])
+# Remove duplicates
+df_clean.drop_duplicates(inplace=True)
+# Handle NaN: forward fill then backward fill
+df_clean.fillna(method="ffill", inplace=True)
+df_clean.fillna(method="bfill", inplace=True)
+# Convert numeric-looking object columns to float and integer coercing errors to NaN
+cols_to_convert = {
+    'float': ['Numeric', 'Low', 'High'],
+    'int': ['YEAR (DISPLAY)', 'STARTYEAR', 'ENDYEAR']
+}
+for dtype, cols in cols_to_convert.items():
+    for col in cols:
+        if dtype == 'float':
+            df_clean[col] = pd.to_numeric(df_clean[col], errors='coerce')
+        elif dtype == 'int':
+            df_clean[col] = pd.to_numeric(df_clean[col], errors='coerce', downcast='integer')
+            
+# -------------------------------------------------
+st.write("Cleaned dataset:")
+st.dataframe(df_clean.head())
+# Already displayed in section 3
+#st.dataframe(df_clean.dtypes)
+# ----------------------------------------------------
+# SECTION 3: EXPLORATORY DATA ANALYSIS (EDIT AS NEEDED)
+# ----------------------------------------------------
+st.header("3. Exploratory Data Analysis (EDA)")
+#st.write("Add your own analyses here. Below are optional placeholders.")
 df_clean = df.copy()
 indicator_list = sorted(df_clean["GHO (DISPLAY)"].unique())
 selected_indicator = st.selectbox("Choose an Indicator:", indicator_list)
@@ -50,14 +86,6 @@ st.dataframe(df_filtered)
 if df_filtered.shape[0] < 3:
     st.warning("⚠ Not enough data points for modeling. Need at least 3 years.")
     st.stop()
-
-# ----------------------------------------------------
-# SECTION 3: EXPLORATORY DATA ANALYSIS (EDIT AS NEEDED)
-# ----------------------------------------------------
-st.header("3. Exploratory Data Analysis (EDA)")
-
-st.write("Add your own analyses here. Below are optional placeholders.")
-
 
 # ----------------------------------------------------
 # SECTION 4: FEATURE ENGINEERING (USER FILLS IN)
