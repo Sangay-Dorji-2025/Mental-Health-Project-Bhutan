@@ -66,6 +66,53 @@ st.write("Add your own analyses here. Below are optional placeholders.")
 st.header("4. Feature Engineering -Histogram and advance features")
 
 
+X = df_filtered[["YEAR (DISPLAY)"]]
+y = df_filtered["Numeric"]
+
+# Linear Regression
+model = LinearRegression()
+model.fit(X, y)
+
+df_filtered["Predicted"] = model.predict(X)
+
+# Metrics
+r2 = r2_score(y, df_filtered["Predicted"])
+mae = mean_absolute_error(y, df_filtered["Predicted"])
+rmse = np.sqrt(mean_squared_error(y, df_filtered["Predicted"]))
+
+# ---------------------------------------------------------
+# DISPLAY MODEL SUMMARY
+# ---------------------------------------------------------
+st.write("### Model Summary")
+
+st.markdown(
+    f"""
+    <div style='text-align:left; font-size:20px;'>
+        <p>&#9679; <strong>Regression Equation:</strong> y = {model.coef_[0]:.3f} × Year + {model.intercept_:.3f}</p>
+        <p>&#9679; <strong>Slope (β₁):</strong> {model.coef_[0]:.3f}</p>
+        <p>&#9679; <strong>Intercept (β₀):</strong> {model.intercept_:.3f}</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+st.write("### Model Performance:")
+st.markdown(
+    f"""
+    <div style='text-align:left; font-size:20px;'>
+        <p>&#9679; <strong>R² Score:</strong> {r2:.3f}</p>
+        <p>&#9679; <strong>MAE:</strong> {mae:.3f}</p>
+        <p>&#9679; <strong>RMSE:</strong> {rmse:.3f}</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+# ---------------------------------------------------------
+# SHOW TABLE
+# ---------------------------------------------------------
+st.write("### Actual vs Predicted Table")
+st.dataframe(df_filtered[["YEAR (DISPLAY)", "Numeric", "Predicted"]])
         
 # ----------------------------------------------------
 # SECTION 7: EXPORT PROCESSED DATA (OPTIONAL)
