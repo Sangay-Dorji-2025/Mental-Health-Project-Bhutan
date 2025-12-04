@@ -238,7 +238,7 @@ else:
 # ---------------------------------------------------------
 # Build Linear Regression Model
 # ---------------------------------------------------------
-numeric_cols = df_clean.select_dtypes(include=np.number).columns.tolist()
+#numeric_cols = df_clean.select_dtypes(include=np.number).columns.tolist()
 target_col = st.selectbox("Select Target Column", numeric_cols)
 feature_cols = st.multiselect("Select Feature Columns", [c for c in numeric_cols if c != target_col], default=[c for c in numeric_cols if c != target_col])
 
@@ -265,7 +265,7 @@ if feature_cols:
         y_pred = np.ravel(y_pred)
         y_test = np.ravel(y_test)
 
-        # --- Metrics ---
+ # --- Metrics ---
         mae = mean_absolute_error(y_test, y_pred)
         rmse = mean_squared_error(y_test, y_pred, squared=False)
         r2 = r2_score(y_test, y_pred)
