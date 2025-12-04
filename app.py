@@ -281,7 +281,6 @@ st.markdown(
 # ---------------------------------------------------------
 st.write("##  Actual vs Predicted Table")
 df = df_clean.copy()
-pred_col = "Predicted"   # <-- Change if needed
 st.dataframe(df_clean)
 #----------------------------------------------------------------
 # SECTION 6: PREDICTION INTERFACE
