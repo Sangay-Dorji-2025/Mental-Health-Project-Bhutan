@@ -308,7 +308,7 @@ fig, ax = plt.subplots(figsize=(9, 5))
 ax.scatter(df_clean["YEAR (DISPLAY)"], df_clean["Numeric"], s=80, label="Actual", alpha=0.8)
 
 # Line predicted
-ax.plot(df_clean["YEAR (DISPLAY)"], df_clean["Predicted"], linestyle='--', linewidth=2, label="Predicted")
+ax.plot(df_clean["YEAR (DISPLAY)"], df_clean["Predicted"], linestyle='---', linewidth=2,color ="red", label="Predicted")
 
 # Make plot clean
 ax.set_xlabel("YEAR (DISPLAY)", fontsize=12)
