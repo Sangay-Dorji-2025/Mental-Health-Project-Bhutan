@@ -248,10 +248,10 @@ y = df_clean["Numeric"]
    # y = df_clean[target_col]
 
  # --- Train/Test Split ---
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
  # --- Model Selection ---
-    model_option = st.selectbox("Select Regression Model", ["Linear Regression", "Polynomial Regression (deg 2)", "Random Forest"])
+ model_option = st.selectbox("Select Regression Model", ["Linear Regression", "Polynomial Regression (deg 2)", "Random Forest"])
     if model_option == "Linear Regression":
         model = LinearRegression()
     elif model_option == "Polynomial Regression (deg 2)":
