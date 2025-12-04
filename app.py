@@ -12,6 +12,7 @@ from sklearn.preprocessing import PolynomialFeatures
 from sklearn.pipeline import make_pipeline
 from sklearn.ensemble import RandomForestRegressor
 import os
+
 st.set_page_config(page_title="Bhutan Healthcare Analytics", layout="wide")
 
 st.title("Bhutan Healthcare Data Science Project")
@@ -236,92 +237,25 @@ else:
 # ---------------------------------------------------------
 # Build Linear Regression Model
 # ---------------------------------------------------------
-X = df_clean[["YEAR (DISPLAY)"]]
-y = df_clean["Numeric"]
+numeric_cols = df.select_dtypes(include=np.number).columns.tolist()
+    target_col = st.selectbox("Select Target Column", numeric_cols)
+    feature_cols = st.multiselect("Select Feature Columns", [c for c in numeric_cols if c != target_col], default=[c for c in numeric_cols if c != target_col])
 
-model = LinearRegression()
-model.fit(X, y)
+    if feature_cols:
+        X = df[feature_cols]
+        y = df[target_col]
 
-# Predictions
-df_clean["Predicted"] = model.predict(X)
+        # --- Train/Test Split ---
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# ---------------------------------------------------------
-# Calculate Metrics
-# ---------------------------------------------------------
-r2 = r2_score(y, df_clean["Predicted"])
-mae = mean_absolute_error(y, df_clean["Predicted"])
-rmse = np.sqrt(mean_squared_error(y, df_clean["Predicted"]))
-
-# ---------------------------------------------------------
-# Display Model Information
-# ---------------------------------------------------------
-st.write(" ## Model Summary")
-# Coefficients explained
-st.markdown(
-    f"""
-    <div style='text-align: left; font-size: 20px;'>
-        <span>&#9679; Regression Equation: </span>   y = {model.coef_[0]:.3f}x + {model.intercept_:.3f}<br>
-        <span>&#9679; Slope (β₁): </span> {model.coef_[0]:.3f} → Increase per year<br>
-        <span>&#9679; Intercept (β₀): </span> {model.intercept_:.3f} → Value when YEAR = 0
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-# Metrics
-st.write(" ## Model Performance Metrics:")
-st.markdown(
-    f"""
-    <div style='text-align: left; font-size: 20px;'>
-        <p>&#9679; <strong>R Square (R²) Score:</strong> {r2:.3f}</p>
-        <p>&#9679; <strong>Mean Absolute Error Score (MAE):</strong> {mae:.3f}</p>
-        <p>&#9679; <strong>Root Mean Squared Error Score (RMSE):</strong> {rmse:.3f}</p>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-# ---------------------------------------------------------
-# Table of Actual vs Predicted
-# ---------------------------------------------------------
-st.write("##  Actual vs Predicted Table")
-df = df_clean.copy()
-st.dataframe(df_clean)
-#----------------------------------------------------------------
-# SECTION 6: PREDICTION INTERFACE
-# ----------------------------------------------------
-st.header("6. Prediction Interface")
-##################################################################
-# --------------------------
-# 5. PREDICT FUTURE YEAR
-# --------------------------
-st.write("### Predict for Future Year")
-st.write("Existing data predicted between 1961 to 2030. Now you can predict after 2030 for next 100 years")
-future_year = st.number_input("Enter future year:", min_value=2030, max_value=2130)
-if st.button("Predict"):
-    predicted_value = model.predict([[future_year]])
-    st.success(f"Predicted Numeric value for {future_year}: **{predicted_value[0]:.2f}**") 
-    
-# ---------------------------------------------------------
-# Plot Actual vs Predicted
-# ---------------------------------------------------------
-st.write(f"### Actual vs Predicted Plot")
-
-fig, ax = plt.subplots(figsize=(9, 5))
-
- #Scatter actual values
-ax.scatter(df_clean["YEAR (DISPLAY)"], df_clean["Numeric"], s=80, label="Actual", alpha=0.8)
-
-# Line predicted
-ax.plot(df_clean["YEAR (DISPLAY)"], df_clean["Predicted"], linestyle='--', linewidth=2,color ='red', label="Predicted")
-
-# Make plot clean
-ax.set_xlabel("YEAR (DISPLAY)", fontsize=12)
-ax.set_ylabel("Numeric (Hospital Data)", fontsize=12)
-ax.set_title("Linear Regression — Actual vs Predicted", fontsize=15, fontweight="bold")
-ax.grid(True, linestyle='--', alpha=0.4)
-ax.legend()
-
-st.pyplot(fig)
-
+        # --- Model Selection ---
+        model_option = st.selectbox("Select Regression Model", ["Linear Regression", "Polynomial Regression (deg 2)", "Random Forest"])
+        if model_option == "Linear Regression":
+            model = LinearRegression()
+        elif model_option == "Polynomial Regression (deg 2)":
+            model = make_pipeline(PolynomialFeatures(degree=2), LinearRegression())
+        else:
+            model = RandomForestRegressor(n_estimators=100, random_state=42)
 # ----------------------------------------------------
 # SECTION 7: EXPORT PROCESSED DATA (OPTIONAL)
 # ----------------------------------------------------
