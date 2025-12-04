@@ -8,6 +8,9 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.pipeline import make_pipeline
+from sklearn.ensemble import RandomForestRegressor
 import os
 st.set_page_config(page_title="Bhutan Healthcare Analytics", layout="wide")
 
