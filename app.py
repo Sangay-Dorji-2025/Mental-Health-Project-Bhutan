@@ -244,7 +244,7 @@ model = LinearRegression()
 model.fit(X, y)
 
 # Predictions
-#df_clean["Predicted"] = model.predict(X)
+df_clean["Predicted"] = model.predict(X)
 
 # ---------------------------------------------------------
 # Calculate Metrics
