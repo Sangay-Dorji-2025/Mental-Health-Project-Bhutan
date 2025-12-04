@@ -31,7 +31,7 @@ uploaded_file = st.file_uploader("Upload CSV", type=["csv"])
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
     st.write("Preview of dataset:")
-    st.dataframe(df.head(10))
+    st.dataframe(df.head())
 else:
     st.warning("Please upload a dataset to proceed.")
     st.stop()
@@ -69,7 +69,7 @@ for dtype, cols in cols_to_convert.items():
             
 # -------------------------------------------------
 st.write("Cleaned dataset:")
-st.dataframe(df_clean.head())
+st.dataframe(df_clean.head(10))
 # Already displayed in section 3
 #st.dataframe(df_clean.dtypes)
 
