@@ -195,6 +195,13 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+# Table of Actual vs Predicted
+# ---------------------------------------------------------
+st.write("##  Actual vs Predicted Table")
+df = df_clean.copy()
+st.dataframe(df_clean)
+
 # Plot Actual vs Predicted
 years_plot = df_indicator["YEAR (DISPLAY)"].astype(int)
 fig, ax = plt.subplots(figsize=(9, 5))
