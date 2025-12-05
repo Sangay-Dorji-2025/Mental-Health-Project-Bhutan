@@ -207,25 +207,13 @@ st.dataframe(df_display[cols])
 #---------------------------------------------------------
 # Plot Actual vs Predicted
 
-fig, ax = plt.subplots(figsize=(9, 5))
-# Scatter and line plot
+fig, ax = plt.subplots(figsize=(9, 5)) 
 ax.scatter(df_indicator["YEAR (DISPLAY)"], df_indicator["Numeric"], s=80, label="Actual")
 ax.plot(df_indicator["YEAR (DISPLAY)"], df_indicator["Predicted"], color="red", linestyle='--', label="Predicted")
-
-# Labels and title
-ax.set_xlabel("Year")
-ax.set_ylabel("Numeric")
+ax.set_xlabel("Year") ax.set_ylabel("Numeric") 
 ax.set_title("Actual vs Predicted")
-
-# Grid and legend
 ax.grid(True, linestyle='--', alpha=0.5)
-ax.legend()
-
-# Force x-axis to show integers only
-ax.set_xticks(df_indicator["YEAR (DISPLAY)"].astype(int))
-ax.set_xticklabels(df_indicator["YEAR (DISPLAY)"].astype(int))
-
-# Display in Streamlit
+ax.legend() 
 st.pyplot(fig)
 
 # -----------------------------
