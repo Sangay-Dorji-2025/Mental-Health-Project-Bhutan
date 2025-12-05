@@ -126,7 +126,7 @@ else:
     st.dataframe(df_clean)
 
 indicator_list = df_clean["GHO (DISPLAY)"].unique()
-selected_indicator = st.selectbox("Choose Indicator", indicator_list)
+selected_indicator = st.selectbox("Choose Indicator to get perfect performance", indicator_list)
 df_indicator = df_clean[df_clean["GHO (DISPLAY)"] == selected_indicator].copy()
 
 X = df_indicator[["YEAR (DISPLAY)"]]
