@@ -123,14 +123,14 @@ else:
     st.title("Bhutan Health Care Data Science(Supervised Learning Model:  Linear Regression)")
     st.write(" ## Sample Dataset")
     st.dataframe(df_clean)
+#----------------------------
+#indicator_list = df_clean["GHO (DISPLAY)"].unique()
+#selected_indicator = st.selectbox("Choose Indicator", indicator_list)
+#df_indicator = df_clean[df_clean["GHO (DISPLAY)"] == selected_indicator].copy()
 
-indicator_list = df_clean["GHO (DISPLAY)"].unique()
-selected_indicator = st.selectbox("Choose Indicator", indicator_list)
-df_indicator = df_clean[df_clean["GHO (DISPLAY)"] == selected_indicator].copy()
-
-X = df_indicator[["YEAR (DISPLAY)"]]
-y = df_indicator["Numeric"]
-
+#X = df_indicator[["YEAR (DISPLAY)"]]
+#y = df_indicator["Numeric"]
+#------------------------------------------
 model = LinearRegression()
 model.fit(X, y)
 df_indicator["Predicted"] = model.predict(X)
@@ -167,10 +167,16 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+#----------------------------------------------
+indicator_list = df_clean["GHO (DISPLAY)"].unique()
+selected_indicator = st.selectbox("Choose Indicator", indicator_list)
+df_indicator = df_clean[df_clean["GHO (DISPLAY)"] == selected_indicator].copy()
 
+X = df_indicator[["YEAR (DISPLAY)"]]
+y = df_indicator["Numeric"]
 st.write("Actual vs Predicted Table")
 st.dataframe(df_indicator)
-
+#------------------------------------------------
 # Plot Actual vs Predicted
 fig, ax = plt.subplots(figsize=(9, 5))
 ax.scatter(df_indicator["YEAR (DISPLAY)"], df_indicator["Numeric"], s=80, label="Actual")
