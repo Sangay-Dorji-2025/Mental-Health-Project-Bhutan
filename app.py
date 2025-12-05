@@ -204,7 +204,7 @@ df_display = df_indicator.copy()
 cols = ["YEAR (DISPLAY)", "GHO (DISPLAY)", "Numeric", "Predicted"]
 cols = [col for col in cols if col in df_display.columns]  # ensures no error if a column missing
 st.dataframe(df_display[cols])
----------------------------------------------------------
+#---------------------------------------------------------
 # Plot Actual vs Predicted
 years_plot = df_indicator["YEAR (DISPLAY)"].astype(int)
 fig, ax = plt.subplots(figsize=(9, 5))
