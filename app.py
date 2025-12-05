@@ -68,9 +68,9 @@ if st.checkbox("Show column info"):
     st.write(pd.DataFrame({"Column": df_clean.columns, "Dtype": df_clean.dtypes.astype(str)}))
 
 # -----------------------------
-# SECTION 4: HISTOGRAMS
+# SECTION 4: Feature Engineering
 # -----------------------------
-st.header("4. Histogram Analysis")
+st.header(" ## 4.Feature Engineering -Histogram and advance features")
 
 years = st.multiselect("Select Year(s)", sorted(df_clean["YEAR (DISPLAY)"].unique()))
 df_filtered_hist = df_clean[df_clean["YEAR (DISPLAY)"].isin(years)] if years else df_clean.copy()
