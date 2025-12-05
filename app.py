@@ -195,6 +195,10 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+# -----------------------------
+# SECTION 6: FUTURE PREDICTION
+# -----------------------------
+st.header("6. Predict Future Value")
 # Plot Actual vs Predicted
 years_plot = df_indicator["YEAR (DISPLAY)"].astype(int)
 fig, ax = plt.subplots(figsize=(9, 5))
@@ -207,10 +211,14 @@ ax.grid(True, linestyle='--', alpha=0.5)
 ax.legend()
 st.pyplot(fig)
 
-# -----------------------------
-# SECTION 6: FUTURE PREDICTION
-# -----------------------------
-st.header("6. Predict Future Value")
+
+
+
+
+
+
+
+
 future_year = st.number_input("Enter future year:", min_value=2030, max_value=2130)
 if st.button("Predict"):
     pred_value = model.predict(np.array([[future_year]]))[0]
