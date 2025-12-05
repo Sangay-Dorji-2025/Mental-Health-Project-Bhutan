@@ -221,10 +221,24 @@ st.pyplot(fig)
 # SECTION 6: FUTURE PREDICTION
 # -----------------------------
 st.header("6. Predict Future Value")
-if st.button("Predict"):
-    X_future = np.array([[future_year]])
-    pred_value = model.predict(X_future)[0]
-    st.success(f"Predicted Numeric value for **{selected_indicator}** in year **{future_year}**: {pred_value:.2f}")
+# Step 1: Input future year
+min_future_year = int(df_indicator["YEAR (DISPLAY)"].max()) + 1
+future_year = st.number_input(
+    "Enter future year:",
+    min_value=min_future_year,
+    max_value=2130,
+    value=min_future_year
+)
+
+# Step 2: Predict button
+if st.button("Predict Future Value"):
+    try:
+        # Make sure input is numeric and in correct shape
+        X_future = np.array([[float(future_year)]])
+        pred_value = model.predict(X_future)[0]
+        st.success(f"Predicted Numeric value for **{selected_indicator}** in year **{int(future_year)}**: {pred_value:.2f}")
+    except Exception as e:
+        st.error(f"Prediction failed: {e}")
 
 # -----------------------------
 # SECTION 7: EXPORT CLEANED DATA
