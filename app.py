@@ -70,7 +70,7 @@ if st.checkbox("Show column info"):
 # -----------------------------
 # SECTION 4: Feature Engineering
 # -----------------------------
-st.header(" ## 4.Feature Engineering -Histogram and advance features")
+st.header("4.Feature Engineering -Histogram and advance features")
 
 years = st.multiselect("Select Year(s)", sorted(df_clean["YEAR (DISPLAY)"].unique()))
 df_filtered_hist = df_clean[df_clean["YEAR (DISPLAY)"].isin(years)] if years else df_clean.copy()
