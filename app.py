@@ -217,6 +217,8 @@ ax.set_ylabel("Numeric")
 ax.set_title("Actual vs Predicted")
 ax.grid(True, linestyle='--', alpha=0.5)
 ax.legend() 
+# Force x-axis ticks to be integers
+ax.xaxis.set_major_locator(mtick.MaxNLocator(integer=True))
 st.pyplot(fig)
 
 # -----------------------------
