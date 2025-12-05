@@ -126,8 +126,14 @@ else:
     st.dataframe(df_clean)
 
 indicator_list = df_clean["GHO (DISPLAY)"].unique()
-selected_indicator = st.selectbox("Choose Correct Indicator to get perfect performance", indicator_list)
-df_indicator = df_clean[df_clean["GHO (DISPLAY)"] == selected_indicator].copy()
+#selected_indicator = st.selectbox("Choose Correct Indicator to get perfect performance", indicator_list)
+#df_indicator = df_clean[df_clean["GHO (DISPLAY)"] == selected_indicator].copy()
+# Create radio buttons with bold options
+selected_indicator = st.radio(
+    "Choose Correct Indicator to get perfect performance",
+    options=[f"**{ind}**" for ind in indicator_list],
+    format_func=lambda x: x  # keeps Markdown formatting
+)
 
 X = df_indicator[["YEAR (DISPLAY)"]]
 y = df_indicator["Numeric"]
