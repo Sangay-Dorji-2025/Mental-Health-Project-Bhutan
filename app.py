@@ -70,41 +70,60 @@ if st.checkbox("Show column info"):
 # -----------------------------
 # SECTION 4: Feature Engineering
 # -----------------------------
-st.header("4.Feature Engineering -Histogram and advance features")
+st.header("4. Feature Engineering - Histogram and Advanced Features")
 
-years = st.multiselect("Select Year(s)", sorted(df_clean["YEAR (DISPLAY)"].unique()))
-df_filtered_hist = df_clean[df_clean["YEAR (DISPLAY)"].isin(years)] if years else df_clean.copy()
+# --- Year selection ---
+years_selected = st.multiselect(
+    "Select Year(s)",
+    sorted(df_clean["YEAR (DISPLAY)"].unique())
+)
+
+# Filter data based on year selection
+if years_selected:
+    df_filtered_hist = df_clean[df_clean["YEAR (DISPLAY)"].isin(years_selected)]
+    year_text = ", ".join(map(str, years_selected))
+else:
+    df_filtered_hist = df_clean.copy()
+    year_text = "All Years"
+
+# Sort by year for consistent plotting
 df_filtered_hist = df_filtered_hist.sort_values("YEAR (DISPLAY)")
 
+# --- Column selection and histogram options ---
 col_selected = st.selectbox("Choose Column", ["Low", "Numeric", "High"])
 bins = st.slider("Number of bins", 5, 100, 30)
 log_scale = st.checkbox("Log Transformation")
-use_kde = st.checkbox("Add KDE Curve")
+use_kde = st.checkbox("Add KDE Curve (Smooth Density)")
 
+# Prepare data
 data = df_filtered_hist[col_selected].dropna()
 if log_scale:
     data = np.log1p(data)
 
+# --- Plot histogram ---
 fig, ax = plt.subplots(figsize=(8, 5))
 if use_kde:
-    sns.histplot(data, bins=bins, kde=True, ax=ax)
+    sns.histplot(data, bins=bins, kde=True, edgecolor="black", ax=ax)
 else:
     ax.hist(data, bins=bins, edgecolor="black")
 
+# --- Mean / Median / Std lines ---
 mean_val, median_val, std_val = data.mean(), data.median(), data.std()
 ax.axvline(mean_val, color='red', linestyle='--', label=f"Mean: {mean_val:.2f}")
 ax.axvline(median_val, color='blue', linestyle='-', label=f"Median: {median_val:.2f}")
 ax.axvline(mean_val + std_val, color='green', linestyle=':', label=f"+1 Std: {mean_val + std_val:.2f}")
-ax.set_title(f"Histogram of Bhutan Healthcare")
+
+# --- Labels and grid ---
+ax.set_title(f"Histogram of Bhutan Healthcare ({year_text})", fontsize=14, fontweight="bold")
 ax.set_xlabel(col_selected)
 ax.set_ylabel("Frequency")
 ax.grid(True, linestyle='--', alpha=0.5)
 ax.legend()
 st.pyplot(fig)
 
+# --- Summary statistics ---
 st.subheader("Summary Statistics")
 st.write(data.describe())
-
 # -----------------------------
 # SECTION 5: LINEAR REGRESSION MODEL
 # -----------------------------
