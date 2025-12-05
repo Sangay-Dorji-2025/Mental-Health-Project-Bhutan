@@ -55,7 +55,7 @@ st.write("Cleaned dataset:")
 st.dataframe(df_clean.head())
 
 # -----------------------------
-# SECTION 3: EDA
+# SECTION 3: Exploratory Data Analysis
 # -----------------------------
 st.header("3. Exploratory Data Analysis (EDA)")
 exclude_cols = ['YEAR (DISPLAY)', 'STARTYEAR', 'ENDYEAR']
@@ -109,6 +109,22 @@ st.write(data.describe())
 # SECTION 5: LINEAR REGRESSION MODEL
 # -----------------------------
 st.header("5. Machine Learning Model")
+mode = st.radio("Choose model mode:", ["Load Existing Model", "Train New Model"])
+
+if mode == "Load Existing Model":
+    model_file = st.file_uploader("Upload trained .pkl model", type=["pkl"])
+    if model_file is not None:
+        model = joblib.load(model_file)
+        st.success("Model loaded successfully.")
+    else:
+        st.warning("Upload a model to continue.")
+        st.stop()
+
+    else:
+        st.title("Bhutan Health Care Data Science(Supervised Learning Model:  Linear Regression)")
+        st.write(" ## Sample Dataset")
+        st.dataframe(df_clean)
+
 indicator_list = df_clean["GHO (DISPLAY)"].unique()
 selected_indicator = st.selectbox("Choose Indicator", indicator_list)
 df_indicator = df_clean[df_clean["GHO (DISPLAY)"] == selected_indicator].copy()
