@@ -120,8 +120,8 @@ if mode == "Load Existing Model":
         st.warning("Upload a model to continue.")
         st.stop()
 else:
-    st.title("Bhutan Health Care Data Science Project ")
-    st.header("Model select is Supervised Learning Model (Linear Regression)")
+    #st.title("Bhutan Health Care Data Science Project ")
+    st.header("Model selected is Supervised Learning Model (Linear Regression)")
     st.write(" ## Sample Dataset")
     st.dataframe(df_clean)
 
