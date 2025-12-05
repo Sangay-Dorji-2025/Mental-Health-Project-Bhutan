@@ -137,11 +137,6 @@ selected_indicator = st.selectbox("", indicator_list)  # empty string for label 
 # Filter the dataframe based on selection
 df_indicator = df_clean[df_clean["GHO (DISPLAY)"] == selected_indicator].copy()
 
-#indicator_list = df_clean["GHO (DISPLAY)"].unique()
-#selected_indicator = st.selectbox("**Choose Correct Indicator to get perfect performance**", indicator_list)
-#df_indicator = df_clean[df_clean["GHO (DISPLAY)"] == selected_indicator].copy()
-
-
 X = df_indicator[["YEAR (DISPLAY)"]]
 y = df_indicator["Numeric"]
 
@@ -161,9 +156,9 @@ st.write(" ## Model Summary")
 st.markdown(
     f"""
     <div style='text-align: left; font-size: 20px;'>
-        <span>&#9679; Regression Equation: </span>   y = {model.coef_[0]:.3f}x + {model.intercept_:.3f}<br>
-        <span>&#9679; Slope (β₁): </span> {model.coef_[0]:.3f} → Increase per year<br>
-        <span>&#9679; Intercept (β₀): </span> {model.intercept_:.3f} → Value when YEAR = 0
+        <span>&#9679; <strong>Regression Equation: </span>  </strong> y = {model.coef_[0]:.3f}x + {model.intercept_:.3f}<br>
+        <span>&#9679; <strong>Slope (β₁): </span> </strong>{model.coef_[0]:.3f} → Increase per year<br>
+        <span>&#9679; <strong>Intercept (β₀): </span></strong> {model.intercept_:.3f} → Value when YEAR = 0
     </div>
     """,
     unsafe_allow_html=True
