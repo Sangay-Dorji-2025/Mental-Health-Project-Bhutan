@@ -207,20 +207,28 @@ cols = [col for col in cols if col in df_display.columns]  # ensures no error if
 st.dataframe(df_display[cols])
 #---------------------------------------------------------
 # Plot Actual vs Predicted
-
 df_indicator["YEAR (DISPLAY)"] = df_indicator["YEAR (DISPLAY)"].astype(int)
-fig, ax = plt.subplots(figsize=(9, 5)) 
-ax.scatter(df_indicator["YEAR (DISPLAY)"], df_indicator["Numeric"], s=80, label="Actual")
-#ax.plot(df_indicator["YEAR (DISPLAY)"], df_indicator["Predicted"], color="red", linestyle='--', label="Predicted")
+
+fig, ax = plt.subplots(figsize=(9, 5))
+
+# Actual points
+ax.scatter(df_indicator["YEAR (DISPLAY)"], df_indicator["Numeric"], s=50, label="Actual", color="blue")
+
+# Predicted dashed line
 ax.plot(df_indicator["YEAR (DISPLAY)"], df_indicator["Predicted"], color="red", linestyle='--', linewidth=2, marker=None, label="Predicted")
+
+# Labels, title, grid, legend
 ax.set_xlabel("Year")
-ax.set_ylabel("Numeric") 
+ax.set_ylabel("Numeric")
 ax.set_title("Actual vs Predicted")
 ax.grid(True, linestyle='--', alpha=0.5)
-ax.legend() 
-# Force x-axis ticks to be integers
+ax.legend()
+
+# Force integer ticks
 ax.xaxis.set_major_locator(mtick.MaxNLocator(integer=True))
+
 st.pyplot(fig)
+
 
 # -----------------------------
 # SECTION 6: FUTURE PREDICTION
