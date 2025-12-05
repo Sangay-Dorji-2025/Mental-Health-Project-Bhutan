@@ -10,7 +10,7 @@ import joblib
 
 st.set_page_config(page_title="Bhutan Healthcare Analytics", layout="wide")
 
-st.title("Bhutan Healthcare Data Science Project")
+st.title("Bhutan Healthcare Data Science Project: Group A: Group 8")
 st.write("Starter template for healthcare analytics and prediction using Streamlit.")
 
 # -----------------------------
