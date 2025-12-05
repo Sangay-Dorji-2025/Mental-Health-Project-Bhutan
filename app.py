@@ -221,19 +221,10 @@ st.pyplot(fig)
 # SECTION 6: FUTURE PREDICTION
 # -----------------------------
 st.header("6. Predict Future Value")
-
-# Input for future year
-future_year = st.number_input("Enter future year:", min_value=2030, max_value=2130)
-
 if st.button("Predict"):
-    # Make sure input is a 2D array for sklearn
     X_future = np.array([[future_year]])
-    
-    try:
-        pred_value = model.predict(X_future)[0]
-        st.success(f"Predicted Numeric value for {future_year}: {pred_value:.2f}")
-    except Exception as e:
-        st.error(f"Prediction failed: {e}")
+    pred_value = model.predict(X_future)[0]
+    st.success(f"Predicted Numeric value for **{selected_indicator}** in year **{future_year}**: {pred_value:.2f}")
 
 # -----------------------------
 # SECTION 7: EXPORT CLEANED DATA
