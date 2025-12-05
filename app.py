@@ -228,6 +228,7 @@ ax.legend()
 ax.xaxis.set_major_locator(mtick.MaxNLocator(integer=True))
 
 st.pyplot(fig)
+plt.close(fig)  # closes the figure to prevent overlaps in Streamlit
 
 
 # -----------------------------
