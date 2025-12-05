@@ -201,7 +201,7 @@ st.write("## Actual vs Predicted Table")
 # Make a copy of the filtered indicator dataframe which contains predictions
 df_display = df_indicator.copy()
 # Optionally, reorder columns
-cols = ["YEAR (DISPLAY)", "GHO (DISPLAY", "Numeric", "Predicted"]
+cols = ["YEAR (DISPLAY)", "GHO (DISPLAY)", "Numeric", "Predicted"]
 cols = [col for col in cols if col in df_display.columns]  # ensures no error if a column missing
 st.dataframe(df_display[cols])
 #---------------------------------------------------------
