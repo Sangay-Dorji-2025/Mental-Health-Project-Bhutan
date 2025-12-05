@@ -139,13 +139,25 @@ df_indicator["Predicted"] = model.predict(X)
 r2 = r2_score(y, df_indicator["Predicted"])
 mae = mean_absolute_error(y, df_indicator["Predicted"])
 rmse = np.sqrt(mean_squared_error(y, df_indicator["Predicted"]))
-
-st.markdown(f"""
-**Regression Equation:** y = {model.coef_[0]:.3f}x + {model.intercept_:.3f}  
-**R²:** {r2:.3f}  
-**MAE:** {mae:.3f}  
-**RMSE:** {rmse:.3f}
-""")
+#----------------------------------------------------
+#st.markdown(f"""
+#**Regression Equation:** y = {model.coef_[0]:.3f}x + {model.intercept_:.3f}  
+#**R²:** {r2:.3f}  
+#**MAE:** {mae:.3f}  
+#**RMSE:** {rmse:.3f}
+#""")
+#-------------------------------------------------
+st.write(" ## Model Performance Metrics:")
+st.markdown(
+    f"""
+    <div style='text-align: left; font-size: 20px;'>
+        <p>&#9679; <strong>R Square (R²) Score:</strong> {r2:.3f}</p>
+        <p>&#9679; <strong>Mean Absolute Error Score (MAE):</strong> {mae:.3f}</p>
+        <p>&#9679; <strong>Root Mean Squared Error Score (RMSE):</strong> {rmse:.3f}</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 st.write("Actual vs Predicted Table")
 st.dataframe(df_indicator)
