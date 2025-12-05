@@ -125,9 +125,21 @@ else:
     st.write(" ## Sample Dataset")
     st.dataframe(df_clean)
 
+st.markdown(
+    "<p style='font-size:20px; font-weight:bold;'>Choose Correct Indicator to get perfect performance:</p>",
+    unsafe_allow_html=True
+)
+
+# Selectbox (options remain normal)
 indicator_list = df_clean["GHO (DISPLAY)"].unique()
-selected_indicator = st.selectbox("**Choose Correct Indicator to get perfect performance**", indicator_list)
+selected_indicator = st.selectbox("", indicator_list)  # empty string for label since we used markdown
+
+# Filter the dataframe based on selection
 df_indicator = df_clean[df_clean["GHO (DISPLAY)"] == selected_indicator].copy()
+
+#indicator_list = df_clean["GHO (DISPLAY)"].unique()
+#selected_indicator = st.selectbox("**Choose Correct Indicator to get perfect performance**", indicator_list)
+#df_indicator = df_clean[df_clean["GHO (DISPLAY)"] == selected_indicator].copy()
 
 
 X = df_indicator[["YEAR (DISPLAY)"]]
