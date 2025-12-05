@@ -207,6 +207,7 @@ st.dataframe(df_display[cols])
 #---------------------------------------------------------
 # Plot Actual vs Predicted
 
+df_indicator["YEAR (DISPLAY)"] = df_indicator["YEAR (DISPLAY)"].astype(int)
 fig, ax = plt.subplots(figsize=(9, 5)) 
 ax.scatter(df_indicator["YEAR (DISPLAY)"], df_indicator["Numeric"], s=80, label="Actual")
 ax.plot(df_indicator["YEAR (DISPLAY)"], df_indicator["Predicted"], color="red", linestyle='--', label="Predicted")
