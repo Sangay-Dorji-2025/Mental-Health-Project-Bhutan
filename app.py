@@ -34,28 +34,35 @@ else:
 # ----------------------------------------------------
 # SECTION 2: BASIC DATA CLEANING (EDIT AS NEEDED)
 # ----------------------------------------------------
-indicator = "Number of incident tuberculosis cases"  # choose your indicator
+def clean_numeric(x):
+    if pd.isna(x):
+        return np.nan
+    x = str(x).strip()
 
-df_plot = df_clean[df_clean["GHO (DISPLAY)"] == indicator].copy()
+    # Handle >100 cases
+    if x.startswith(">"):
+        return float(x.replace(">", ""))
 
-fig, ax = plt.subplots(figsize=(8,5))
+    # Remove bracket ranges (keep the first value only)
+    if "[" in x:
+        x = x.split("[")[0].strip()
 
-ax.plot(df_plot["YEAR (DISPLAY)"], df_plot["Value"], marker="o", label="Value")
-ax.fill_between(
-    df_plot["YEAR (DISPLAY)"],
-    df_plot["Low"],
-    df_plot["High"],
-    alpha=0.2,
-    label="Confidence Interval"
-)
+    # Convert to float
+    try:
+        return float(x)
+    except:
+        return np.nan
 
-ax.set_title(f"{indicator} Over Time", fontsize=14, fontweight="bold")
-ax.set_xlabel("Year")
-ax.set_ylabel("Value")
-ax.legend()
-ax.grid(axis="y", linestyle="--", alpha=0.6)
+df["Numeric"] = df["Numeric"].apply(clean_numeric)
+df["Value"] = df["Value"].apply(clean_numeric)
+df["Low"] = df["Low"].apply(clean_numeric)
+df["High"] = df["High"].apply(clean_numeric)
 
-plt.show()
+# Clean year column
+df["YEAR (DISPLAY)"] = pd.to_numeric(df["YEAR (DISPLAY)"], errors="coerce")
+
+# Remove completely empty indicator rows
+df_clean = df.dropna(subset=["Value", "YEAR (DISPLAY)"])
 # ----------------------------------------------------
 # SECTION 7: EXPORT PROCESSED DATA (OPTIONAL)
 # ----------------------------------------------------
