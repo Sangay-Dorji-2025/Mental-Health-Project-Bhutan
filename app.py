@@ -34,36 +34,6 @@ else:
 # ----------------------------------------------------
 # SECTION 2: BASIC DATA CLEANING (EDIT AS NEEDED)
 # ----------------------------------------------------
-def clean_numeric(x):
-    if pd.isna(x):
-        return np.nan
-    x = str(x).strip()
-
-    # Handle >100 cases
-    if x.startswith(">"):
-        return float(x.replace(">", ""))
-
-    # Remove bracket ranges (keep the first value only)
-    if "[" in x:
-        x = x.split("[")[0].strip()
-
-    # Convert to float
-    try:
-        return float(x)
-    except:
-        return np.nan
-
-df["Numeric"] = df["Numeric"].apply(clean_numeric)
-df["Value"] = df["Value"].apply(clean_numeric)
-df["Low"] = df["Low"].apply(clean_numeric)
-df["High"] = df["High"].apply(clean_numeric)
-
-# Clean year column
-df["YEAR (DISPLAY)"] = pd.to_numeric(df["YEAR (DISPLAY)"], errors="coerce")
-
-# Remove completely empty indicator rows
-df_clean = df.dropna(subset=["Value", "YEAR (DISPLAY)"])
-
 indicator = "Number of incident tuberculosis cases"  # choose your indicator
 
 df_plot = df_clean[df_clean["GHO (DISPLAY)"] == indicator].copy()
