@@ -143,14 +143,6 @@ else:
     st.header("Model selected is Supervised Learning Model (Linear Regression)")
     st.write(" ## Sample Dataset")
     st.dataframe(df_clean)
-    
-# Table of Actual vs Predicted
-# ---------------------------------------------------------
-st.write("##  Actual vs Predicted Table")
-df = df_clean.copy()
-st.dataframe(df_clean)
-
-
 
 st.markdown(
     "<p style='font-size:20px; font-weight:bold;'>Choose Correct Indicator to get perfect performance:</p>",
@@ -203,6 +195,12 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+# Table of Actual vs Predicted
+# ---------------------------------------------------------
+st.write("##  Actual vs Predicted Table")
+df = df_clean.copy()
+st.dataframe(df_clean)
 
 # Plot Actual vs Predicted
 years_plot = df_indicator["YEAR (DISPLAY)"].astype(int)
