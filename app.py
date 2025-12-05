@@ -63,6 +63,30 @@ df["YEAR (DISPLAY)"] = pd.to_numeric(df["YEAR (DISPLAY)"], errors="coerce")
 
 # Remove completely empty indicator rows
 df_clean = df.dropna(subset=["Value", "YEAR (DISPLAY)"])
+
+
+indicator = "Number of incident tuberculosis cases"  # choose your indicator
+
+df_plot = df_clean[df_clean["GHO (DISPLAY)"] == indicator].copy()
+
+fig, ax = plt.subplots(figsize=(8,5))
+
+ax.plot(df_plot["YEAR (DISPLAY)"], df_plot["Value"], marker="o", label="Value")
+ax.fill_between(
+    df_plot["YEAR (DISPLAY)"],
+    df_plot["Low"],
+    df_plot["High"],
+    alpha=0.2,
+    label="Confidence Interval"
+)
+
+ax.set_title(f"{indicator} Over Time", fontsize=14, fontweight="bold")
+ax.set_xlabel("Year")
+ax.set_ylabel("Value")
+ax.legend()
+ax.grid(axis="y", linestyle="--", alpha=0.6)
+
+plt.show()
 # ----------------------------------------------------
 # SECTION 7: EXPORT PROCESSED DATA (OPTIONAL)
 # ----------------------------------------------------
