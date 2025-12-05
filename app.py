@@ -87,6 +87,52 @@ ax.legend()
 ax.grid(axis="y", linestyle="--", alpha=0.6)
 
 plt.show()
+
+
+indicator = st.sidebar.selectbox("Select Indicator", df["GHO (DISPLAY)"].unique())
+
+df_filtered = df[df["GHO (DISPLAY)"] == indicator].sort_values("YEAR (DISPLAY)")
+
+st.subheader(f"📌 {indicator}")
+st.dataframe(df_filtered)
+
+# Plot
+fig, ax = plt.subplots(figsize=(8,5))
+ax.plot(df_filtered["YEAR (DISPLAY)"], df_filtered["Value"], marker="o", label="Value")
+
+if df_filtered["Low"].notna().sum() > 0:
+    ax.fill_between(
+        df_filtered["YEAR (DISPLAY)"],
+        df_filtered["Low"],
+        df_filtered["High"],
+        alpha=0.2,
+        label="Confidence Interval"
+    )
+
+ax.set_xlabel("Year")
+ax.set_ylabel("Value")
+ax.set_title(indicator)
+ax.legend()
+st.pyplot(fig)
+
+# ----------- Prediction Model ------------
+if len(df_filtered) >= 3:
+    st.subheader("📈 Prediction (Linear Regression)")
+    
+    X = df_filtered["YEAR (DISPLAY)"].values.reshape(-1,1)
+    y = df_filtered["Value"].values
+
+    model = LinearRegression()
+    model.fit(X, y)
+
+    next_year = df_filtered["YEAR (DISPLAY)"].max() + 1
+    pred = model.predict([[next_year]])[0]
+
+    st.write(f"Predicted value for **{next_year}**: **{pred:.2f}**")
+
+else:
+    st.warning("Not enough data points for prediction (need ≥3).")
+
 # ----------------------------------------------------
 # SECTION 7: EXPORT PROCESSED DATA (OPTIONAL)
 # ----------------------------------------------------
