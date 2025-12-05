@@ -119,11 +119,10 @@ if mode == "Load Existing Model":
     else:
         st.warning("Upload a model to continue.")
         st.stop()
-
-    else:
-        st.title("Bhutan Health Care Data Science(Supervised Learning Model:  Linear Regression)")
-        st.write(" ## Sample Dataset")
-        st.dataframe(df_clean)
+else:
+    st.title("Bhutan Health Care Data Science(Supervised Learning Model:  Linear Regression)")
+    st.write(" ## Sample Dataset")
+    st.dataframe(df_clean)
 
 indicator_list = df_clean["GHO (DISPLAY)"].unique()
 selected_indicator = st.selectbox("Choose Indicator", indicator_list)
