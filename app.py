@@ -133,6 +133,21 @@ if len(df_filtered) >= 3:
 else:
     st.warning("Not enough data points for prediction (need ≥3).")
 
+
+df_pred = df_clean[df_clean["GHO (DISPLAY)"] == "Number of incident tuberculosis cases"].sort_values("YEAR (DISPLAY)")
+
+X = df_pred["YEAR (DISPLAY)"].values.reshape(-1,1)
+y = df_pred["Value"].values
+
+model = LinearRegression()
+model.fit(X, y)
+
+future_years = np.arange(2023, 2031).reshape(-1,1)
+preds = model.predict(future_years)
+
+pred_df = pd.DataFrame({"Year": future_years.flatten(), "Predicted TB Cases": preds})
+print(pred_df)
+
 # ----------------------------------------------------
 # SECTION 7: EXPORT PROCESSED DATA (OPTIONAL)
 # ----------------------------------------------------
