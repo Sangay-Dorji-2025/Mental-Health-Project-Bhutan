@@ -139,6 +139,22 @@ df_indicator["Predicted"] = model.predict(X)
 r2 = r2_score(y, df_indicator["Predicted"])
 mae = mean_absolute_error(y, df_indicator["Predicted"])
 rmse = np.sqrt(mean_squared_error(y, df_indicator["Predicted"]))
+#----------------------------------------------------
+# Display Model Information
+# ---------------------------------------------------------
+st.write(" ## Model Summary")
+# Coefficients explained
+st.markdown(
+    f"""
+    <div style='text-align: left; font-size: 20px;'>
+        <span>&#9679; Regression Equation: </span>   y = {model.coef_[0]:.3f}x + {model.intercept_:.3f}<br>
+        <span>&#9679; Slope (β₁): </span> {model.coef_[0]:.3f} → Increase per year<br>
+        <span>&#9679; Intercept (β₀): </span> {model.intercept_:.3f} → Value when YEAR = 0
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+#------------------------------------------------------------------------------
 
 st.write(" ## Model Performance Metrics:")
 st.markdown(
