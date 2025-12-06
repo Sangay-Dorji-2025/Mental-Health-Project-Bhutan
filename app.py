@@ -34,11 +34,13 @@ df_clean = df.copy()
 
 # Remove first row if unnecessary
 df_clean = df_clean.drop(df_clean.index[0])
+# Remove duplicate data
 df_clean.drop_duplicates(inplace=True)
+# Handle NaN values and fill forward or backward base on dataset
 df_clean.fillna(method="ffill", inplace=True)
 df_clean.fillna(method="bfill", inplace=True)
 
-# Convert numeric-looking columns
+# Convert numeric-looking object columns to float and integer coercing errors to NaN 
 cols_to_convert = {
     'float': ['Numeric', 'Low', 'High'],
     'int': ['YEAR (DISPLAY)', 'STARTYEAR', 'ENDYEAR']
@@ -59,6 +61,7 @@ st.dataframe(df_clean.head())
 # SECTION 3: Exploratory Data Analysis
 # -----------------------------
 st.header("3. Exploratory Data Analysis (EDA)")
+# Excluding the year columns and caluclating the statistics info using Numeric, Low and High columns
 exclude_cols = ['YEAR (DISPLAY)', 'STARTYEAR', 'ENDYEAR']
 numeric_cols = [col for col in df_clean.select_dtypes(include=[np.number]).columns if col not in exclude_cols]
 
@@ -97,18 +100,21 @@ log_scale = st.checkbox("Log Transformation")
 use_kde = st.checkbox("Add KDE Curve (Smooth Density)")
 
 # Prepare data
+# Remove missing values NaN
 data = df_filtered_hist[col_selected].dropna()
+# Helps when data is highly skewed and make histogram and ML model more stable
 if log_scale:
     data = np.log1p(data)
 
 # --- Plot histogram ---
 fig, ax = plt.subplots(figsize=(8, 5))
+# Kernel Density Estimate (KDE): help to make histogram smooth and data distribution clearly
 if use_kde:
     sns.histplot(data, bins=bins, kde=True, edgecolor="black", ax=ax)
 else:
     ax.hist(data, bins=bins, edgecolor="black")
 
-# --- Mean / Median / Std lines ---
+# Calculating  Mean / Median / Std  and showing on histogram  ---
 mean_val, median_val, std_val = data.mean(), data.median(), data.std()
 ax.axvline(mean_val, color='red', linestyle='--', label=f"Mean: {mean_val:.2f}")
 ax.axvline(median_val, color='blue', linestyle='-', label=f"Median: {median_val:.2f}")
