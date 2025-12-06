@@ -150,7 +150,7 @@ else:
     st.header("Model selected is Supervised Learning Model (Linear Regression)")
     st.write(" ## Sample Dataset")
     st.dataframe(df_clean)
-
+# markdown is one of the most powerful text-display function in streamlit
 st.markdown(
     "<p style='font-size:20px; font-weight:bold;'>Choose Correct Indicator to get perfect performance:</p>",
     unsafe_allow_html=True
@@ -165,8 +165,9 @@ df_indicator = df_clean[df_clean["GHO (DISPLAY)"] == selected_indicator].copy()
 
 X = df_indicator[["YEAR (DISPLAY)"]]
 y = df_indicator["Numeric"]
-
+# model selection
 model = LinearRegression()
+# Fitting on model
 model.fit(X, y)
 df_indicator["Predicted"] = model.predict(X)
 
@@ -179,17 +180,18 @@ rmse = np.sqrt(mean_squared_error(y, df_indicator["Predicted"]))
 # ---------------------------------------------------------
 st.write(" ## Model Summary")
 # Coefficients explained
+# model.coef_[0]--> relationship between input (x) and output (y).
 st.markdown(
     f"""
     <div style='text-align: left; font-size: 20px;'>
-        <span>&#9679; <strong>Regression Equation: </span>  </strong> y = {model.coef_[0]:.3f}x + {model.intercept_:.3f}<br>
+        <span>&#9679; <strong>Regression Equation: </span>  </strong> y = {model.coef_[0]:.3f}x + {model.intercept_:.3f}<br>        
         <span>&#9679; <strong>Slope (β₁): </span> </strong>{model.coef_[0]:.3f} → Increase per year<br>
         <span>&#9679; <strong>Intercept (β₀): </span></strong> {model.intercept_:.3f} → Value when YEAR = 0
     </div>
     """,
     unsafe_allow_html=True
 )
-#------------------------------------------------------------------------------
+#-----------------Displaying calclated metrics on streamlit-------------------------------------------------------------
 
 st.write(" ## Model Performance Metrics:")
 st.markdown(
